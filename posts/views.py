@@ -7,15 +7,21 @@ from posts.models import UserPost
 
 def makepost(request):
     curent_user = request.user
-    desc = request.POST['desc']     
-    owner = curent_user.email
-    created = timezone.localtime()
-    UserPost.objects.create(owner=owner , description = desc , createdon = created)    
-    print('posted')
-    return redirect('/feed')
+    if not curent_user:
+        return redirect('/api/signin/')
+    else:
+        desc = request.POST['desc']     
+        owner = curent_user.email
+        created = timezone.localtime()
+        UserPost.objects.create(owner=owner , description = desc , createdon = created)    
+        print('posted')
+        return redirect('/feed')
 
 def displaypost(request):
     curent_user = request.user
-    posts = UserPost()
-    posts = UserPost.objects.all().order_by('createdon').reverse()
-    return render(request,'feed.html',{'posts':posts})
+    if not curent_user:
+        return redirect('/api/signin/')
+    else:
+        posts = UserPost()
+        posts = UserPost.objects.all().order_by('createdon').reverse()
+        return render(request,'feed.html',{'posts':posts})
