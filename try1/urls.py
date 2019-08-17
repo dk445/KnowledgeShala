@@ -23,5 +23,5 @@ urlpatterns = [
     path('api/',include('signin.urls')),
     path('signout/',include('signout.urls')),
     path('',include('posts.urls')),
-    path('add',include('college.urls')),
+    path('add/',include('college.urls')),
 ]
