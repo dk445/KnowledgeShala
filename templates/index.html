@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script src="{% static 'jquery.js' %}"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<!--===============================================================================================-->
+
+
+
+<script>
+	history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+
+</script>
+
+</head>
+<body style="background-color:white;">
+<!--		{%  if user.is_authenticated %}
+		main design after login
+	<title>Welcome</title>
+	<body><br/><h3>Welcome , {{ user.name }}</h3><br/>
+
+	<br/><br/><hr/>
+	
+	<h2><b>Make Posts</b></h2>
+	<br/>
+    <form method="POST" action="post/">
+		{% csrf_token %}
+		Caption : 
+		<textarea name= 'desc'></textarea><br/>
+		<button>Post</button>
+	</form>
+
+	{% for post in posts %}
+	
+		<br/><hr/>
+		{{user.name}}<hr/>
+		{{post.description}}<hr/><br/>
+		
+	{% endfor %}
+
+	<br/><br/><a href="api/signout/">signout</a></body>
+
+	
+	{% else %} -->
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="login100-more" style="background-image: url('assets/images/bg-01.jpg');"></div>		
+			<title>Signup</title>
+			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+					<h5>{{message}}</h5>
+				<form class="login100-form validate-form" method="POST">
+					{% csrf_token %}
+					<span class="login100-form-title p-b-59">
+						Sign Up
+					</span>
+					<h5 style="color: red">{{message}}</h5>
+					<div class="wrap-input100 validate-input" data-validate="Name is required">
+						<span class="label-input100">full Name</span>
+						<input class="input100" type="text" name="name" placeholder="First Name...">
+						<span class="focus-input100"></span>
+					</diV>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<span class="label-input100">Email</span>
+						<input class="input100" type="text" name="email" placeholder="Email addess...">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Mobile number is required">
+						<span class="label-input100">Mobile</span>
+						<input class="input100" type="text" name="mobile" placeholder="Mobile">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Mobile number is required">
+						<span class="label-input100">College Id</span>
+						<input class="input100" type="text" name="clgId" placeholder="College Id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Mobile number is required">
+						<span class="label-input100">Department Id</span>
+						<input class="input100" type="text" name="deptId" placeholder="Department Id">
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="wrap-input100 validate-input" data-validate="Mobile number is required">
+						<span >Role</span><!--class="label-input100" -->
+						<input class="input100" type="radio" name="role" value="0" checked>Student
+						<input class="input100" type="radio" name="role" value="1">Instructor
+						<!--<span class="focus-input100"></span>-->
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" name="pass" placeholder="*************">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Repeat Password is required">
+						<span class="label-input100">Repeat Password</span>
+						<input class="input100" type="password" name="repeat-pass" placeholder="*************">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="flex-m w-full p-b-33">
+						<div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								<span class="txt1">
+									I agree to the
+									<a href="#" class="txt2 hov1">
+										Terms of User
+									</a>
+								</span>
+							</label>
+						</div>
+
+						
+					</div>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn">
+								Sign Up
+							</button>
+						</div>
+
+						<a href="api/signin" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
+							Sign in
+							<i class="fa fa-long-arrow-right m-l-5"></i>
+						</a>
+					</div>
+				</form>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'js/main.js' %}"></script>
+	
+	
+
+
+
+</body>
+</html>
