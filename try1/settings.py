@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'signout.apps.SignoutConfig',
     'posts.apps.PostsConfig',
     'college.apps.CollegeConfig',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
