@@ -12,6 +12,9 @@
     
 </head>
 <body>
+    {% if user.is_authenticated %}
+        <script>window.location.href="/api/signin"</script>
+    {% endif %}
     <br/><h3>Welcome {{user.name}}</h3>
 
     <br/><br/><hr/>
