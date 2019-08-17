@@ -16,9 +16,9 @@
 
     <br/><br/><hr/>
 
-    <form method="GET">
+    <form method="POST" action="/search/">
         {% csrf_token %}
-        <input type="text" size="50" name="search">
+        <input type="text" size="50" id="search" name="search">
         <button>Search</button>
     </form>
 	
