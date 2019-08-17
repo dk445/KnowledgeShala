@@ -44,34 +44,6 @@
 <body style="background-color:white;">
 	{%  if user.is_authenticated %}
 		<script>window.location.href="/feed"</script>
-<!--		
-		main design after login
-	<title>Welcome</title>
-	<body><br/><h3>Welcome , {{ user.name }}</h3><br/>
-
-	<br/><br/><hr/>
-	
-	<h2><b>Make Posts</b></h2>
-	<br/>
-    <form method="POST" action="post/">
-		{% csrf_token %}
-		Caption : 
-		<textarea name= 'desc'></textarea><br/>
-		<button>Post</button>
-	</form>
-
-	{% for post in posts %}
-	
-		<br/><hr/>
-		{{user.name}}<hr/>
-		{{post.description}}<hr/><br/>
-		
-	{% endfor %}
-
-	<br/><br/><a href="api/signout/">signout</a></body>
-
-	
-	{% else %} -->
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="login100-more" style="background-image: url('assets/images/bg-01.jpg');"></div>		
