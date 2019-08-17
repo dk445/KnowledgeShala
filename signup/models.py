@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 class CollegeData(models.Model):
     clgid = models.CharField(max_length=3,primary_key=True)
     clgName = models.CharField(max_length = 100)
-    city = models.CharField(max_length=20)
+    city = models.CharField(max_length=20, null=True)
     email = models.EmailField(unique = True)
 
 class DepartmentData(models.Model):
