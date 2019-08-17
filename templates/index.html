@@ -42,7 +42,9 @@
 
 </head>
 <body style="background-color:white;">
-		{%  if user.is_authenticated %}
+	{%  if user.is_authenticated %}
+		window.location.href="/feed"
+<!--		
 		main design after login
 	<title>Welcome</title>
 	<body><br/><h3>Welcome , {{ user.name }}</h3><br/>
@@ -69,7 +71,7 @@
 	<br/><br/><a href="api/signout/">signout</a></body>
 
 	
-	{% else %} 
+	{% else %} -->
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="login100-more" style="background-image: url('assets/images/bg-01.jpg');"></div>		
