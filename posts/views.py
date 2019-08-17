@@ -7,7 +7,7 @@ from posts.models import UserPost
 
 def makepost(request):
     curent_user = request.user
-    if curent_user.is_authenticated:
+    if not curent_user.is_authenticated:
         return redirect('/api/signin/')
     else:
         desc = request.POST['desc']     
@@ -19,8 +19,6 @@ def makepost(request):
 
 def displaypost(request):
     curent_user = request.user
-    check = request.user.is_authenticated
-    #if check == False:
     if not request.user.is_authenticated:
         return redirect('/api/signin/')
     else:
