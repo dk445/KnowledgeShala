@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'signin.apps.SigninConfig',
     'signout.apps.SignoutConfig',
     'posts.apps.PostsConfig',
+    'college.apps.CollegeConfig',
 ]
 
 MIDDLEWARE = [
