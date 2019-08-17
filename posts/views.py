@@ -19,7 +19,7 @@ def makepost(request):
 
 def displaypost(request):
     curent_user = request.user
-    if not curent_user:
+    if  curent_user is None:
         return redirect('/api/signin/')
     else:
         posts = UserPost()
