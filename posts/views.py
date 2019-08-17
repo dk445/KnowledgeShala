@@ -19,7 +19,7 @@ def makepost(request):
 
 def displaypost(request):
     curent_user = request.user
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('/api/signin/')
     else:
         posts = UserPost()
