@@ -8,7 +8,7 @@ class CollegeData(models.Model):
     clgid = models.CharField(max_length=3,primary_key=True)
     clgName = models.CharField(max_length = 100)
     city = models.CharField(max_length=20, null=True)
-    email = models.EmailField(unique = True)
+    email = models.EmailField(unique = True,null=True)
 
 class DepartmentData(models.Model):
     deptid = models.CharField(max_length = 10, primary_key=True)
