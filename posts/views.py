@@ -7,7 +7,7 @@ from posts.models import UserPost
 
 def makepost(request):
     curent_user = request.user
-    desc = request.POST['desc'] 
+    desc = request.POST['desc']     
     owner = curent_user.email
     created = timezone.localtime()
     UserPost.objects.create(owner=owner , description = desc , createdon = created)    
