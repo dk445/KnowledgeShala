@@ -32,6 +32,7 @@ def signupPage(request):
         print('user created')
         return render(request,'signin.html',{'message' : 'Registered successfully.'})
     else:
+        print('called')
         return render(request,'index.html')
 
 def get(self, request, format=None):
