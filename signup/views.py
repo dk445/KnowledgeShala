@@ -30,7 +30,7 @@ def signupPage(request):
        # except:
         #  return render(request,'index.html',{'message':'Error while signup. Try again'})'''
         print('user created')
-        return render(request,'signin.html',{'message' : 'Registered successfully.'})
+        return redirect('api/signin',{'message' : 'Registered successfully.'})
     else:
         print('called')
         return render(request,'index.html')
