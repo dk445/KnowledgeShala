@@ -12,9 +12,9 @@
     
 </head>
 <body>
-    {% if user.is_authenticated %}
+    {%  if user.is_authenticated %}
         <script>window.location.href="/api/signin"</script>
-    {% endif %}
+    {% else %}
     <br/><h3>Welcome {{user.name}}</h3>
 
     <br/><br/><hr/>
@@ -47,7 +47,7 @@
 	<br/><br/><a href="/signout">signout</a></body>
 
 
-
+    {%  endif %}
   <!--  <a href="/">logout</a>
     <button onclick="fun()">Signout</button>
     <script>
