@@ -44,7 +44,7 @@
 <body style="background-color:white;">
 	{%  if user.is_authenticated %}
 		<script>window.location.href="/feed"</script>
-	{% endif %}
+	{% else %}
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="login100-more" style="background-image: url('assets/images/bg-01.jpg');"></div>		
@@ -137,10 +137,9 @@
 					</div>
 				</form>
 			</div>
-			{% endif %}
 		</div>
 	</div>
-	
+	{% endif %}
 <!--===============================================================================================-->
 	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
 <!--===============================================================================================-->
