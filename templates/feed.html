@@ -18,8 +18,7 @@
 
     <br/><br/><hr/>
     {% csrf_token %}
-    <form>
-        
+    <form method="GET">        
         <input type="text" size="50" id="search_query" name="searchquery">
         <a href="/search/{{searchquery}}"><button>Search</button></a>
     </form>
