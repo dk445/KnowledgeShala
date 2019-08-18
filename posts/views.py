@@ -6,7 +6,7 @@ from posts.models import UserPost
 # Create your views here.
 
 def makepost(request):
-    #curent_user = request.user
+    curent_user = request.user
    # if not curent_user.is_authenticated:
     #    return redirect('/api/signin/')
    # else:
