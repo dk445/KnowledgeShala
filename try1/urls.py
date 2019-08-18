@@ -25,5 +25,5 @@ urlpatterns = [
     path('',include('posts.urls')),
     path('add/',include('college.urls')),
     path('search/',include('search.urls')),
-    path('request/',include('requests.urls'))
+    path('requests/',include('requests.urls'))
 ]
