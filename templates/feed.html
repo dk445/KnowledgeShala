@@ -17,6 +17,10 @@
     <br/><h3>Welcome {{user.name}}</h3>
 
     <br/><br/><hr/>
+
+    <ul>
+        <li></li>
+    </ul>
     
     <form method="POST" action="/search/">
         {% csrf_token %}
@@ -43,7 +47,7 @@
 		
 	{% endfor %}
    
-	<br/><br/><a href="/signout">signout</a></body>
+	<br/><br/><a href="/signout">signout</a>
 
     
     {% else %}
