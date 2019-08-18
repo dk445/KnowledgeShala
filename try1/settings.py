@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'college.apps.CollegeConfig',
     'django.contrib.postgres',
     'search.apps.SearchConfig',
+    'requests.apps.RequestsConfig',
 ]
 
 MIDDLEWARE = [
