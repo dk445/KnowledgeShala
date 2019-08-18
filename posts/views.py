@@ -6,11 +6,11 @@ from posts.models import UserPost
 # Create your views here.
 
 def makepost(request):
-    '''curent_user = request.user
-    if not curent_user.is_authenticated:
-        return redirect('/api/signin/')
-    else:'''
-        
+    #curent_user = request.user
+   # if not curent_user.is_authenticated:
+    #    return redirect('/api/signin/')
+   # else:
+
     desc = request.POST['desc']     
     owner = curent_user.email
     created = timezone.localtime()
@@ -19,10 +19,10 @@ def makepost(request):
     return redirect('/feed')
 
 def displaypost(request):
-    '''curent_user = request.user
-    if request.user.is_authenticated:
-        return redirect('/api/signin/')
-    else:'''
+ #   '''curent_user = request.user
+  #  if request.user.is_authenticated:
+   #     return redirect('/api/signin/')
+    #else:'''
 
     posts = UserPost()
     posts = UserPost.objects.all().order_by('createdon').reverse()
