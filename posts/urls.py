@@ -6,3 +6,4 @@ urlpatterns = [
     path('feed/',views.displaypost),
     path('feed/post/',views.makepost)
 ]
+                                                                        
