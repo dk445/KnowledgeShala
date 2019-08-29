@@ -6,7 +6,7 @@ from django.http import HttpResponse
 # Create your views here.
 def accept(request,acceptingemail):
     loggedinuser = request.user.email
-    requestObj = Requests.objects.get(requested=acceptingemail , requesting=loggedinuser) 
+    requestObj = Requests.objects.get(requested_id=acceptingemail , requesting_id=loggedinuser) 
     print(requestObj)
     requestObj.statusid_id='1'
     print('accept')
@@ -16,7 +16,7 @@ def accept(request,acceptingemail):
 
 def displayrequests(request):
     loggedinuser = request.user.email
-    users = Requests.objects.filter(requesting=loggedinuser,statusid_id='0')
+    users = Requests.objects.filter(requesting_id=loggedinuser,statusid_id='0')
     return render(request,'request.html',{'result':users})
 
 def makeRequest(request,requestedemail):
@@ -27,7 +27,7 @@ def makeRequest(request,requestedemail):
         requestedemail = requestedemail
         statusid = '0'
         
-        Requests.objects.create(requested=loggedinuser , requesting=requestedemail , statusid_id=statusid)
+        Requests.objects.create(requested_id=loggedinuser , requesting_id=requestedemail , statusid_id=statusid)
         
         return HttpResponse('<script>window.close()</script>')
 
