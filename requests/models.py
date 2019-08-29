@@ -9,10 +9,8 @@ class RequestStatus(models.Model):
 
 class Requests(models.Model):
     requestid = models.AutoField(primary_key=True)
-    requesting = models.EmailField()
-    requested = models.EmailField()
-    # requesting = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requesting_user")
-    # requested = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requested_user")
+    requesting = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requesting_user")
+    requested = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requested_user")
     statusid = models.ForeignKey(RequestStatus,on_delete=models.CASCADE)
     class Meta:
         unique_together = ('requesting' , 'requested')
