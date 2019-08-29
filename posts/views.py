@@ -12,7 +12,7 @@ def makepost(request):
    # else:
 
     desc = request.POST['desc']     
-    owner = UserDatar.objects.get(email=equest.user.email)
+    owner = UserData.objects.get(email=request.user.email)
     created = timezone.localtime()
     UserPost.objects.create(owner=owner , description = desc , createdon = created)    
     print('posted')
