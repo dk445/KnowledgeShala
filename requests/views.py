@@ -7,7 +7,7 @@ from django.http import HttpResponse
 def accept(request,acceptingemail):
     loggedinuser = request.user.email
     requestObj = Requests.objects.filter(requested=acceptingemail , requesting=loggedinuser) 
-    print(requestObj.statusid)
+    #print(requestObj.statusid_id)
     requestObj.statusid='1'
     print('accept')
     return redirect('/request')
