@@ -4,8 +4,12 @@ from signup.models import UserData
 from django.http import HttpResponse
 
 # Create your views here.
-def accept(request):
+def accept(request,acceptingemail):
+    requestObj = Requests.objects.get(requested_id=acceptingemail , requesting_id=request.user.email) 
+    requestObj.statusid_id='1'
     print('accept')
+    displayrequests(request)
+    
     
 
 def displayrequests(request):
