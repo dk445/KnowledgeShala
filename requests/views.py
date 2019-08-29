@@ -8,8 +8,8 @@ def accept(request,acceptingemail):
     requestObj = Requests.objects.get(requested_id=acceptingemail , requesting_id=request.user.email) 
     requestObj.statusid_id='1'
     print('accept')
-    displayrequests(request)
-    
+    return redirect('/requests/')
+
     
 
 def displayrequests(request):
