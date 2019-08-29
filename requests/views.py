@@ -16,7 +16,7 @@ def accept(request,acceptingemail):
 
 def displayrequests(request):
     loggedinuser = request.user.email
-    users = Requests.objects.filter(requesting_id=loggedinuser,statusid_id='0')
+    users = Requests.objects.filter(requesting=loggedinuser,statusid_id='0')
     return render(request,'request.html',{'result':users})
 
 def makeRequest(request,requestedemail):
