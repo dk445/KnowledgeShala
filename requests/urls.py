@@ -5,5 +5,5 @@ from . import views
 urlpatterns = [
     path('<requestedemail>',views.makeRequest),   
     path('',views.displayrequests) ,
-    path('accept/', views.accept),
+    path('accept/<acceptingemail>', views.accept),
 ] 
