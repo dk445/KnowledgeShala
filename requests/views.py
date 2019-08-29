@@ -6,7 +6,7 @@ from django.http import HttpResponse
 # Create your views here.
 def accept(request,acceptingemail):
     loggedinuser = request.user.email
-    Requests.objects.get(requested_id=acceptingemail , requesting_id=loggedinuser).update(statusid_id='1') 
+    Requests.objects.filter(requested_id=acceptingemail , requesting_id=loggedinuser).update(statusid_id='1') 
     #print(requestObj)
     #requestObj.statusid_id='1'
     print('accept')
