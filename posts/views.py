@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.utils import timezone
 from posts.models import UserPost
+from signup.models import UserData
 
 
 # Create your views here.
@@ -11,7 +12,7 @@ def makepost(request):
    # else:
 
     desc = request.POST['desc']     
-    owner = request.user.email
+    owner = UserDatar.objects.get(email=equest.user.email)
     created = timezone.localtime()
     UserPost.objects.create(owner=owner , description = desc , createdon = created)    
     print('posted')
