@@ -7,6 +7,7 @@ from django.http import HttpResponse
 def accept(request,acceptingemail):
     loggedinuser = request.user.email
     Requests.objects.filter(requested_id=acceptingemail , requesting_id=loggedinuser).update(statusid_id='1') 
+    
     #print(requestObj)
     #requestObj.statusid_id='1'
     print('accept')
@@ -18,6 +19,8 @@ def displayrequests(request):
     loggedinuser = request.user.email
     users = Requests.objects.filter(requesting=loggedinuser,statusid_id='0')
     return render(request,'request.html',{'result':users})
+    
+    
 
 def makeRequest(request,requestedemail):
     if not request.user.is_authenticated:
