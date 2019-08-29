@@ -8,7 +8,7 @@ def accept(request,acceptingemail):
     loggedinuser = request.user.email
     requestObj = Requests.objects.filter(requested=acceptingemail , requesting=loggedinuser) 
     print(requestObj)
-    requestObj.statusid_id='1'
+    requestObj.statusid='1'
     print('accept')
     return redirect('/request')
 
