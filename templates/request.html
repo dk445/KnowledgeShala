@@ -18,7 +18,7 @@
      <ul>
          {% for user in result %}
             <br/<b><li>{{ user.requested.name }}</li></b>
-            {{ user.requested.email }} <a href="accept/{{ user.requested.email }}" target="_blank"><button>Accept</button></a> <hr/>
+            {{ user.requested.email }} <a href="accept/{{ user.requested.email }}" ><button>Accept</button></a> <hr/>
         {% endfor %}
      </ul>
  </body>
