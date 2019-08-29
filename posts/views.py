@@ -6,13 +6,12 @@ from posts.models import UserPost
 # Create your views here.
 
 def makepost(request):
-    curent_user = request.user
    # if not curent_user.is_authenticated:
     #    return redirect('/api/signin/')
    # else:
 
     desc = request.POST['desc']     
-    owner = curent_user.email
+    owner = request.user.email
     created = timezone.localtime()
     UserPost.objects.create(owner=owner , description = desc , createdon = created)    
     print('posted')
