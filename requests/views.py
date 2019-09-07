@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from requests.models import Requests
+from requests.models import Requests , Relation
 from signup.models import UserData
 from django.http import HttpResponse
 
@@ -8,6 +8,8 @@ def accept(request,acceptingemail):
     loggedinuser = request.user.email
     Requests.objects.filter(requested_id=acceptingemail , requesting_id=loggedinuser).update(statusid_id='1') 
     
+    Relation.objects.create(user_id = loggedinuser , mate_id = acceptingemail)
+    Relation.objects.create(mate_id = loggedinuser , user_id = acceptingemail)
     #print(requestObj)
     #requestObj.statusid_id='1'
     print('accept')
