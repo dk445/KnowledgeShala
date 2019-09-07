@@ -21,4 +21,4 @@ class Relation(models.Model):
     mate = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="mate")
 
     class Meta:
-        unique_together('user' , 'mate')
+        unique_together = ('user' , 'mate')
