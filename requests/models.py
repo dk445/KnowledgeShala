@@ -20,8 +20,6 @@ class Relation(models.Model):
     user = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="user")
     mate = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="mate")
 
-    def __str__(self):
-        return self.mate
-
+   
     class Meta:
         unique_together = ('user' , 'mate')
