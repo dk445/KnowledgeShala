@@ -14,3 +14,11 @@ class Requests(models.Model):
     statusid = models.ForeignKey(RequestStatus,on_delete=models.CASCADE)
     class Meta:
         unique_together = ('requesting' , 'requested')
+
+
+class Relation(models.Model):
+    user = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="user")
+    mate = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="mate")
+
+    class Meta:
+        unique_together('user' , 'mate')
