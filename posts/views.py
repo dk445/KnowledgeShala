@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.utils import timezone
 from posts.models import UserPost
 from signup.models import UserData
+from requests.models import Relation
 
 
 # Create your views here.
@@ -23,7 +24,11 @@ def displaypost(request):
   #  if request.user.is_authenticated:
    #     return redirect('/api/signin/')
     #else:'''
-
+    loggedinuser = request.user.email
+    mates = Relation.objects.filter(user = loggedinuser)
+    filteredpost = set()
     posts = UserPost()
-    posts = UserPost.objects.all().order_by('createdon').reverse()
-    return render(request,'feed.html',{'posts':posts})
+    for mate in mates:
+        posts = UserPost.objects.filter(owner = mate.email).order_by('createdon').reverse()
+        filteredpost.add(posts)
+    return render(request,'feed.html',{'posts':filteredpost})
