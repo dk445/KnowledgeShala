@@ -24,8 +24,8 @@ def displaypost(request):
   #  if request.user.is_authenticated:
    #     return redirect('/api/signin/')
     #else:'''
-    loggedinuser = request.user.email
-    mates = Relation.objects.filter(user = loggedinuser)
+    loggedinuser = request.user
+    mates = Relation.objects.filter(user = loggedinuser.email)
     filteredpost = set()
     posts = UserPost()
     for mate in mates:
