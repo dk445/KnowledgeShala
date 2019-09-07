@@ -27,7 +27,7 @@ def displaypost(request):
     loggedinuser = request.user.email
     mates = Relation.objects.filter(user = loggedinuser)
     filteredpost = []
-    posts = UserPost()
+   # posts = UserPost()
     for relation in mates:
         posts = UserPost.objects.filter(owner = relation.mate).order_by('createdon').reverse()
         filteredpost.append(posts)
