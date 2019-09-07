@@ -32,4 +32,4 @@ def displaypost(request):
         posts = UserPost.objects.filter(owner = relation.mate).order_by('createdon').reverse()
         filteredpost.add(posts)
     print(filteredpost)
-    return render(request,'feed.html',{'posts':filteredpost})
+    return render(request,'feed.html',{'mateposts':filteredpost})
