@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'search.apps.SearchConfig',
     'requests.apps.RequestsConfig',
+    'mymates.apps.MymatesConfig',
 ]
 
 MIDDLEWARE = [
