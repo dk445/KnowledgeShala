@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Mates</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+       <ul>
+     
+               <li><a href="/feed/">Back Home</a></li>
+               <li><a href="/signout">Signout</a></li>
+           </ul>
+           
+    <ul>
+        {% for mate in result %}
+           <br/<b><li>{{ mate.mate.name }}</li></b>
+           {{ mate.mate.email }} <hr/>
+       {% endfor %}
+    </ul>
+</body>
+</html>
