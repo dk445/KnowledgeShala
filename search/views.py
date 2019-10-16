@@ -16,7 +16,7 @@ def search(request):
             result2 = UserData.objects.filter(name__unaccent__icontains = query).defer('email')
             result.append(result1)
             result.append(result2)
-            #print(result)
+            print(result)
         except:
             return render(request,'search.html',{'message': 'Error in searching. Try again'})
         return render(request,'search.html',{'searchresult':result})
