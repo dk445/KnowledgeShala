@@ -31,7 +31,7 @@ def displaypost(request):
     posts = UserPost.objects.filter(owner_id = loggedinuser).order_by('createdon').reverse()
     #filteredpost.append(posts)
     for relation in mates:
-        posts = UserPost.objects.filter(owner_id = relation.mate , owner_id = loggedinuser).order_by('createdon').reverse()
+        posts = UserPost.objects.filter(owner_id = relation.mate, owner_id = loggedinuser).order_by('createdon').reverse()
         filteredpost.append(posts)
     print(filteredpost)
     return render(request,'feed.html',{'mateposts':filteredpost})
