@@ -11,7 +11,11 @@ def search(request):
 
     if request.user:
         try:
-            result = UserData.objects.filter(name__unaccent__icontains = query).defer('name','email')
+            result = []
+            result1 = UserData.objects.filter(name__unaccent__icontains = query).defer('name')
+            result2 = UserData.objects.filter(name__unaccent__icontains = query).defer('email')
+            result.append(result1)
+            result.append(result2)
             #print(result)
         except:
             return render(request,'search.html',{'message': 'Error in searching. Try again'})
