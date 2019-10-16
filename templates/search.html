@@ -17,8 +17,8 @@
         {% for search in searchresult %}
             <br/>
             <b><li>{{ search.name }}</li></b>
-            {{ search.email }}
-            <a href="/request/{{ search.email }}" target="_blank"><button>request</button></a>
+            <a href="/account/{{search.email}}">{{search.email}}</a>
+            <!--<a href="/request/{{ search.email }}" target="_blank"><button>request</button></a>-->
             <hr/>
         {% endfor %}
 
