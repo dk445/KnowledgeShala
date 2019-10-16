@@ -28,6 +28,8 @@ def displaypost(request):
     mates = Relation.objects.filter(user_id = loggedinuser)
     filteredpost = []
    # posts = UserPost()
+    own_posts = UserPost.objects.filter(owner_id = loggedinuser).order_by('createdon').reverse()
+    filteredpost.append(posts)
     for relation in mates:
         posts = UserPost.objects.filter(owner_id = relation.mate).order_by('createdon').reverse()
         filteredpost.append(posts)
