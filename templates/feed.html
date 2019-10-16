@@ -42,13 +42,13 @@
 	</form>
 
     {% for post in mateposts %}
-    
-		<br/><hr/>
-        <u>{{post.0.owner_id}}</u><br/><br/>
-        {{post.0.createdon.time}}<br/>
-        {{post.0.description}}<br/>
-        
-		
+        {% for every_post in post %}
+            <br/><hr/>
+            <u>{{every_post.owner_id}}</u><br/>
+            {{every_post.createdon.time}}<br/>
+            {{every_post.description}}<br/>
+            
+        {% endfor %}  
 	{% endfor %}
    
 	
