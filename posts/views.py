@@ -25,11 +25,11 @@ def displaypost(request):
    #     return redirect('/api/signin/')
     #else:'''
     loggedinuser = request.user.email
-    mates = Relation.objects.filter(user = loggedinuser)
+    mates = Relation.objects.filter(user_id = loggedinuser)
     filteredpost = []
    # posts = UserPost()
     for relation in mates:
-        posts = UserPost.objects.filter(owner = relation.mate).order_by('createdon').reverse()
+        posts = UserPost.objects.filter(owner_id = relation.mate).order_by('createdon').reverse()
         filteredpost.append(posts)
     print(filteredpost)
     return render(request,'feed.html',{'mateposts':filteredpost})
