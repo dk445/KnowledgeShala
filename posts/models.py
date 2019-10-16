@@ -8,4 +8,6 @@ class UserPost(models.Model):
     owner = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="post_owner")
     description = models.TextField(blank=True)
     createdon = models.DateTimeField()
+
+
     
