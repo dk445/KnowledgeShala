@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'search.apps.SearchConfig',
     'requests.apps.RequestsConfig',
     'mymates.apps.MymatesConfig',
+    'profile.apps.ProfileConfig',
 ]
 
 MIDDLEWARE = [
