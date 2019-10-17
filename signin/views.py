@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from posts.models import UserPost
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import auth,User
+from django.views.decorators.csrf import csrf_protect
 # Create your views here.
 
 @csrf_protect
