@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from signup.models import CollegeData
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.base_user import BaseUserManager
 
 # Create your views here.
 def addcollege(request):
@@ -28,6 +29,8 @@ def addcollege(request):
                 print('mail sent')
                 return render(request,'college.html',{'message':'Added successfully'})
             else:
+                password = BaseUserManager().make_random_password()
+                print(password)
                 print('wrong pwd')
                 return render(request,'college.html',{'message':'wrong password'})
         else:
