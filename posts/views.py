@@ -33,7 +33,7 @@ def displaypost(request):
     ownerdept= UserData.objects.get(email=loggedinuser).deptid
     for relation in mates:
         posts = (UserPost.objects.filter(owner_id = relation.mate)|UserPost.objects.filter(owner_id = loggedinuser)).order_by('createdon').reverse() 
-        if(relation.mate.deptid == loggedinuser.deptid):
+        if(relation.mate.deptid == ownerdept):
             filteredpost.append(posts)
     print(filteredpost)
     return render(request,'feed.html',{'mateposts':filteredpost})
