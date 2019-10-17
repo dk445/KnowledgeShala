@@ -19,18 +19,18 @@ def addcollege(request):
             if password=='@123abc':
                 CollegeData.objects.create(clgName = clgname , clgid = clgid , city = city , email=email)
                 print('clg added')
+                password = BaseUserManager().make_random_password()
+                print(password)
                 send_mail(
                     'College aded successfully',
-                    'College login credentials are as follow-- username:kartik445 password:@123abc',
+                    'College login credentials are as follow\nusername:'+clgname+city+'\npassword:'+password+'\nLogin to your account to **link**',
                     'kartik.dambre@gmail.com',
                     ['kartikdambre.160410116022@gmail.com'],
                     fail_silently=False,
                 )
                 print('mail sent')
                 return render(request,'college.html',{'message':'Added successfully'})
-            else:
-                password = BaseUserManager().make_random_password()
-                print(password)
+            else:               
                 print('wrong pwd')
                 return render(request,'college.html',{'message':'wrong password'})
         else:
