@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from signup.models import CollegeData
 from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def addcollege(request):
