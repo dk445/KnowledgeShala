@@ -3,7 +3,7 @@ from django.utils import timezone
 from posts.models import UserPost
 from signup.models import UserData
 from requests.models import Relation
-
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your views here.
 
@@ -19,6 +19,9 @@ def makepost(request):
         return redirect('/feed')
 
 def displaypost(request):
+    pwd = make_password('@123abc')
+    print(pwd)
+    print(check_password('@123abc',pwd))
     if not request.user.is_authenticated:
         return redirect('/api/signin/')
     else:
