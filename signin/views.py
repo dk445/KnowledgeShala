@@ -12,7 +12,17 @@ from django.contrib.auth.models import auth,User
 def collegesignin(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
+    else:
+        if request.method == 'GET':
+            return render(request,'collegesignin.html')
 
+        else:
+            email = request.POST['email']
+            password = request.POST['password']
+
+            college = CollegeData.objects.get(email=email)
+            print(college.name)
+            return(college.name)
 
 def signinPage(request):
     if request.user.is_authenticated:
