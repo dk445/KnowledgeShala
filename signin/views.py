@@ -9,7 +9,8 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import auth,User
 # Create your views here.
 
-
+def collegesignin(request):
+    pass
 
 def signinPage(request):
     if request.method == 'GET':
