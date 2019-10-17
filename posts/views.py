@@ -25,7 +25,7 @@ def displaypost(request):
         loggedinuser = request.user.email
         mates = Relation.objects.filter(user_id = loggedinuser)
         filteredpost = []
-    # posts = UserPost()
+        # posts = UserPost()
         #posts = .order_by('createdon').reverse()
         #filteredpost.append(posts)
         ownerdept= UserData.objects.get(email=loggedinuser).deptid
@@ -33,5 +33,5 @@ def displaypost(request):
             posts = (UserPost.objects.filter(owner_id = relation.mate)|UserPost.objects.filter(owner_id = loggedinuser)).order_by('createdon').reverse() 
             if(relation.mate.deptid == ownerdept):   #post of mates with same deptid
                 filteredpost.append(posts)
-        print(filteredpost)
+       # print(filteredpost)
         return render(request,'feed.html',{'mateposts':filteredpost})
