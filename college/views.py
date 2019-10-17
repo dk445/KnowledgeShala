@@ -25,6 +25,7 @@ def addcollege(request):
                     ['kartikdambre.160410116022@gmail.com'],
                     fail_silently=False,
                 )
+                print('mail sent')
                 return render(request,'college.html',{'message':'Added successfully'})
             else:
                 print('wrong pwd')
