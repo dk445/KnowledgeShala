@@ -12,7 +12,7 @@ from django.contrib.auth.models import auth,User
 def collegesignin(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
-    else:
+
 
 def signinPage(request):
     if request.user.is_authenticated:
