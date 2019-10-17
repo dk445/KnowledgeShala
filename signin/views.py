@@ -22,7 +22,7 @@ def collegesignin(request):
             password = request.POST['password']
 
             college = CollegeData.objects.get(email=email)
-            print(college.clgName)
+            print(college.email)
             if(check_password(password,college.password)):
                 return render(request,'collegeHome.html',{'college': college}) 
             else:
