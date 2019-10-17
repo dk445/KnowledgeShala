@@ -3,6 +3,7 @@ from signup.models import CollegeData
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your views here.
 def addcollege(request):
@@ -17,10 +18,11 @@ def addcollege(request):
             password = request.POST['pwd']
 
             if password=='@123abc':
-                CollegeData.objects.create(clgName = clgname , clgid = clgid , city = city , email=email)
-                print('clg added')
                 password = BaseUserManager().make_random_password()
                 print(password)
+                clgpassword = make_password(password)
+                CollegeData.objects.create(clgName = clgname , clgid = clgid , city = city , email=email,password=clgpassword)
+                print('clg added')                
                 send_mail(
                     'College aded successfully',
                     'College login credentials are as follow\nusername: '+clgname+city+'\npassword: '+password+'\nLogin to your account to **link**',
