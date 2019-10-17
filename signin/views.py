@@ -10,41 +10,46 @@ from django.contrib.auth.models import auth,User
 # Create your views here.
 
 def collegesignin(request):
-    pass
+    if request.user.is_authenticated:
+        return redirect('/feed/')
+    else:
 
 def signinPage(request):
-    if request.method == 'GET':
-        return render(request,'signin.html')
-
+    if request.user.is_authenticated:
+        return redirect('/feed/')
     else:
-        emailId = request.POST['email']
-        password = request.POST['password']
-      #  role = request.POST['role']
+        if request.method == 'GET':
+            return render(request,'signin.html')
 
-        print(emailId)
-        print(password)
-       # print(role)
-        # encr_password = make_password(password)
-        try: 
-            user = UserData.objects.get(email=emailId)            
-        except:
-            return render(request,'signin.html',{'message':'No such user found.'})
-            print('(Exception) not found')
-    
-        if check_password(password,user.password):
-            auth.login(request,user)
-            #posts = UserPost()
-            #posts = UserPost.objects.all()
-            return redirect('/feed')
         else:
-            return render(request,'signin.html',{'message':'Wrong credentials'}) 
-            print('wrong pwd')   
-            
+            emailId = request.POST['email']
+            password = request.POST['password']
+        #  role = request.POST['role']
 
+            print(emailId)
+            print(password)
+        # print(role)
+            # encr_password = make_password(password)
+            try: 
+                user = UserData.objects.get(email=emailId)            
+            except:
+                return render(request,'signin.html',{'message':'No such user found.'})
+                print('(Exception) not found')
         
-       
-        # print(user)
+            if check_password(password,user.password):
+                auth.login(request,user)
+                #posts = UserPost()
+                #posts = UserPost.objects.all()
+                return redirect('/feed')
+            else:
+                return render(request,'signin.html',{'message':'Wrong credentials'}) 
+                print('wrong pwd')   
+                
+
+            
         
+            # print(user)
+            
         
             
 
