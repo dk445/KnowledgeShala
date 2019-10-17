@@ -25,7 +25,7 @@ def addcollege(request):
                 print('clg added')                
                 send_mail(
                     'College aded successfully',
-                    'College login credentials are as follow\nusername: '+clgname+city+'\npassword: '+password+'\nLogin to your account to **link**',
+                    'College login credentials are as follow\nusername: '+email+'\npassword: '+password+'\nLogin to your account to **link**',
                     'kartik.dambre@gmail.com',
                     ['kartikdambre.160410116022@gmail.com'],
                     fail_silently=False,
