@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import auth,User
 # Create your views here.
 
+@csrf_protect
 def collegesignin(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
