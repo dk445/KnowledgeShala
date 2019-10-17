@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 
 @csrf_protect
 def collegesignin(request):
+    csrfContext = RequestContext(request)
     if request.user.is_authenticated:
         return redirect('/feed/')
     else:
@@ -24,7 +25,7 @@ def collegesignin(request):
 
             college = CollegeData.objects.get(email=email)
             print(college.name)
-            return(college.name)
+            return(college.name,csrfContext)
 
 def signinPage(request):
     if request.user.is_authenticated:
