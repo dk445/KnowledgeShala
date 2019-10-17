@@ -30,8 +30,9 @@ def displaypost(request):
    # posts = UserPost()
     #posts = .order_by('createdon').reverse()
     #filteredpost.append(posts)
+    ownerdept= UserData.objects.get(email=loggedinuser).deptid
     for relation in mates:
-        posts = ((UserPost.objects.filter(owner_id = relation.mate)|UserPost.objects.filter(owner_id = loggedinuser))& (UserPost.objects.filter(owner_id.deptid = loggedinuser.deptid))).order_by('createdon').reverse() 
+        posts = ((UserPost.objects.filter(owner_id = relation.mate)|UserPost.objects.filter(owner_id = loggedinuser))& (UserPost.objects.filter(owner.deptid = loggedinuser.deptid))).order_by('createdon').reverse() 
         filteredpost.append(posts)
     print(filteredpost)
     return render(request,'feed.html',{'mateposts':filteredpost})
