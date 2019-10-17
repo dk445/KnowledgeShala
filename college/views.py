@@ -22,7 +22,8 @@ def addcollege(request):
                 print(password)
                 clgpassword = make_password(password)
                 CollegeData.objects.create(clgName = clgname , clgid = clgid , city = city , email=email,password=clgpassword)
-                print('clg added')                
+                print('clg added')
+
                 send_mail(
                     'College aded successfully',
                     'College login credentials are as follow\nusername: '+email+'\npassword: '+password+'\nLogin to your account to **link**',
