@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from signup.models import CollegeData
+from django.core.mail import send_mail
 
 # Create your views here.
 def addcollege(request):
@@ -16,6 +17,13 @@ def addcollege(request):
             if password=='@123abc':
                 CollegeData.objects.create(clgName = clgname , clgid = clgid , city = city , email=email)
                 print('clg added')
+                send_mail(
+                    'College aded successfully',
+                    'College login credentials are as follow-- username:kartik445 password:@123abc',
+                    'kartik.dambre@gmail.com',
+                    ['kartikdambre.160410116022@gmail.com'],
+                    fail_silently=False,
+                )
                 return render(request,'college.html',{'message':'Added successfully'})
             else:
                 print('wrong pwd')
