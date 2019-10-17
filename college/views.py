@@ -4,8 +4,7 @@ from signup.models import CollegeData
 # Create your views here.
 def addcollege(request):
     if request.user.is_authenticated:
-        alert('sign out first')
-        return redirect('/api/signin/')
+        return redirect('/feed/')
     else:
         if request.method=='POST':
             clgname = request.POST['collegename']
