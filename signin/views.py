@@ -7,17 +7,15 @@ from django.contrib.auth.hashers import make_password, check_password
 from posts.models import UserPost
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import auth,User
-from django.views.decorators.csrf import csrf_protect
 # Create your views here.
 
-@csrf_protect
+
 def collegesignin(request):
-    csrfContext = RequestContext(request)
     if request.user.is_authenticated:
         return redirect('/feed/')
     else:
         if request.method == 'GET':
-            return render(request,'collegesignin.html')
+            return render(request,'collegepage.html')
 
         else:
             email = request.POST['email']
@@ -25,8 +23,10 @@ def collegesignin(request):
 
             college = CollegeData.objects.get(email=email)
             print(college.name)
-            return(college.name,csrfContext)
-
+            if(check_password(password,college.password)):
+                return render(request,'collegeHome.html',{'college': college}) 
+            else:
+                return render(request,'collegepage.html')
 def signinPage(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
