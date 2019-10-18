@@ -25,7 +25,7 @@ def collegesignin(request):
             college = CollegeData.objects.get(email=email)
             print(college.email)
             if(check_password(password,college.password)):
-                return HttpResponse(college.name)
+                return HttpResponse(college.clgName)
                 #return render(request,'collegeHome.html',{'college': college}) 
             else:
                 return render(request,'collegepage.html')
