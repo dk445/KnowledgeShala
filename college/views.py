@@ -12,12 +12,18 @@ def collegeFeed(request,password):
     
     college = CollegeData.objects.get(password=password)
     print(college.email)
+
     #requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
     collegeusers = UserData.objects.filter(clgid_id=college.clgid)
-    for req in collegeusers:
-        if(req.isVerified=='Yes'):
-            print(req.name)
-    return render(request,'collegeHome.html',{'college': college},{'users':collegeusers}) #request can be separate where isVerified==NO
+   # for req in collegeusers:
+    #    if(req.isVerified=='No'):
+     #       print(req.name)
+    
+
+    #request can be separate where isVerified==NO
+    return render(request,'collegeHome.html',{'college': college},{'users':collegeusers}) 
+
+    
 
 def addcollege(request):
     if request.user.is_authenticated:
