@@ -26,7 +26,8 @@ def collegesignin(request):
             print(college.email)
             if(check_password(password,college.password)):
                 #return HttpResponse(college)
-                return render(request,'collegeHome.html',{'college': college}) 
+                requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgId=college.clgid)
+                return render(request,'collegeHome.html',{'college': college},{'requests':requests}) 
             else:
                 return render(request,'collegepage.html')
 def signinPage(request):
