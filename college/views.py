@@ -9,13 +9,13 @@ from signup.models import UserData,CollegeData,DepartmentData,RoleData
 # Create your views here.
 
 def collegeFeed(request,password):
-    print(make_password('svit1234'))
+    
     college = CollegeData.objects.get(password=password)
     print(college.email)
     requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
     collegeusers = UserData.objects.filter(clgid_id=college.clgid)
-    #for req in collegeusers:
-    #   print(req.name)
+    for req in collegeusers:
+       print(req.name)
     return render(request,'collegeHome.html',{'college': college},{'requests':requests}),{'users':collegeusers} 
 
 def addcollege(request):
