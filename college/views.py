@@ -15,7 +15,7 @@ def collegeFeed(request,password):
     #requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
     collegeusers = UserData.objects.filter(clgid_id=college.clgid)
     for req in collegeusers:
-        if(req.isVerified=='No')
+        if(req.isVerified=='No'):
             print(req.name)
     return render(request,'collegeHome.html',{'college': college},{'users':collegeusers}) #request can be separate where isVerified==NO
 
