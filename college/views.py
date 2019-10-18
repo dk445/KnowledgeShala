@@ -13,8 +13,8 @@ def collegeFeed(request,email):
     print(college.email)
     requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
     collegeusers = UserData.objects.filter(clgid_id=college.clgid)
-        #for req in requests:
-        #   print(req.name)
+    for req in collegeusers:
+        print(req.name)
     return render(request,'collegeHome.html',{'college': college},{'requests':requests}) 
 
 def addcollege(request):
