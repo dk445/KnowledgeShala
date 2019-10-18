@@ -9,7 +9,7 @@ from signup.models import UserData,CollegeData,DepartmentData,RoleData
 # Create your views here.
 
 def collegeFeed(request,password):
-
+    print(make_password('svit1234'))
     college = CollegeData.objects.get(password=password)
     print(college.email)
     requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
