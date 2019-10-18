@@ -11,13 +11,10 @@ from signup.models import UserData,CollegeData,DepartmentData,RoleData
 def collegeFeed(request):
     college = CollegeData.objects.get(email=email)
     print(college.email)
-    if(check_password(password,college.password)):
-        requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
+    requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
         #for req in requests:
         #   print(req.name)
-    else:
-        return render(request,'collegepage.html')
-
+        
 def addcollege(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
