@@ -29,7 +29,7 @@ def collegesignin(request):
                 requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
                 for req in requests:
                     print(req.name)
-                return HttpResponse(requests)
+                return requests
                 #return render(request,'collegeHome.html',{'college': college},{'requests':requests}) 
             else:
                 return render(request,'collegepage.html')
