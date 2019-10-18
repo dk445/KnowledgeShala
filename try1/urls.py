@@ -24,7 +24,7 @@ urlpatterns = [
     path('signout/',include('signout.urls')),
     path('',include('posts.urls')),
     path('',include('account.urls')),
-    path('add/',include('college.urls')),
+    path('',include('college.urls')),
     path('search/',include('search.urls')),
     path('request/',include('requests.urls')),
     path('mates/',include('mymates.urls')),
