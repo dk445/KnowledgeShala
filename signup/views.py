@@ -5,6 +5,7 @@ from signup.models import UserData,CollegeData,DepartmentData,RoleData
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import auth,User
 from django.utils import timezone
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -24,21 +25,27 @@ def signupPage(request):
         department = DepartmentData.objects.get(deptid=deptId)
         role = RoleData.objects.get(roleid = roleId)
         user = UserData.objects.create(name=fullname, email=email,password=password,mobile=mobile,clgid=college,deptid=department,roleid=role)
-       # try:
-          
+        
+        #sending mail to user 
+        send_mail(
+            'Registered successfully',
+            'Once your college verified your account you can access your account.',
+            'kartik.dambre@gmail.com',
+            [email],
+            fail_silently=False,
+            )
+        print('mail sent')
 
-       # except:
-        #  return render(request,'index.html',{'message':'Error while signup. Try again'})'''
+        #sending request to college
+        
+
         print('user created')
         return redirect('api/signin',{'message' : 'Registered successfully.'})
     else:
         print('called')
         return render(request,'index.html')
 
-def get(self, request, format=None):
-    pass
-def post(self,request):
-    pass
+
     
 
         
