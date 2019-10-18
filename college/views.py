@@ -14,7 +14,7 @@ def collegeFeed(request):
     requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
         #for req in requests:
         #   print(req.name)
-        
+    return render(request,'collegeHome.html',{'college': college},{'requests':requests}) 
 def addcollege(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
