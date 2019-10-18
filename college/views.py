@@ -8,13 +8,15 @@ from signup.models import UserData,CollegeData,DepartmentData,RoleData
 
 # Create your views here.
 
-def collegeFeed(request):
+def collegeFeed(request,email):
     college = CollegeData.objects.get(email=email)
     print(college.email)
     requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
+    collegeusers = UserData.objects.filter(clgid_id=college.clgid)
         #for req in requests:
         #   print(req.name)
     return render(request,'collegeHome.html',{'college': college},{'requests':requests}) 
+
 def addcollege(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
