@@ -21,15 +21,11 @@ def collegesignin(request):
         else:
             email = request.POST['email']
             password = request.POST['password']
-
-            college = CollegeData.objects.get(email=email).values('clgid','clgName','city')
-            print(college.password)
             if(check_password(password,college.password)):
-                return redirect('/college/')
-                requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
+                return redirect('/college/<email>')
                 #for req in requests:
                  #   print(req.name)
-                return render(request,'collegeHome.html',{'college': college},{'requests':requests}) 
+                
             else:
                 return render(request,'collegepage.html')
 def signinPage(request):
