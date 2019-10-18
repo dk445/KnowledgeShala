@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from posts.models import UserPost
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import auth,User
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -24,7 +25,7 @@ def collegesignin(request):
             college = CollegeData.objects.get(email=email)
             print(college.email)
             if(check_password(password,college.password)):
-                return (college)
+                return HttpResponse(college)
                #return render(request,'collegeHome.html',{'college': college}) 
             else:
                 return render(request,'collegepage.html')
