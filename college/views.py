@@ -16,7 +16,7 @@ def collegeFeed(request,password):
     collegeusers = UserData.objects.filter(clgid_id=college.clgid)
     for req in collegeusers:
        print(req.name)
-    return render(request,'collegeHome.html',{'college': college},{'requests':requests}),{'users':collegeusers} 
+    return render(request,'collegeHome.html',{'college': college},{'requests':requests},{'users':collegeusers})
 
 def addcollege(request):
     if request.user.is_authenticated:
