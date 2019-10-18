@@ -4,8 +4,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password, check_password
+from signup.models import UserData,CollegeData,DepartmentData,RoleData
 
 # Create your views here.
+
+def collegeFeed(request):
+    pass
+
 def addcollege(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
