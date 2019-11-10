@@ -6,13 +6,13 @@ from django.contrib.auth.hashers import make_password, check_password
 from signup.models import UserData,CollegeData,DepartmentData,RoleData
 
 # Create your views here.
-def requesttocollege(request,password):
+def requeststocollege(request,password):
     college = CollegeData.objects.get(password=password)
     print(college.email)
 
     requests = UserData.objects.filter(clgid_id=college.clgid , isVerified='No')
     print(requests)
-    
+
 
 def collegeFeed(request,password):
     
