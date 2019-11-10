@@ -16,7 +16,7 @@ def requeststocollege(request,id):
 
 def collegeFeed(request,id):
     
-    college = CollegeData.objects.get(password=password)
+    college = CollegeData.objects.get(clgid_id=id)
     print(college.email)
 
     #requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
