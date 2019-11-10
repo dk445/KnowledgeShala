@@ -23,7 +23,7 @@ def collegesignin(request):
             password = request.POST['password']
             college = CollegeData.objects.get(email=email)
             if(check_password(password,college.password)):
-                
+                print(college.clgid)
                 return redirect('/college/'+college.password)
                 #for req in requests:
                  #   print(req.name)
