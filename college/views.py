@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-from signup.models import CollegeData
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
@@ -7,6 +6,13 @@ from django.contrib.auth.hashers import make_password, check_password
 from signup.models import UserData,CollegeData,DepartmentData,RoleData
 
 # Create your views here.
+def requesttocollege(request,password):
+    college = CollegeData.objects.get(password=password)
+    print(college.email)
+
+    requests = UserData.objects.filter(clgid_id=college.clgid , isVerified='No')
+    print(requests)
+    
 
 def collegeFeed(request,password):
     
@@ -23,7 +29,6 @@ def collegeFeed(request,password):
     #request can be separate where isVerified==NO
     return render(request,'collegeHome.html',{'college': college},{'users':collegeusers}) 
 
-    
 
 def addcollege(request):
     if request.user.is_authenticated:
