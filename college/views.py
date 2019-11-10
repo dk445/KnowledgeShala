@@ -7,7 +7,7 @@ from signup.models import UserData,CollegeData,DepartmentData,RoleData
 
 # Create your views here.
 def requeststocollege(request,id):
-    college = CollegeData.objects.get(clgid_id=id)
+    college = CollegeData.objects.get(clgid=id)
     print(college.email)
 
     requests = UserData.objects.filter(clgid_id=id , isVerified='No')
