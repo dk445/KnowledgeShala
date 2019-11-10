@@ -14,7 +14,7 @@ def requeststocollege(request,id):
     print(requests)
 
 
-def collegeFeed(request,password):
+def collegeFeed(request,id):
     
     college = CollegeData.objects.get(password=password)
     print(college.email)
