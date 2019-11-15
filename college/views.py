@@ -6,12 +6,39 @@ from django.contrib.auth.hashers import make_password, check_password
 from signup.models import UserData,CollegeData,DepartmentData,RoleData
 
 # Create your views here.
+
+def acceptrequest(request,id,email):    
+    UserData.object.get(email=email).update(isVerified='Yes')
+    send_mail(
+        'Your request is granted by college authority',
+        'You can now login with your id and password and experience the knowledge ride.'
+        'kartik.dambre@gmail.com',
+        [email],
+        fail_silently=False,
+    )
+    print('mail sent')
+    return redirect('college/'+id+'/requests')
+
+
+def rejectrequest(request,id,email):
+    UserData.object.get(email=email).delete()
+    send_mail(
+        'Your request is deinied by college authority',
+        'Contact college authority and try again.'
+        'kartik.dambre@gmail.com',
+        [email],
+        fail_silently=False,
+    )
+    print('mail sent')
+
+
 def requeststocollege(request,id):
     college = CollegeData.objects.get(clgid=id)
     print(college.email)
-
     requests = UserData.objects.filter(clgid_id=id , isVerified='No')
     print(requests)
+    return requests
+
 
 
 def collegeFeed(request,id):
