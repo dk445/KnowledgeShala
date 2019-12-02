@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',         #added
     'rest_framework',
     'signup.apps.SignupConfig',
     'signin.apps.SigninConfig',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware'  # added
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -146,3 +148,10 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'kartik.dambre@gmail.com'
 EMAIL_HOST_PASSWORD = 'lnolbzcygiugctdv'
+
+ 
+#added 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000/'
+    )
+    
