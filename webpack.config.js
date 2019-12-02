@@ -1,7 +1,7 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    context: path.join(__dirname, "src"),
+    context: path.join(__dirname, "frontend"),
     entry: './src/index.js',
     mode: 'development',
     resolve: {
