@@ -1,8 +1,8 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    context: path.join(__dirname, "public"),
-    entry: "../src/index.js",
+   // context: path.join(__dirname, "public"),
+    //entry: "../src/index.js",
     mode: 'development',
     resolve: {
         extensions: ['.js', '.jsx']
@@ -16,7 +16,7 @@ module.exports = {
         ]
     },
     plugins: [new HtmlWebpackPlugin({
-        template: './try1/frontend/src/index.html'
+        template: '../src/index.html'
     })],
     devServer: {
         historyApiFallback: true
