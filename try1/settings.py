@@ -152,6 +152,6 @@ EMAIL_HOST_PASSWORD = 'lnolbzcygiugctdv'
  
 #added 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000'
+    'http://localhost:3000',
     )
     
