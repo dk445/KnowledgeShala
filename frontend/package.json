@@ -1,13 +1,12 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "start": "webpack-dev-server --open",
   "private": true,
   "proxy": "http://localhost:8000",
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
   },
   "dependencies": {
     "axios": "^0.18.0",
