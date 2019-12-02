@@ -1,8 +1,8 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    context: path.join(__dirname, "src"),
-    entry: '/index.js',
+    context: path.join(__dirname, "frontend"),
+    entry: 'src/index.js',
     mode: 'development',
     resolve: {
         extensions: ['.js', '.jsx']
