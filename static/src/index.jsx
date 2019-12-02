@@ -12,9 +12,10 @@ configureFakeBackend();
 render(
     <div>
         <h1>hello</h1>
-    </div>
+    </div>,
+    document.getElementById("root"),
     <Provider store={store}>
         <App />
-    </Provider>,
-    document.getElementById("root")
+    </Provider>
+    
 );
