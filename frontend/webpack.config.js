@@ -2,7 +2,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     context: path.join(__dirname, "public"),
-    entry: "../src/index.js"
+    entry: "../src/index.js",
     mode: 'development',
     resolve: {
         extensions: ['.js', '.jsx']
