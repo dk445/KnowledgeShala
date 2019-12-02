@@ -14,7 +14,7 @@ module.exports = {
         ]
     },
     plugins: [new HtmlWebpackPlugin({
-        template: 'try1/frontend/src/index.html'
+        template: ',/try1/frontend/src/index.html'
     })],
     devServer: {
         historyApiFallback: true
@@ -22,7 +22,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://localhost:4000'
+            apiUrl: 'http://localhost:8000'
         })
     }
 }
