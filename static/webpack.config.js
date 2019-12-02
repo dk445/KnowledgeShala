@@ -1,10 +1,10 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
     //context: path.join(__dirname, "frontend"),
     entry: {
-        './src/index.js'
-    },
+        app: './src/index.jsx'    },
     mode: 'development',
     resolve: {
         extensions: ['.js', '.jsx']
@@ -16,6 +16,12 @@ module.exports = {
                 loader: 'babel-loader'
             }
         ]
+    },
+    watch: true,
+    devtool: 'source-map',
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname,'dist') 
     },
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html'
