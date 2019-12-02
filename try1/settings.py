@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',         #added
     'rest_framework',
+    'frontend',
     'signup.apps.SignupConfig',
     'signin.apps.SigninConfig',
     'signout.apps.SignoutConfig',
