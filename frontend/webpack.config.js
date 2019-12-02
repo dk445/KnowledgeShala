@@ -14,7 +14,7 @@ module.exports = {
         ]
     },
     plugins: [new HtmlWebpackPlugin({
-        template: './frontend/src/index.html'
+        template: 'try1/frontend/src/index.html'
     })],
     devServer: {
         historyApiFallback: true
