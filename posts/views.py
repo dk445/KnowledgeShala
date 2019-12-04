@@ -40,6 +40,6 @@ def displaypost(request):
                 filteredpost.append(serialize_posts)
         
         
-        return HttpResponse(serialize_posts)
+        return HttpResponse(filteredpost)
        # print(filteredpost)
       #  return render(request,'feed.html',{'mateposts':filteredpost})
