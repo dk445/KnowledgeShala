@@ -90,4 +90,4 @@ def addcollege(request):
                 print('wrong pwd')
                 #return render(request,'college.html',{'message':'wrong password'})
         else:
-           # return render(request,'college.html')
+            return render(request,'college.html')
