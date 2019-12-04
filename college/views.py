@@ -59,7 +59,7 @@ def collegeFeed(request,id):
 
 def addcollege(request):
     if request.user.is_authenticated:
-        return redirect('/feed/')
+        return redirect('/feed')
     else:
         if request.method=='POST':
             clgname = request.POST['collegename']
