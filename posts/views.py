@@ -37,5 +37,6 @@ def displaypost(request):
             if(relation.mate.deptid == ownerdept):   #post of mates with same deptid
                 filteredpost.append(posts)
         post_data = serializers.serialize('json',filteredpost)
+        print(post_data)
        # print(filteredpost)
       #  return render(request,'feed.html',{'mateposts':filteredpost})
