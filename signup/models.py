@@ -20,7 +20,7 @@ class RoleData(models.Model):
     roleid = models.CharField(max_length = 1, primary_key=True)
     rolename = models.CharField(max_length = 52)
 
-class UserData(User):
+class UserData(AbstractUser):
     email = models.EmailField(primary_key=True,unique = True)
     name = models.CharField(max_length = 24)
     mobile = models.CharField(max_length = 10)
