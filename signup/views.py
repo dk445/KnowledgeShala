@@ -7,6 +7,7 @@ from django.contrib.auth.models import auth,User
 from django.utils import timezone
 from django.core.mail import send_mail
 
+
 # Create your views here.
 
 def signupPage(request):
