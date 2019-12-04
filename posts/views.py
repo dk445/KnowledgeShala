@@ -37,8 +37,7 @@ def displaypost(request):
             posts = (UserPost.objects.filter(owner_id = relation.mate)|UserPost.objects.filter(owner_id = loggedinuser)).order_by('createdon').reverse() 
             if(relation.mate.deptid == ownerdept):   #post of mates with same deptid
                 filteredpost.append(posts)
-        #posts_serialized = serializers.serialize('json', filteredpost)
-        return JsonResponse(filteredpost, safe=False) 
         
+        return JsonResponse(filteredpost)
        # print(filteredpost)
       #  return render(request,'feed.html',{'mateposts':filteredpost})
