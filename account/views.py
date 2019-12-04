@@ -12,7 +12,7 @@ def profile(request,requestedemail):
     else:
         result=[]
 
-        data = UserData.objects.get(email = requestedemail).values()
+        data = UserData.objects.filter(email = requestedemail)
         data_serializer = serializers.serialize('json',data)   
         result.append(data_serializer)
 
