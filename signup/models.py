@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,User
 
 # Create your models here.
 
@@ -20,7 +20,7 @@ class RoleData(models.Model):
     roleid = models.CharField(max_length = 1, primary_key=True)
     rolename = models.CharField(max_length = 52)
 
-class UserData(AbstractUser):
+class UserData(User):
     email = models.EmailField(primary_key=True,unique = True)
     name = models.CharField(max_length = 24)
     mobile = models.CharField(max_length = 10)
