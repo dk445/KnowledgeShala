@@ -3,6 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('/account/<requestedemail>',views.profile),
+    path('account/<requestedemail>',views.profile),
 ]
                                                                         
