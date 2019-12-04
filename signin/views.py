@@ -30,6 +30,7 @@ def collegesignin(request):
                 
             else:
                 return render(request,'collegepage.html')
+                
 def signinPage(request):
     if request.user.is_authenticated:
         return redirect('/feed/')
