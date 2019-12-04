@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from signup.models import UserData
 from django.contrib.postgres.operations import UnaccentExtension
 from django.core import serializers
@@ -17,7 +17,7 @@ def search(request):
             #print(result)
         except:
             return render(request,'search.html',{'message': 'Error in searching. Try again'})
-        return render(request,'search.html',{'searchresult':result})
+        return HttpResponse(result_list)
     else:
         return redirect('/api/signin/')
         
