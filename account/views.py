@@ -11,8 +11,8 @@ def profile(request,requestedemail):
         return redirect('/api/signin/')
     else:
         result=[]
-        
-        data = UserData.objects.get(email = requestedemail)
+
+        data = UserData.objects.get(email = requestedemail).values()
         data_serializer = serializers.serialize('json',data)   
         result.append(data_serializer)
 
