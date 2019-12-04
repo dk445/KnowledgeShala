@@ -23,8 +23,8 @@ def profile(request,requestedemail):
             mateList =  Relation.objects.filter(user = requestedemail)
             mateList_serializer = serializers.serialize('json',mateList) 
             result.append(mateList_serializer)  
-        except:
-            return HttpResponse("error") 
+        #except:
+         #   return HttpResponse("error") 
 
         if(request.user.email == requestedemail):
             request_status = None
