@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.utils import timezone
 from posts.models import UserPost
 from signup.models import UserData
@@ -38,6 +38,7 @@ def displaypost(request):
             if(relation.mate.deptid == ownerdept):   #post of mates with same deptid
                 filteredpost.append(posts)
         
-        return JsonResponse(posts)
+        serialize_posts = serializers.serialize('json',filteredpost)
+        return HttpResponse(serialize_posts)
        # print(filteredpost)
       #  return render(request,'feed.html',{'mateposts':filteredpost})
