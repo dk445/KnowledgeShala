@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from requests.models import Requests , Relation
 from signup.models import UserData
 from django.http import HttpResponse
+from django.core import serializers
+
 
 # Create your views here.
 def accept(request,acceptingemail):
@@ -14,14 +16,15 @@ def accept(request,acceptingemail):
     #print(requestObj)
     #requestObj.statusid_id='1'
     print('accept')
-    return redirect('/request')
+    #return redirect('/request')
 
     
 
 def displayrequests(request):
     loggedinuser = request.user.email
     users = Requests.objects.filter(requesting=loggedinuser,statusid_id='0')
-    return render(request,'request.html',{'result':users})
+    result = serializers.serialize('json',users)
+    return HttpResponse(result)
     
     
 
