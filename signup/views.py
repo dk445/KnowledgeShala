@@ -41,10 +41,10 @@ def signupPage(request):
         
 
         print('user created')
-        return redirect('api/signin',{'message' : 'Registered successfully.'})
+        #return redirect('api/signin',{'message' : 'Registered successfully.'})
     else:
         print('called')
-        return render(request,'index.html')
+        #return render(request,'index.html')
 
 
     
