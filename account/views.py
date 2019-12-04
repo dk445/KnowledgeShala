@@ -23,14 +23,15 @@ def profile(request,requestedemail):
             mateList =  Relation.objects.filter(user = requestedemail)
             mateList_serializer = serializers.serialize('json',mateList) 
             result.append(mateList_serializer)  
-
-            if(request.user.email == requestedemail):
-                request_status = None
-            else:
-                request_status = (Requests.objects.get(requesting = request.user.email , requested = requestedemail)).statusid
-
         except:
-            return HttpResponse("error")    
+            return HttpResponse("error") 
+
+        if(request.user.email == requestedemail):
+            request_status = None
+        else:
+            request_status = (Requests.objects.get(requesting = request.user.email , requested = requestedemail)).statusid
+
+           
         #print(request_status)
         #print(mateList[0].mate.name)
         #print(data.name)
