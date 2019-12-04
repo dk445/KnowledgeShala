@@ -38,25 +38,25 @@ def requeststocollege(request,id):
     #print(college.email)
     requests = UserData.objects.filter(clgid_id=id , isVerified='No')
     result = serializers.serialize('json',requests)
-    print(result)
+    #print(result)
     return HttpResponse(result)
 
 
 
 def collegeFeed(request,id):
-    
-    college = CollegeData.objects.get(clgid=id)
-    print(college.email)
+    #college = CollegeData.objects.get(clgid=id)
+    #print(college.email)
 
     #requests = UserData.objects.filter(isVerified = 'No') & UserData.objects.filter(clgid_id=college.clgid)
-    collegeusers = UserData.objects.filter(clgid_id=college.clgid)
+    collegeusers = UserData.objects.filter(clgid_id=id)
+    result = serializers.serialize('json',collegeusers)
    # for req in collegeusers:
     #    if(req.isVerified=='No'):
      #       print(req.name)
     
 
     #request can be separate where isVerified==NO
-    return render(request,'collegeHome.html',{'college': college},{'users':collegeusers}) 
+    return HttpResponse(result)
 
 
 def addcollege(request):
