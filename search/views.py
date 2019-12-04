@@ -6,7 +6,7 @@ from django.core import serializers
 # Create your views here.
 
 def search(request):
-    query = request.POST['search_query',False]
+    query = request.POST['search_query']
     if not query:
         return redirect('/api/signin/')
 
