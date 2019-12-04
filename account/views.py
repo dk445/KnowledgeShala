@@ -26,18 +26,18 @@ def profile(request,requestedemail):
         #except:
          #   return HttpResponse("error") 
 
-        if(request.user.email == requestedemail):
-            request_status = None
-        else:
-            request_status = (Requests.objects.get(requesting = request.user.email , requested = requestedemail)).statusid
+            if(request.user.email == requestedemail):
+                request_status = None
+            else:
+                request_status = (Requests.objects.get(requesting = request.user.email , requested = requestedemail)).statusid
 
-           
-        #print(request_status)
-        #print(mateList[0].mate.name)
-        #print(data.name)
-        #print(data.isVerified)
-        #print(data.roleid.rolename)
-        #print(data.deptid.deptname)
-        #print(posts)
+            
+            #print(request_status)
+            #print(mateList[0].mate.name)
+            #print(data.name)
+            #print(data.isVerified)
+            #print(data.roleid.rolename)
+            #print(data.deptid.deptname)
+            #print(posts)
 
-        return HttpResponse(result)
+            return HttpResponse(result)
