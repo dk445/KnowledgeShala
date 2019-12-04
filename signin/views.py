@@ -33,7 +33,7 @@ def collegesignin(request):
                 
 def signinPage(request):
     if request.user.is_authenticated:
-        return redirect('/feed/')
+        return redirect('/feed')
     else:
         if request.method == 'GET':
             return render(request,'signin.html')
