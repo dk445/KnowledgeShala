@@ -1,9 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password, check_password
 from signup.models import UserData,CollegeData,DepartmentData,RoleData
+from django.core import serializers
 
 # Create your views here.
 
@@ -33,11 +34,12 @@ def rejectrequest(request,id,email):
 
 
 def requeststocollege(request,id):
-    college = CollegeData.objects.get(clgid=id)
-    print(college.email)
+    #college = CollegeData.objects.get(clgid=id)
+    #print(college.email)
     requests = UserData.objects.filter(clgid_id=id , isVerified='No')
-    print(requests)
-    return requests
+    result = serializers.serialize('json',requests)
+    print(result)
+    return HttpResponse(result)
 
 
 
@@ -83,9 +85,9 @@ def addcollege(request):
                     fail_silently=False,
                 )
                 print('mail sent')
-                return render(request,'college.html',{'message':'Added successfully'})
+                #return render(request,'college.html',{'message':'Added successfully'})
             else:               
                 print('wrong pwd')
-                return render(request,'college.html',{'message':'wrong password'})
+                #return render(request,'college.html',{'message':'wrong password'})
         else:
-            return render(request,'college.html')
+           # return render(request,'college.html')
