@@ -6,4 +6,4 @@ from django.contrib.auth.models import auth,User
 
 def signout(request):
     auth.logout(request)
-    return redirect('/api/signin',{'message':'Signed out successfully'})
+#    return redirect('/api/signin',{'message':'Signed out successfully'})
