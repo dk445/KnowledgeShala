@@ -38,6 +38,6 @@ def displaypost(request):
             if(relation.mate.deptid == ownerdept):   #post of mates with same deptid
                 filteredpost.append(posts)
         
-        return JsonResponse(filteredpost,safe=false)
+        return JsonResponse(filteredpost,safe=False)
        # print(filteredpost)
       #  return render(request,'feed.html',{'mateposts':filteredpost})
