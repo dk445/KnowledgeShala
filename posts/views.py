@@ -35,10 +35,11 @@ def displaypost(request):
         ownerdept= UserData.objects.get(email=loggedinuser).deptid
         for relation in mates:
             posts = (UserPost.objects.filter(owner_id = relation.mate)|UserPost.objects.filter(owner_id = loggedinuser)).order_by('createdon').reverse() 
+            serialize_posts = serializers.serialize('json',posts)
             if(relation.mate.deptid == ownerdept):   #post of mates with same deptid
-                filteredpost.append(posts)
+                filteredpost.append(serialize_posts)
         
-        serialize_posts = serializers.serialize('json',filteredpost)
+        
         return HttpResponse(serialize_posts)
        # print(filteredpost)
       #  return render(request,'feed.html',{'mateposts':filteredpost})
