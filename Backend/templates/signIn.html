@@ -1,0 +1,18 @@
+<title>SignIn</title>
+
+
+<h2> signinpage</h2>
+
+<h5 style="color: red">{{message}}</h5>
+
+<form method="POST">
+    
+    {% csrf_token %}
+    
+    Email : <input type="text" name="email" placeholder="email"></br>
+    Password : <input type="password" name="password" placeholder="password"></br>
+    <!--Login As : <input  type="radio" name="role" value="0" checked>Student
+                <input  type="radio" name="role" value="1">Instructor</br>-->
+    <button>Signin </button>
+</form>
+<h4> Don't have an account? <a href="/">Click here</a> for signup.</h4>

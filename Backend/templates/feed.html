@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<title>Feed</title>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    
+    
+</head>
+<body>
+    {%  if user.is_authenticated %}
+        
+    <br/><h3>Welcome {{user.name}}</h3>
+
+    <br/><br/><hr/>
+
+    <ul>
+      
+        <li><a href="/request">Friend Requests</a></li>
+        <li><a href="/mates">My Mates</a></li>
+        <li><a href="/signout">Signout</a></li>
+        
+    </ul>
+    
+    <form method="POST" action="/search/">
+        {% csrf_token %}
+        <input type="text" size="50"  name="search_query">
+        <button>Search</button>
+    </form>
+	
+	<h2><b>Make Posts</b></h2>
+	<br/>
+    <form method="POST" action="post/">
+		{% csrf_token %}
+		Caption : 
+		<textarea name= 'desc'></textarea><br/>
+		<button>Post</button>
+	</form>
+
+    {% for post in mateposts %}
+        {% for every_post in post %}
+            <br/><hr/>
+            <u>{{every_post.owner_id}}</u><br/>
+            {{every_post.createdon.time}}<br/>
+            {{every_post.description}}<br/>
+            
+        {% endfor %}  
+	{% endfor %}
+   
+	
+
+    
+    {% else %}
+        <script>window.location.href="/api/signin"</script>
+    {%  endif %}
+  <!--  <a href="/">logout</a>
+    <button onclick="fun()">Signout</button>
+    <script>
+    function fun(){
+        location.replace('api/signout')
+    }
+    </script>-->
+</body>
+</html>

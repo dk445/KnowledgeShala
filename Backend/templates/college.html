@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Add</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <h2>Fill college data</h2><br/>
+    <h5 style="color: red">{{message}}</h5><br/>
+    <form method="POST" action="/add/">
+        {% csrf_token %}
+        College Neme : <input type="text" name ="collegename"/><br/>
+        College Id : <input type="text" name ="collegeid"/><br/>
+        City : <input type="text" name = "city"/><br/>
+        Email : <input type="email" name = "email"/><br/>
+        Admin Password : <input type='password' name = "pwd"><br/>
+        <button>Submit</button>
+    </form>   
+    <br/><a href="/">HomePage</a>
+</body>
+</html>
