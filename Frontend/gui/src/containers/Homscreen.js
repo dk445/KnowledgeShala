@@ -1,10 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
-import { Layout, Menu, Icon, List, Avatar } from 'antd';
+import { Layout, List, Avatar } from 'antd';
 import Sidenav from '../components/Sidenav';
-import history from '../history';
-import{ Link } from 'react-router-dom';
+import {reactLocalStorage} from 'reactjs-localstorage';
 const { Header, Content, Footer, Sider } = Layout;
 
 
@@ -15,14 +14,13 @@ class Homescreen extends React.Component{
         loggedinuser : ''
     }
 
-    componentDidMount() {
+    
 
-        this.setState({
-            loggedinuser : this.props.location.email
-        })
-        console.log(this.state.loggedinuser);
-        axios.post('http://127.0.0.1:8000/feed/',{
-            email: this.state.loggedinuser
+    componentDidMount() {
+        axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/feed/',
+            data: reactLocalStorage.get('email')
         })
         .then(res => {
             
@@ -38,7 +36,7 @@ class Homescreen extends React.Component{
     render(){
         return(
             <Layout>
-                <Sidenav navPosition={'2'}/>
+                <Sidenav navPosition={'2'} email ={this.state.loggedinuser}/>
                 <Layout style={{ marginLeft: 200 }}>
                 <Header style={{  background: '#fff', padding: 0 ,textAlign:'center',fontSize:'50px'}} > KnowledgeShala</Header>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>

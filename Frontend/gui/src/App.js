@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import LoginForm from './containers/Login';
 import SignupForm from './containers/Signup';
+import {reactLocalStorage} from 'reactjs-localstorage';
 import axios from 'axios';
 import $ from 'jquery';
 import history from './history';
@@ -39,20 +40,12 @@ class App extends Component {
   
   
 
-  componentDidMount(){  
-
-window.location.hash="/";
-window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
-window.onhashchange=function(){window.location.hash="/";}
-    this.setState({
-      email : this.props.location.email
-  })
-  console.log(this.state.email);
-  axios.post('http://127.0.0.1:8000/signout/',{
-      email: this.state.email
-    })
-    
-  }
+componentDidMount(){ 
+      window.location.hash="/";
+      window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
+      window.onhashchange=function(){window.location.hash="/";} 
+      reactLocalStorage.clear()    
+}
 
 
   render(){

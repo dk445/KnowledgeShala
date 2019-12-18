@@ -11,8 +11,8 @@ import jsonpickle
 
 def displaymates(request):
     data = json.loads(request.body.decode('utf-8'))
-    #loggedinuser =  data['email']
-    loggedinuser = 'kartikdambre.160410116022@gmail.com'
+    loggedinuser =  data['email']
+    #loggedinuser = 'kartikdambre.160410116022@gmail.com'
     print(loggedinuser)
     result = []
     #loggedinuser = request.user.email

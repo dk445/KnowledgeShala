@@ -17,7 +17,7 @@ def profile(request):
     data=[]
     userPosts=[]
 
-    email = 'kartikdambre.160410116022@gmail.com'
+    
 
     user = UserData.objects.get(email = email)
     data.append(user.get_user_view())

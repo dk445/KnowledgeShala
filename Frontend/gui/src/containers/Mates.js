@@ -4,6 +4,7 @@ import '../App.css';
 import { Layout, Menu, Icon, List, Avatar } from 'antd';
 import Sidenav from '../components/Sidenav';
 import { Link } from 'react-router-dom';
+import {reactLocalStorage} from 'reactjs-localstorage';
 const { Header, Content, Footer, Sider } = Layout;
 
 class Mates extends React.Component{    
@@ -14,12 +15,9 @@ class Mates extends React.Component{
     }
 
     componentDidMount() {
-        this.setState({
-            loggedinuser : this.props.email
-        })
         console.log(this.state.loggedinuser);
         axios.post('http://127.0.0.1:8000/mates/',{
-            email: this.state.loggedinuser
+            email: reactLocalStorage.get('email')
         })
         .then(res => {
             
@@ -34,7 +32,7 @@ class Mates extends React.Component{
     render(){
         return(
             <Layout>
-                <Sidenav  navPosition={'4'}/>
+                <Sidenav  navPosition={'5'} email ={this.state.loggedinuser}/>
                 
                 <Layout style={{ marginLeft: 200 }}>
                 <Header style={{  background: '#fff', padding: 0 ,textAlign:'center',fontSize:'50px'}} > KnowledgeShala</Header>

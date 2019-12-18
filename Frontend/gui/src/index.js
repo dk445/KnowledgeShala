@@ -8,6 +8,7 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import history from './history';
 import Profile from './containers/Profile';
+import MakePost from './containers/MakePost';
 
 
 const routing = (
@@ -18,6 +19,7 @@ const routing = (
         <Route path="/mates" component={Mates} />
         <Route path="/account" component={Profile}/>
         <Route path="/#" component={App}/>
+        <Route path="/post" component={MakePost}/>
       </div>
     </Router>
   )

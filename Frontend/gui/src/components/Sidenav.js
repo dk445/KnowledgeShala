@@ -8,6 +8,12 @@ class Sidenav extends React.Component{
     loggedinuser  : ''
   }
 
+  componentDidMount(){
+      this.setState({
+          loggedinuser: this.props.email
+      })
+  }
+
   render(){
     return(
       <div>
@@ -20,7 +26,7 @@ class Sidenav extends React.Component{
                 }}>
                 
                 <div className="logo" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.props.navPosition]}>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={this.props.navPosition}>
                     <Menu.Item key="1">
                     <Icon type="user" />
                     <span className="nav-text"><Link to={{
@@ -33,43 +39,26 @@ class Sidenav extends React.Component{
                     </Menu.Item>
                     <Menu.Item key="2">
                     <Icon type="home" />
-                    <span className="nav-text"><Link to={{
-                                                    pathname: "/feed",
-                                                    state: {
-                                                        email : this.state.loggedinuser
-                                                    }
-                                                }}>
-                                                Feed</Link></span>
+                    <span className="nav-text"><Link to="/feed"> Feed</Link></span>
                     </Menu.Item>
+
+
                     <Menu.Item key="3">
-                    <Icon type="user-add" />
-                    <span className="nav-text"><Link to={{
-                                                    pathname: "/request",
-                                                    state: {
-                                                        email : this.state.loggedinuser
-                                                    }
-                                                }}>
-                                                Requests</Link></span>
-                    </Menu.Item>
+                    <Icon type="upload" />
+                    <span className="nav-text"><Link to="/post"> Post</Link></span>
+                    </Menu.Item>                                
+                    
                     <Menu.Item key="4">
-                    <Icon type="team" />
-                    <span className="nav-text"><Link to={{
-                                                    pathname: "/mates",
-                                                    state: {
-                                                        email : this.state.loggedinuser
-                                                    }
-                                                }}>
-                                                Mates</Link></span>
+                    <Icon type="user-add" />
+                    <span className="nav-text"><Link to="/request"> Requests</Link></span>
                     </Menu.Item>
                     <Menu.Item key="5">
+                    <Icon type="team" />
+                    <span className="nav-text"><Link to= "/mates">Mates</Link></span>
+                    </Menu.Item>
+                    <Menu.Item key="6">
                     <Icon type="logout" />
-                    <span className="nav-text"><Link to={{
-                                                    pathname: "/",
-                                                    state: {
-                                                        email : this.state.loggedinuser
-                                                    }
-                                                }}>
-                                                Logout</Link></span>
+                    <span className="nav-text"><Link to="/"> Logout</Link></span>
                     </Menu.Item>
                 </Menu>
                 </Sider>

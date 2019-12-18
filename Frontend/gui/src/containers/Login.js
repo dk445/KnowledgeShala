@@ -2,8 +2,8 @@
 import  React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
+import { Redirect } from 'react-router-dom';
+import {reactLocalStorage} from 'reactjs-localstorage';
 import history from '../history';
 import Homscreen from './Homscreen';
 
@@ -14,6 +14,7 @@ class LoginForm extends React.Component {
   state = {
     email:'',
     password:'',
+    redirect: false
   }
 
   handleChange = event => {
@@ -22,8 +23,13 @@ class LoginForm extends React.Component {
       password: event.target.elements.password.value,
      });
   }
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -49,13 +55,16 @@ class LoginForm extends React.Component {
        // let history =  useHistory();
         console.log('redirecting to feed');
         console.log(emailId);
-        axios.post('http://127.0.0.1:8000/feed/',{
-            email: emailId
-        })
-        history.push({
-          pathname: '/feed',         
-        });
-        window.location.reload();
+        reactLocalStorage.set('email',emailId);
+        console.log(reactLocalStorage.get('email'));
+        
+        //axios.post('http://127.0.0.1:8000/feed/',{
+          //  email: emailId
+        //})
+       // window.history.pushState(null,null,'/feed')
+
+        //window.location.reload();
+        this.setRedirect();
         
       }
       else{
@@ -65,10 +74,24 @@ class LoginForm extends React.Component {
     })  
 
   };
+  
+  
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to={{
+        pathname:  '/feed',
+        state:{
+          email:this.state.email
+        }
+      }} />
+    }
+  }
 
       render(){
         const { getFieldDecorator }  = this.props.form;
         return (
+          <div>
+          {this.renderRedirect()}
           <Form onSubmit={this.handleSubmit}  >  
             <Form.Item name = "emailId">
               {getFieldDecorator('username', {
@@ -107,6 +130,7 @@ class LoginForm extends React.Component {
              
             </Form.Item>
           </Form>
+          </div>
         );
       }  
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../App.css';
 import { Layout, Menu, Icon, List, Avatar ,Collapse , Button} from 'antd';
 import { Link } from 'react-router-dom';
+import {reactLocalStorage} from 'reactjs-localstorage';
 import Sidenav from '../components/Sidenav';
 const { Header, Content, Footer, Sider } = Layout;
 const { Panel } = Collapse;
@@ -27,12 +28,8 @@ class Profile extends React.Component{
     
 
     componentDidMount() {
-        this.setState({
-            loggedinuser : this.props.email
-        })
-        console.log(this.state.loggedinuser);
         axios.post('http://127.0.0.1:8000/account/',{
-            email: this.state.email
+            email: reactLocalStorage.get('email')
         })
         .then(res => {
             

@@ -48,10 +48,11 @@ def signinPage(request):
         if check_password(password,user.password) :
             
             if user.isVerified == "No":
+                auth.login(request,user)
                 print('not verified')
                 #return HttpResponse('not verified')  //commenting for development purpose
                 return HttpResponse('login success')  #this line should be remove
-                
+            
             print('login success')
             
             return HttpResponse('login success')

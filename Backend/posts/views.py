@@ -26,21 +26,25 @@ class Posts(APIView):
         
 
     def makepost(request):
-        if not request.user.is_authenticated:
-            return redirect('/api/signin/')
-        else:
-            desc = request.POST['desc']     
-            owner = UserData.objects.get(email=request.user.email)
-            created = timezone.localtime()
-            UserPost.objects.create(owner=owner , description = desc , createdon = created)    
-            print('posted')
-            return redirect('/feed')
+        data = json.loads(request.body.decode('utf-8'))
+        #print(data)
+        desc = data['desc']
+        email = data['email']
+        print(desc , email)
+    #try:
+        owner = UserData.objects.get(email=email)
+        created = timezone.localtime()
+        Post = UserPost(owner=owner , description = desc , createdon = created)
+        #UserPost.objects.create(owner=owner , description = desc , createdon = created)
+        Post.save();    
+    #except:
+        #return HttpResponse('failed')
+        print('posted')
+        return HttpResponse('success')
 
     def displaypost(request):
-        data = json.loads(request.body.decode('utf-8'))
-        #loggedinuser =  data['email']     //commenting for development purpose
-        #print(loggedinuser)
-        loggedinuser = 'kartikdambre.160410116022@gmail.com'  #this line should be remove
+        print(request.body.decode('utf-8'))
+        loggedinuser =  request.body.decode('utf-8')   
         mates = Relation.objects.filter(user_id = loggedinuser)
         filteredpost = []
         postids = []
@@ -48,15 +52,13 @@ class Posts(APIView):
         for relation in mates:
             if(relation.mate.deptid == ownerdept):
                 posts = (UserPost.objects.filter(owner_id = relation.mate).order_by('createdon').reverse() | UserPost.objects.filter(owner_id = loggedinuser).order_by('createdon').reverse())
-                if(len(posts)!=0):
-                    for post in posts:
-                        if post.postid not in postids:
-                            postids.append(post.postid)
-                            filteredpost.append(post.getView()) 
-                else:
-                    return HttpResponse('No posts')               
+                for post in posts:
+                    if post.postid not in postids:
+                        postids.append(post.postid)
+                        filteredpost.append(post.getView())         
         print(filteredpost)
-        return HttpResponse(jsonpickle.encode(filteredpost))        
+        return HttpResponse(jsonpickle.encode(filteredpost))      
+
         
         
         
