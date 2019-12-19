@@ -8,7 +8,8 @@ from posts.models import UserPost
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import auth,User
 from django.http import HttpResponse
-import json
+from django.core.mail import send_mail
+import json , random , jsonpickle
 # Create your views here.
 
 
@@ -31,13 +32,39 @@ def collegesignin(request):
                 
             else:
                 return render(request,'collegepage.html')
+
+def otpRequest(request):
+    data = json.loads(request.body.decode('utf-8'))
+    email = data['email']
+    otp = random.randint(10101010 , 98989898)
+    otp = str(otp)
+
+    send_mail(
+            'Reset password request',
+            'Your OTP for resetting the password is '+otp+'.Do not share it with others.',
+            'kartik.dambre@gmail.com',
+            [email],
+            fail_silently=False,
+            )
+    return HttpResponse(otp)
+
+def PwdReset(request):
+    data = json.loads(request.body.decode('utf-8'))
+    email = data['email']
+    password = data['password']
+    password = make_password(password)
+
+    UserData.objects.get(email=email).update(password=password)
+
+    return HttpResponse('Reset Successfully')
+    
+
                 
 def signinPage(request):
     data = json.loads(request.body.decode('utf-8'))
-
-
     email = data['email']  
     password = data['password']
+    
 
     #email = 'kartikdambre.160410116022@gmail.com'
 

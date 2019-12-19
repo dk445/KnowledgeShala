@@ -5,4 +5,6 @@ from . import views
 urlpatterns = [
     path('signin/',views.signinPage),
     path('college/',views.collegesignin),
+    path('signin/forgot',views.otpRequest),
+    path('signin/forgot/reset',views.PwdReset),
 ]

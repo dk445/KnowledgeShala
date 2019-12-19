@@ -4,7 +4,9 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import history from '../history';
+import 'antd/dist/antd.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Homscreen from './Homscreen';
 
 
@@ -52,18 +54,10 @@ class LoginForm extends React.Component {
       console.log(res);
       console.log(res.data);
       if(res.data == "login success"){
-       // let history =  useHistory();
         console.log('redirecting to feed');
         console.log(emailId);
         reactLocalStorage.set('email',emailId);
         console.log(reactLocalStorage.get('email'));
-        
-        //axios.post('http://127.0.0.1:8000/feed/',{
-          //  email: emailId
-        //})
-       // window.history.pushState(null,null,'/feed')
-
-        //window.location.reload();
         this.setRedirect();
         
       }
@@ -78,12 +72,7 @@ class LoginForm extends React.Component {
   
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to={{
-        pathname:  '/feed',
-        state:{
-          email:this.state.email
-        }
-      }} />
+      return <Redirect to='/feed'/>
     }
   }
 
@@ -121,7 +110,7 @@ class LoginForm extends React.Component {
                 valuePropName: 'checked',
                 initialValue: true,
               })(<Checkbox>Remember me</Checkbox>)}
-              <a className="login-form-forgot" href="/">
+              <a className="login-form-forgot" href="/forgot">
                 Forgot password
               </a><br/>
               <Button type="primary" htmlType="submit" className="login-form-button">

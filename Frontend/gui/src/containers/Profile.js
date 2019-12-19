@@ -118,8 +118,8 @@ class Profile extends React.Component{
                             />
                                 
                                 {item.description}
-                                <div>{
-                                        <Button type="link" style={{marginLeft:'400px',height:'25px',fontSize:'15px'}} onClick={() => {
+                                <div >{
+                                        <Button type="link" style={{marginLeft:'1000px',height:'25px',fontSize:'15px'}} onClick={() => {
                                             console.log(item.postid);
                                             axios.post('http://127.0.0.1:8000/feed/delete/',{
                                                 pk: item.postid

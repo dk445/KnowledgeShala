@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import history from './history';
 import Profile from './containers/Profile';
 import MakePost from './containers/MakePost';
+import Forgot from './containers/forgot';
 
 
 const routing = (
@@ -20,6 +21,7 @@ const routing = (
         <Route path="/account" component={Profile}/>
         <Route path="/#" component={App}/>
         <Route path="/post" component={MakePost}/>
+        <Route path="/forgot" component={Forgot}/>
       </div>
     </Router>
   )

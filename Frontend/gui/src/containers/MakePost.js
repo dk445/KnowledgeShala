@@ -59,7 +59,7 @@ class MakePost extends React.Component{
             <Sidenav  navPosition={'3'}/>
             
             <Layout style={{ marginLeft: 200 }}>
-            <Header style={{  background: '#fff', padding: 0 ,textAlign:'center',fontSize:'50px'}} > KnowledgeShala</Header>
+            <Header style={{  background: '#00152A', padding: 0 ,textAlign:'center',fontSize:'50px' ,color:'white'}} > KnowledgeShala</Header>
             <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                 <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}> 
 

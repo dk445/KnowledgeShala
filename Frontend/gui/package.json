@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.26.1",
     "bootstrap": "^4.4.1",
+    "create-react-class": "^15.6.3",
     "jquery": "^3.4.1",
     "qs": "^6.9.1",
     "react": "^16.12.0",

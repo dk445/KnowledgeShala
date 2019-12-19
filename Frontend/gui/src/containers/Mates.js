@@ -4,6 +4,7 @@ import '../App.css';
 import { Layout, Menu, Icon, List, Avatar } from 'antd';
 import Sidenav from '../components/Sidenav';
 import { Link } from 'react-router-dom';
+import history from '../history';
 import {reactLocalStorage} from 'reactjs-localstorage';
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -15,7 +16,7 @@ class Mates extends React.Component{
     }
 
     componentDidMount() {
-        console.log(this.state.loggedinuser);
+
         axios.post('http://127.0.0.1:8000/mates/',{
             email: reactLocalStorage.get('email')
         })
