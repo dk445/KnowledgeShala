@@ -5,7 +5,9 @@ import { Layout, List, Avatar , Form , Input , Button} from 'antd';
 import Sidenav from '../components/Sidenav';
 import {Redirect} from 'react-router-dom';
 import {reactLocalStorage} from 'reactjs-localstorage';
-const { Header, Content, Footer, Sider } = Layout;
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+const { Content} = Layout;
 const { TextArea } = Input;
 
 
@@ -57,15 +59,14 @@ class MakePost extends React.Component{
             {this.renderRedirect()}
             <Layout>
             <Sidenav  navPosition={'3'}/>
-            
             <Layout style={{ marginLeft: 200 }}>
-            <Header style={{  background: '#00152A', padding: 0 ,textAlign:'center',fontSize:'50px' ,color:'white'}} > KnowledgeShala</Header>
+            <Header/>
             <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                 <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}> 
 
             <Form onSubmit={this.handleSubmit}  > 
                 <Form.Item name = "desc">
-
+                <b>Post content</b>
                         <TextArea name="desc" rows={4}/>
 
                 </Form.Item>
@@ -77,7 +78,7 @@ class MakePost extends React.Component{
             </Form>
             </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer/>
                 </Layout>
             </Layout>        
             </div>

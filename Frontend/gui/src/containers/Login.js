@@ -32,6 +32,9 @@ class LoginForm extends React.Component {
   }
 
   handleSubmit = (e) => {
+    this.setState({
+      msg:''
+    })
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -48,7 +51,8 @@ class LoginForm extends React.Component {
 
     axios.post('http://127.0.0.1:8000/api/signin/',{
       email : emailId,
-      password : pwd
+      password : pwd,
+      msg:''
      })
     .then(res => {
       console.log(res);
@@ -62,7 +66,9 @@ class LoginForm extends React.Component {
         
       }
       else{
-        window.location.reload();
+        this.setState({
+          msg: 'Incorrecr email and/or password'
+        })
       }
 
     })  
@@ -81,6 +87,7 @@ class LoginForm extends React.Component {
         return (
           <div>
           {this.renderRedirect()}
+          <h6 style={{color:'red'}}>{this.state.msg}</h6>
           <Form onSubmit={this.handleSubmit}  >  
             <Form.Item name = "emailId">
               {getFieldDecorator('username', {

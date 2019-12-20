@@ -12,14 +12,14 @@ import jsonpickle
 def profile(request):
     data = json.loads(request.body.decode('utf-8'))
     email =  data['email']
-    #print(email)
+    print(email)
 
     data=[]
     userPosts=[]
 
     
 
-    user = UserData.objects.get(email = email)
+    user = UserData.objects.get(email=email)
     data.append(user.get_user_view())
 
     posts = UserPost.objects.filter(owner = email).order_by('createdon').reverse()

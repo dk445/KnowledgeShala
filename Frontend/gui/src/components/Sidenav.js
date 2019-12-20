@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Icon, Button } from 'antd';
 import{ Link, Redirect } from 'react-router-dom';
+import { reactLocalStorage } from 'reactjs-localstorage';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -31,9 +32,15 @@ class Sidenav extends React.Component{
                     
                     <Menu.Item key="1">
                     <Icon type="user" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/account">
+                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to={{
+                                                    pathname :"/account",
+                                                    state : {
+                                                      email: reactLocalStorage.get('email')
+                                                    }
+                                                  }}>
                                                 Profile</Link></Button></span>
                     </Menu.Item>
+
                     <Menu.Item key="2">
                     <Icon type="home" />
                     <span className="nav-text" ><Button type='link' style={{color:'white'}}><Link to="/feed"> Feed</Link></Button></span>
@@ -42,17 +49,19 @@ class Sidenav extends React.Component{
 
                     <Menu.Item key="3">
                     <Icon type="upload" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/post"> Post</Link></Button></span>
+                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/post"> Make Post</Link></Button></span>
                     </Menu.Item>                                
                     
                     <Menu.Item key="4">
-                    <Icon type="user-add" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/request"> Requests</Link></Button></span>
+                    <Icon type="search" />
+                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/search"> Search</Link></Button></span>
                     </Menu.Item>
+
                     <Menu.Item key="5">
                     <Icon type="team" />
                     <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to= "/mates">Mates</Link></Button></span>
                     </Menu.Item>
+
                     <Menu.Item key="6">
                     <Icon type="logout" />
                     <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/"> Logout</Link></Button></span>

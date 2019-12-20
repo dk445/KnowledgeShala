@@ -3,8 +3,11 @@ import axios from 'axios';
 import '../App.css';
 import { Layout, List, Avatar } from 'antd';
 import Sidenav from '../components/Sidenav';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import {Link} from 'react-router-dom';
 import {reactLocalStorage} from 'reactjs-localstorage';
-const { Header, Content, Footer, Sider } = Layout;
+const { Content} = Layout;
 
 
 class Homescreen extends React.Component{    
@@ -38,7 +41,7 @@ class Homescreen extends React.Component{
             <Layout>
                 <Sidenav navPosition={'2'} email ={this.state.loggedinuser}/>
                 <Layout style={{ marginLeft: 200 }}>
-                <Header style={{  background: '#fff', padding: 0 ,textAlign:'center',fontSize:'50px'}} > KnowledgeShala</Header>
+                <Header/>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left', marginLeft:'60px', marginRight:'110px' }}>                        
                         
@@ -71,7 +74,12 @@ class Homescreen extends React.Component{
                         >
                             <List.Item.Meta
                             //avatar={<Avatar src={item.avatar} />}
-                                title={item.owner}
+                                title={<Link to={{
+                                    pathname:"/account",
+                                    state:{
+                                        email : item.email
+                                    }
+                                }}>{item.owner}</Link>}
                                 description={item.createDate + ' '+ item.createTime}
                             />
                                 {item.description}
@@ -80,7 +88,7 @@ class Homescreen extends React.Component{
                     />                                     
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer/>
                 </Layout>
             </Layout>        
         );

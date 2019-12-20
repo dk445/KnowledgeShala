@@ -10,6 +10,7 @@ import history from './history';
 import Profile from './containers/Profile';
 import MakePost from './containers/MakePost';
 import Forgot from './containers/forgot';
+import SearchAction from './containers/Search';
 
 
 const routing = (
@@ -22,6 +23,7 @@ const routing = (
         <Route path="/#" component={App}/>
         <Route path="/post" component={MakePost}/>
         <Route path="/forgot" component={Forgot}/>
+        <Route path="/search" component={SearchAction}/>
       </div>
     </Router>
   )

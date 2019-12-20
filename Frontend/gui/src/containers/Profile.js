@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
-import { Layout, Menu, Icon, List, Avatar ,Collapse , Button} from 'antd';
-import { Link } from 'react-router-dom';
+import { Layout, List, Avatar ,Collapse , Button} from 'antd';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import Sidenav from '../components/Sidenav';
-const { Header, Content, Footer, Sider } = Layout;
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+const {Content} = Layout;
 const { Panel } = Collapse;
 
 
@@ -23,13 +24,20 @@ class Profile extends React.Component{
 
     callback(key) {
         console.log(key);
-    }
-
+    }    
     
 
     componentDidMount() {
+        var email = this.props.location.state.email;
+        if(email==reactLocalStorage.get('email')){
+                this.setState({
+                email : true
+            })
+        }
+        //console.log()
+        console.log(email)
         axios.post('http://127.0.0.1:8000/account/',{
-            email: reactLocalStorage.get('email')
+            email:email
         })
         .then(res => {
             
@@ -53,7 +61,7 @@ class Profile extends React.Component{
                 <Sidenav navPosition={'1'}/>
                 
                 <Layout style={{ marginLeft: 200 }}>
-                <Header style={{  background: '#fff', paddingBottom: '2px' ,textAlign:'center',fontSize:'45px'}} > KnowledgeShala</Header>
+                <Header/>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}>      
                                                 
@@ -81,6 +89,8 @@ class Profile extends React.Component{
                                 
                             )}
                         />   
+
+                        <br/><hr/>
                     
 
                     <List
@@ -111,14 +121,13 @@ class Profile extends React.Component{
                         >   
                             
                             <List.Item.Meta
-                            //avatar={<Avatar src={item.avatar} />}
-                                title={item.owner } 
-                                
+                                //avatar={<Avatar src={item.avatar} />}
+                                title={item.owner }                                 
                                 description={item.createDate + ' '+ item.createTime}
-                            />
-                                
+                                />                                
                                 {item.description}
-                                <div >{
+                                <div >
+                                    {this.state.email ?
                                         <Button type="link" style={{marginLeft:'1000px',height:'25px',fontSize:'15px'}} onClick={() => {
                                             console.log(item.postid);
                                             axios.post('http://127.0.0.1:8000/feed/delete/',{
@@ -126,17 +135,18 @@ class Profile extends React.Component{
                                             }).then(res=>{
                                                 window.location.reload();
                                             })
-                                        }}>delete</Button>
+                                            }}>delete
+                                        </Button> 
+                                        : null
                                     }
-                                </div>
-                                                                 
+                                </div>                                                                 
                             </List.Item>
                         )}
                     />
                                       
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer/>
                 </Layout>
             </Layout>        
         );

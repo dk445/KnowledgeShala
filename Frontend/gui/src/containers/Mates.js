@@ -2,11 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import '../App.css';
 import { Layout, Menu, Icon, List, Avatar } from 'antd';
+import {Link} from 'react-router-dom';
 import Sidenav from '../components/Sidenav';
-import { Link } from 'react-router-dom';
-import history from '../history';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import {reactLocalStorage} from 'reactjs-localstorage';
-const { Header, Content, Footer, Sider } = Layout;
+const {Content } = Layout;
 
 class Mates extends React.Component{    
     
@@ -36,7 +37,7 @@ class Mates extends React.Component{
                 <Sidenav  navPosition={'5'} email ={this.state.loggedinuser}/>
                 
                 <Layout style={{ marginLeft: 200 }}>
-                <Header style={{  background: '#fff', padding: 0 ,textAlign:'center',fontSize:'50px'}} > KnowledgeShala</Header>
+                <Header/>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}>                        
                         <List
@@ -46,15 +47,20 @@ class Mates extends React.Component{
                             <List.Item>
                                 <List.Item.Meta
                                 //avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title={<a href="https://ant.design">{item.mateName}</a>}                          
-                                    description= {item.mateEmail + item.mateClg} //{item.mateClg}
+                                    title={<Link to={{
+                                        pathname:"/account",
+                                        state:{
+                                            email : item.mateEmail
+                                        }
+                                    }}>{item.mateName}</Link>}                          
+                                    description= {'College: '+item.mateClg + ' Department : ' +item.mateDept} //{item.mateClg}
                                 />                
                             </List.Item>
                             )}
                         />                                                
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                <Footer/>
                 </Layout>
             </Layout>        
         );

@@ -13,12 +13,13 @@ class UserPost(models.Model):
         return self.owner_id
 
     def getView(self):
-        return UserPostView(self.postid,self.owner.name,self.description,self.createdon.day,self.createdon.month,self.createdon.year,self.createdon.hour,self.createdon.minute)
+        return UserPostView(self.postid,self.owner.name,self.owner.email,self.description,self.createdon.day,self.createdon.month,self.createdon.year,self.createdon.hour,self.createdon.minute)
 
 class UserPostView():
-    def __init__(self, postid, owner, description,day,month,year,hour,minute):
+    def __init__(self, postid, owner ,email, description,day,month,year,hour,minute):
         self.postid = postid
         self.owner = owner
+        self.email = email
         self.description = description
         self.createDate = str(day)+'/'+str(month)+'/'+str(year)
         self.createTime = str(hour)+':'+str(minute)

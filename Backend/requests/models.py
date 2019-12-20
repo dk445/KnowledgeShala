@@ -21,11 +21,12 @@ class Relation(models.Model):
     mate = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="mate")
 
     def getView(self):
-        return MatesView(self.mate.name,self.mate.email,self.mate.clgid.clgName)
+        return MatesView(self.mate.name,self.mate.email,self.mate.clgid.clgName,self.mate.deptid.deptname)
     class Meta:
         unique_together = ('user' , 'mate')
 class MatesView():
-    def __init__(self,mateName,mateEmail,mateClg):
+    def __init__(self,mateName,mateEmail,mateClg,mateDept):
         self.mateName = mateName
         self.mateEmail = mateEmail
         self.mateClg = mateClg
+        self.mateDept = mateDept

@@ -54,7 +54,9 @@ def PwdReset(request):
     password = data['password']
     password = make_password(password)
 
-    UserData.objects.get(email=email).update(password=password)
+    user = UserData.objects.get(email=email)
+    user.password = password
+    user.save()
 
     return HttpResponse('Reset Successfully')
     
