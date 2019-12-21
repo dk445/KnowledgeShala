@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-react-dropdowns": "^3.9.0",
+    "@syncfusion/ej2-react-dropdowns": "^17.4.39",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

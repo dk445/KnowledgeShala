@@ -1,19 +1,5 @@
 import  React from 'react';
-
-
-import {
-    Form,
-    Input,
-    Tooltip,
-    Icon,
-    Cascader,
-    Select,
-    Radio,
-    Col,
-    Checkbox,
-    Button,
-    AutoComplete,
-  } from 'antd';
+import {Form,Input,Tooltip,Icon,Menu,Cascader,Select,Radio,Col,Checkbox,Button,AutoComplete,DropDown} from 'antd';
 import axios from 'axios';
   
   const { Option } = Select;
@@ -22,7 +8,9 @@ import axios from 'axios';
   class SignupForm extends React.Component {
     state = {
       confirmDirty: false,
-      autoCompleteResult: [],
+      ClgList: [],
+      lable:'',
+      value:''
     };
   
     handleSubmit = e => {
@@ -31,22 +19,26 @@ import axios from 'axios';
         if (!err) {
           console.log('Received values of form: ', values);
         }
+        
       });
 
+
+    try{
       const emailId = e.target.elements.email.value
       const sname = e.target.elements.name.value
       const smobile = e.target.elements.mobile.value
-      const sclgId = e.target.elements.clgId.value
+      const sclgName = e.target.elements.clgName.value
       const sdeptId = e.target.elements.deptId.value
       const srole = e.target.elements.role.value
       const spassword = e.target.elements.pwd.value
+    
 
 
       axios.post('http://127.0.0.1:8000/',{
         email : emailId,
         name : sname,
         mobile : smobile,
-        clgId: sclgId,
+        clgName: sclgName,
         deptId: sdeptId,
         role: srole,
         password : spassword
@@ -55,6 +47,10 @@ import axios from 'axios';
       console.log(res);
       console.log(res.data);
     })
+   
+    }catch  (error){
+      return;
+    }
       
     };
   
@@ -79,6 +75,28 @@ import axios from 'axios';
       }
       callback();
     };
+
+    componentDidMount(){
+       const List = []
+       const obj = {
+         label:'',
+         value:''
+       }
+       axios.get('http://127.0.0.1:8000/get/clg').then(res=> {
+         console.log(res.data);
+         for(var i=0 ; i< res.data.length ;i++){
+           List.push({
+             label : res.data[i].clgId + ' - ' + res.data[i].label + '  '+ res.data[i].city,
+             value: res.data[i].value
+           })
+         } 
+          console.log(List)
+         this.setState({
+             ClgList:List
+           })
+       })       
+   
+      }
   
     
     render() {
@@ -114,7 +132,7 @@ import axios from 'axios';
           <Option value="91">+91</Option>
           <Option value="63">+63</Option>
         </Select>,
-      );
+      ); 
   
       
   
@@ -158,8 +176,13 @@ import axios from 'axios';
               })(<Input name='mobile' addonBefore={prefixSelector} style={{ width: '100%' }} />)}
             </Form.Item>
 
-            <Form.Item label="College Id" name='clgId'>           
-                <Input name='clgId' />            
+            <Form.Item label="College" name='clgName'>       
+                  {getFieldDecorator('residence', {
+                    initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+                    rules: [
+                      { type: 'array', required: true, message: 'Please select your college' },
+                    ],
+                  })(<Cascader options={this.state.ClgList} />)}
             </Form.Item>
 
 

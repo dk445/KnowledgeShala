@@ -40,6 +40,13 @@ class UserDataView():
         self.deptName = deptName
         self.role = role
 
+class ClgListView():
+    def __init__(self,clgName,city,id):
+        self.value = clgName
+        self.label=clgName
+        self.city = city
+        self.clgId = id
+
      
     
 
