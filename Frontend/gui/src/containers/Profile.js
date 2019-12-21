@@ -19,19 +19,32 @@ class Profile extends React.Component{
         email :'',
         loggedinuser:'',
         data: [],
-        posts:[]
+        posts:[],
+        self : false,
+        unfriend : false,
+        req: false        
     }
 
     callback(key) {
         console.log(key);
     }    
     
+    addMate(){
+
+    }
+
+    deleteMate(){
+        
+    }
 
     componentDidMount() {
         var email = this.props.location.state.email;
+        const mates = []
+        const req = []
         if(email==reactLocalStorage.get('email')){
                 this.setState({
-                email : true
+                email : true,
+                self : true
             })
         }
         //console.log()
@@ -39,14 +52,33 @@ class Profile extends React.Component{
         axios.post('http://127.0.0.1:8000/account/',{
             email:email
         })
-        .then(res => {
-            
+        .then(res => {            
             console.log(res.data);
+            for(var i=0;i<res.data.userMates.length;i++){
+                mates.push(res.data.userMates[i].mateEmail)
+            }
+            for(var i=0;i<res.data.userRequests.length;i++){
+                req.push(res.data.userRequests[i].email)
+            }
             this.setState({
                 data : res.data.userdata,
-                posts: res.data.userposts
+                posts: res.data.userposts,
+                //mates: mates
 
             })
+        }).then(res=>{
+            if(mates.includes(reactLocalStorage.get('email'))){
+                this.setState({
+                    unfriend:true,
+                })
+            }
+            else if(req.includes(email)){
+                this.setState({
+                    req:true,
+                    //unfriend:false,
+                })
+            }
+            
         })
     }
     
@@ -88,10 +120,20 @@ class Profile extends React.Component{
                             </Collapse>
                                 
                             )}
-                        />   
+                        /> <br/>
 
+                        <div>
+                            {!this.state.self ? <div>
+                                {this.state.unfriend ? <Button type="primary" onClick={this.deleteMate}>Unfriend</Button> : 
+                                    <div>
+                                        {this.state.req ? <div><Button type="primary"onClick={this.CancelReq}>Requsted</Button></div>
+                                            :<Button type="primary"onClick={this.CancelReq}>Add mate</Button>}
+                                    </div>}
+                                    </div>:null}
+                                
+                            
+                        </div>
                         <br/><hr/>
-                    
 
                     <List
                         itemLayout="vertical"

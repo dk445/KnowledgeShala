@@ -1,7 +1,7 @@
 from django.shortcuts import render ,redirect,HttpResponse
 from signup.models import UserData ,CollegeData , DepartmentData , RoleData
 from  posts.models import UserPost
-from requests.models import Relation , Requests
+from requests.models import Relation , Requests , MatesView
 from django.core import serializers
 import json
 import jsonpickle
@@ -16,6 +16,8 @@ def profile(request):
 
     data=[]
     userPosts=[]
+    userMates=[]
+    userRequests=[]
 
     
 
@@ -26,12 +28,23 @@ def profile(request):
     if len(posts) > 0:
         for post in posts:
             userPosts.append(post.getView())
-        #result.append(userPosts)
-        #data = jsonpickle.encode(result)
-        #userPosts= jsonpickle.encode(userPosts)
+    
+    mates = Relation.objects.filter(user = email)
+    if len(mates) > 0:
+        for mate in mates:
+            userMates.append(mate.getView())
+
+    requests = Requests.objects.filter(requestMaker = email).filter(statusid = '0')
+    if len(requests)>0:
+        for request in  requests:
+            userRequests.append(request.requestReceiver)
+
+    print(userRequests)
     result = {
         'userdata':data,
-        'userposts':userPosts
+        'userposts':userPosts,
+        'userMates' : userMates,
+        'userRequests' : userRequests
     }
     
     

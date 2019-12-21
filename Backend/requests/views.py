@@ -22,7 +22,7 @@ def accept(request,acceptingemail):
 
 def displayrequests(request):
     loggedinuser = request.user.email
-    users = Requests.objects.filter(requesting=loggedinuser,statusid_id='0')
+    users = Requests.objects.filter(requestMaker=loggedinuser,statusid_id='0')
     result = serializers.serialize('json',users)
     return HttpResponse(result)
     
@@ -33,10 +33,10 @@ def makeRequest(request,requestedemail):
         return redirect('/api/signin/')
     else:
         loggedinuser = request.user.email
-        requestedemail = requestedemail
+        #requestedemail = requestedemail
         statusid = '0'
         
-        Requests.objects.create(requested_id=loggedinuser , requesting_id=requestedemail , statusid_id=statusid)
+        Requests.objects.create(requestMaker_id=loggedinuser , requestReceiver_id=requestedemail , statusid_id=statusid)
         
         return HttpResponse('<script>window.close()</script>')
 

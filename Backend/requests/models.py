@@ -9,11 +9,11 @@ class RequestStatus(models.Model):
 
 class Requests(models.Model):
     requestid = models.AutoField(primary_key=True)
-    requesting = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requesting_user")
-    requested = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requested_user")
+    requestMaker = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requesting_user")
+    requestReceiver = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requested_user")
     statusid = models.ForeignKey(RequestStatus,on_delete=models.CASCADE)
     class Meta:
-        unique_together = ('requesting' , 'requested')
+        unique_together = ('requestMaker' , 'requestReceiver')
 
 
 class Relation(models.Model):
@@ -24,6 +24,7 @@ class Relation(models.Model):
         return MatesView(self.mate.name,self.mate.email,self.mate.clgid.clgName,self.mate.deptid.deptname)
     class Meta:
         unique_together = ('user' , 'mate')
+
 class MatesView():
     def __init__(self,mateName,mateEmail,mateClg,mateDept):
         self.mateName = mateName
