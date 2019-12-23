@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import Sidenav from '../components/Sidenav';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Spin } from 'antd';
 
 const {Content} = Layout;
 const { Search } = Input;
@@ -16,6 +17,7 @@ class SearchAction extends React.Component{
         result : [],
         query : '',
         msg:false,
+        load:false
     }
 
     constructor(){
@@ -24,6 +26,9 @@ class SearchAction extends React.Component{
     }
 
     handleSearch() {
+        this.setState({
+            load :true,
+        })
         var searchQuery = document.getElementById('search').value
         console.log(searchQuery);
         if(searchQuery == '') return; 
@@ -38,13 +43,16 @@ class SearchAction extends React.Component{
                 msg:true
             });
         });
+        this.setState({
+            load :false,
+        })
     }
 
     render(){
 
         return(
             <Layout>
-                <Sidenav navPosition={'1'}/>                
+                <Sidenav navPosition={'5'}/>                
                 <Layout style={{ marginLeft: 200 }}>
                     <Header/>
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
@@ -53,7 +61,8 @@ class SearchAction extends React.Component{
                         </div>
                         {this.state.msg ? <h6 style={{marginLeft:'80px'}}>Showing result for '{this.state.query}'</h6> : null}
                         
-                        <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}>                            
+                        <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}>   
+                        <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                          
                             {this.state.result ? 
                                 <List
                                     itemLayout="horizontal"

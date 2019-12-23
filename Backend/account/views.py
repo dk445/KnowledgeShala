@@ -12,12 +12,14 @@ import jsonpickle
 def profile(request):
     data = json.loads(request.body.decode('utf-8'))
     email =  data['email']
+    loggedUser = data['loggedUser']
     print(email)
 
     data=[]
     userPosts=[]
-    userMates=[]
-    userRequests=[]
+    userMates=False
+    userRequests= False
+    comingReq = False
 
     
 
@@ -28,24 +30,25 @@ def profile(request):
     if len(posts) > 0:
         for post in posts:
             userPosts.append(post.getView())
+    if(email != loggedUser):
+        mates = Relation.objects.filter(user = email).filter(mate=loggedUser)
+        requests = Requests.objects.filter(requestReceiver = email).filter(requestMaker=loggedUser).filter(statusid = '0')
+        Req = Requests.objects.filter(requestReceiver = loggedUser).filter(requestMaker=email).filter(statusid = '0')
+        if len(requests)>0:
+            userRequests = True
+        if len(mates) > 0:
+            userMates = True
+        if len(Req) > 0:
+            comingReq = True
+
     
-    mates = Relation.objects.filter(user = email)
-    if len(mates) > 0:
-        for mate in mates:
-            userMates.append(mate.getView())
-
-    requests = Requests.objects.filter(requestMaker = email).filter(statusid = '0')
-    if len(requests)>0:
-        for request in  requests:
-            userRequests.append(request.requestReceiver)
-
-    print(userRequests)
     result = {
         'userdata':data,
         'userposts':userPosts,
         'userMates' : userMates,
-        'userRequests' : userRequests
+        'userRequests' : userRequests,
+        'comingReq': comingReq
     }
     
-    
+    print(result)
     return HttpResponse(jsonpickle.encode(result))

@@ -6,9 +6,8 @@ import './App.css';
 import LoginForm from './containers/Login';
 import SignupForm from './containers/Signup';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import axios from 'axios';
-import $ from 'jquery';
-import history from './history';
+import {Link} from 'react-router-dom';
+
 
 class App extends Component {
 
@@ -23,7 +22,8 @@ class App extends Component {
   }
 
   state={
-    email:''
+    email:'',
+    redirect:false
   }
   _onButtonClick() {
     this.setState({
@@ -41,6 +41,11 @@ class App extends Component {
   
 
 componentDidMount(){ 
+      if(reactLocalStorage.get('email')){
+        this.setState({
+          redirect:true
+        })
+      }
       window.location.hash="/";
       window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
       window.onhashchange=function(){window.location.hash="/";} 
@@ -51,6 +56,7 @@ componentDidMount(){
   render(){
       return (
         <div className="App">
+          {this.state.redirect ? <Link to="/feed"></Link> : null}
           <h1>Welcome to KNOWLEDGESHALA</h1>
           <br/>
           <button className="btn btn-link" onClick={this._onButtonClick}>Login</button>

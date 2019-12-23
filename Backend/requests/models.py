@@ -13,8 +13,12 @@ class Requests(models.Model):
     requestReceiver = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="requested_user")
     statusid = models.ForeignKey(RequestStatus,on_delete=models.CASCADE)
     class Meta:
-        unique_together = ('requestMaker' , 'requestReceiver')
+        #unique_together = ('requestMaker' , 'requestReceiver' , 'statusid')
+        pass
 
+class RequestsView():
+    def __init__(self,requestReceiver):
+        self.user = requestReceiver
 
 class Relation(models.Model):
     user = models.ForeignKey(UserData,on_delete= models.CASCADE,related_name="user")

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Layout, Menu, Icon, Button } from 'antd';
+import axios from 'axios';
+import { Layout, Menu, Icon, Button, Badge } from 'antd';
 import{ Link, Redirect } from 'react-router-dom';
 import { reactLocalStorage } from 'reactjs-localstorage';
 
@@ -9,11 +10,21 @@ const { Header, Content, Footer, Sider } = Layout;
 class Sidenav extends React.Component{
   state = {
     loggedinuser  : '',
-
+    req: false
   }
 
   componentDidMount(){
-   
+    axios.post('http://127.0.0.1:8000/request/reqCount',{
+            email: reactLocalStorage.get('email')
+        })
+        .then(res => {
+            
+            console.log(res.data);
+            if(res.data == 'True')
+            this.setState({
+                req : true
+            })
+        })       
   }
 
   render(){
@@ -30,41 +41,61 @@ class Sidenav extends React.Component{
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={this.props.navPosition}>
                     
+                  
                     <Menu.Item key="1">
-                    <Icon type="user" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to={{
-                                                    pathname :"/account",
-                                                    state : {
-                                                      email: reactLocalStorage.get('email')
-                                                    }
-                                                  }}>
-                                                Profile</Link></Button></span>
+                      <Link to={{
+                        pathname :"/account",
+                        state : {
+                        email: reactLocalStorage.get('email')
+                        }
+                      }}>                    
+                        <Icon type="user" />
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}>Profile</Button></span>
+                      </Link>
                     </Menu.Item>
 
                     <Menu.Item key="2">
-                    <Icon type="home" />
-                    <span className="nav-text" ><Button type='link' style={{color:'white'}}><Link to="/feed"> Feed</Link></Button></span>
+                      <Link to="/feed">
+                        <Icon type="home" />
+                        <span className="nav-text" ><Button type='link' style={{color:'white'}}> Feed</Button></span>
+                      </Link>
                     </Menu.Item>
 
 
                     <Menu.Item key="3">
-                    <Icon type="upload" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/post"> Make Post</Link></Button></span>
-                    </Menu.Item>                                
-                    
-                    <Menu.Item key="4">
-                    <Icon type="search" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/search"> Search</Link></Button></span>
-                    </Menu.Item>
+                      <Link to="/post">
+                        <Icon type="upload" />
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}> Make Post</Button></span>
+                      </Link>
+                    </Menu.Item>             
 
+                    <Menu.Item key="4">
+                      <Link to="/requests">
+                        <Icon type="user-add" />
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}> Requests</Button></span>
+                        {this.state.req ? <Badge color={'red'} /> : null}
+                      </Link>
+                    </Menu.Item>                  
+                    
                     <Menu.Item key="5">
-                    <Icon type="team" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to= "/mates">Mates</Link></Button></span>
+                      <Link to="/search">
+                        <Icon type="search" />
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}> Search</Button></span>
+                      </Link>
                     </Menu.Item>
 
                     <Menu.Item key="6">
-                    <Icon type="logout" />
-                    <span className="nav-text"><Button type='link' style={{color:'white'}}><Link to="/"> Logout</Link></Button></span>
+                      <Link to= "/mates">
+                        <Icon type="team" />
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}>Mates</Button></span>
+                      </Link>
+                    </Menu.Item>
+
+                    <Menu.Item key="7">
+                      <Link to="/">
+                        <Icon type="logout" />
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}> Logout</Button></span>
+                      </Link>
                     </Menu.Item>
                 </Menu>
                 </Sider>

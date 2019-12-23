@@ -22,3 +22,16 @@ def displaymates(request):
     #result = serializers.serialize('json',mates)
 
     return HttpResponse(jsonpickle.encode(result))
+
+def deleteMate(request):
+    data = json.loads(request.body.decode('utf-8'))
+    loggedinuser =  data['loggedUser']
+    mateEmail = data['reqUser']
+
+    try:
+        Relation.objects.filter(user=loggedinuser).filter(mate=mateEmail).delete()
+        Relation.objects.filter(user=mateEmail).filter(mate=loggedinuser).delete()
+        return HttpResponse('success')
+    except:
+        return HttpResponse('failed')
+

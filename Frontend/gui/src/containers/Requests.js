@@ -9,24 +9,24 @@ import Footer from '../components/Footer';
 import {reactLocalStorage} from 'reactjs-localstorage';
 const {Content } = Layout;
 
-class Mates extends React.Component{    
+class Requests extends React.Component{    
     
     state = {
-        mates : [],
+        req : [],
         loggedinuser :'',
-        load:true
+        load:true,
     }
 
     componentDidMount() {
 
-        axios.post('http://127.0.0.1:8000/mates/',{
+        axios.post('http://127.0.0.1:8000/request/displayReq',{
             email: reactLocalStorage.get('email')
         })
         .then(res => {
             
             console.log(res.data);
             this.setState({
-                mates : res.data,
+                req : res.data,
                 load:false
             })
         })
@@ -36,17 +36,17 @@ class Mates extends React.Component{
     render(){
         return(
             <Layout>
-                <Sidenav  navPosition={'6'} email ={this.state.loggedinuser}/>
+                <Sidenav  navPosition={'4'} email ={this.state.loggedinuser}/>
                 
                 <Layout style={{ marginLeft: 200 }}>
                 <Header/>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                 
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}> 
-                    <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                                           
+                    <div style={{position:'relative' , left:'48%' , top:'100 px'}}>{this.state.load ? <Spin size="large" /> : null}</div>                                           
                         <List
                             itemLayout="horizontal"
-                            dataSource={this.state.mates}
+                            dataSource={this.state.req}
                             renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
@@ -54,10 +54,10 @@ class Mates extends React.Component{
                                     title={<Link to={{
                                         pathname:"/account",
                                         state:{
-                                            email : item.mateEmail
+                                            email : item.email
                                         }
-                                    }}>{item.mateName}</Link>}                          
-                                    description= {'College: '+item.mateClg + ' Department : ' +item.mateDept} //{item.mateClg}
+                                    }}>{item.name}</Link>}                          
+                                    description= {'College: '+item.clgName + ' Department : ' +item.deptName} //{item.mateClg}
                                 />                
                             </List.Item>
                             )}
@@ -71,4 +71,4 @@ class Mates extends React.Component{
     }
 }
 
-export default Mates;
+export default Requests;

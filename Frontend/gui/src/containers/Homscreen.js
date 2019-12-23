@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
-import { Layout, List, Avatar } from 'antd';
+import { Layout, List, Avatar , Spin } from 'antd';
 import Sidenav from '../components/Sidenav';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -14,12 +14,16 @@ class Homescreen extends React.Component{
     
     state = {
         posts : [],
-        loggedinuser : ''
+        loggedinuser : '',
+        load : true
     }
 
     
 
     componentDidMount() {
+        this.setState({
+            load :true,
+        })
         axios({
             method: 'post',
             url: 'http://127.0.0.1:8000/feed/',
@@ -32,6 +36,9 @@ class Homescreen extends React.Component{
                 posts : res.data
             })
         })
+        this.setState({
+            load :false,
+        })
     }    
 
   
@@ -43,10 +50,9 @@ class Homescreen extends React.Component{
                 <Layout style={{ marginLeft: 200 }}>
                 <Header/>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+                    <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                    
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left', marginLeft:'60px', marginRight:'110px' }}>                        
-                        
-                   
-                        
+                                            
                     <List
                         itemLayout="vertical"
                         size="large"

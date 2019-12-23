@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path('',views.displaymates),   
+    path('remove',views.deleteMate)
 ] 

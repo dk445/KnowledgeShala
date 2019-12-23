@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import LoginForm from './Login';
 import {createReactClass} from 'create-react-class';
+import {Link} from 'react-router-dom';
 
 class Forgot extends React.Component{
 
@@ -14,7 +15,8 @@ class Forgot extends React.Component{
     state = {
         showotp:false,
         showemail:true,
-        pwdreset:false
+        pwdreset:false,
+        redirect:false
       }
     compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
@@ -75,6 +77,9 @@ class Forgot extends React.Component{
             })
             .then(res=>{
                 console.log(res.data);
+                this.setState({
+                    redirect:true
+                })
             })
 
         }
@@ -108,7 +113,7 @@ render(){
             //const { getFieldDecorator }  = this.props.form;
             return(
                 
-                    
+            <div>{this.state.redirect ? <Link to="/#"/>:null}
                           <Form.Item name = "otp">
                             <Input
                                 required
@@ -118,7 +123,7 @@ render(){
                             />
                         </Form.Item>
                     
-                    
+                        </div>
                 
                 
             );

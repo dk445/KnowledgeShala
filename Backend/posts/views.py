@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from .serializers import UserPostSerializer
 import json
 import jsonpickle
+from operator import attrgetter
 
 
 
@@ -47,15 +48,27 @@ class Posts(APIView):
         loggedinuser =  request.body.decode('utf-8')   
         mates = Relation.objects.filter(user_id = loggedinuser)
         filteredpost = []
-        postids = []
+        postObjects = []
+        posts = UserPost.objects.filter(owner_id = loggedinuser)
+        for post in posts:                
+            postObjects.append(post)
+            #filteredpost.append(post.getView())
+
         ownerdept= UserData.objects.get(email=loggedinuser).deptid
+
         for relation in mates:
             if(relation.mate.deptid == ownerdept):
-                posts = (UserPost.objects.filter(owner_id = relation.mate).order_by('createdon').reverse() | UserPost.objects.filter(owner_id = loggedinuser).order_by('createdon').reverse())
-                for post in posts:
-                    if post.postid not in postids:
-                        postids.append(post.postid)
-                        filteredpost.append(post.getView())         
+                posts = UserPost.objects.filter(owner_id = relation.mate)
+                #posts.order_by('createdon').reverse()
+            for post in posts:
+                #if post.postid not in postids:
+                #        postids.append(post.postid)
+                #filteredpost.append(post.getView()) 
+                postObjects.append(post)
+        sorted(postObjects, key=attrgetter('createdon'))        
+        postObjects.reverse()
+        for post in postObjects:
+            filteredpost.append(post.getView())
         print(filteredpost)
         return HttpResponse(jsonpickle.encode(filteredpost))      
 
