@@ -5,8 +5,9 @@ from django.contrib.auth.models import AbstractUser,User
 
 
 class CollegeData(models.Model):
-    clgid = models.CharField(max_length=3,primary_key=True)
+    clgid = models.CharField(unique=True ,max_length=3,primary_key=True)
     clgName = models.CharField(max_length = 100)
+    mobile = models.CharField(max_length = 10)
     city = models.CharField(max_length=20, null=True)
     email = models.EmailField(unique = True,null=True)
     password = models.CharField(max_length=128)
@@ -46,6 +47,11 @@ class ClgListView():
         self.label=clgName
         self.city = city
         self.clgId = id
+
+class DeptListView():
+    def __init__(self,deptId,deptName):
+        self.deptId = deptId
+        self.deptName = deptName
 
      
     

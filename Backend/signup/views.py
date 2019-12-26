@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from signup.models import UserData,CollegeData,DepartmentData,RoleData,ClgListView
+from signup.models import UserData,CollegeData,DepartmentData,RoleData,ClgListView,DeptListView
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import auth,User
 from django.utils import timezone
@@ -11,6 +11,8 @@ import jsonpickle
 
 
 # Create your views here.
+
+        
 
 def signupPage(request):
     data = json.loads(request.body)
@@ -41,15 +43,25 @@ def signupPage(request):
         #return redirect('api/signin',{'message' : 'Registered successfully.'})
     except:
         return HttpResponse('False')
+
     
 def getClgList(request):
     Clgs = CollegeData.objects.all()
     ClgList = []
     for clg in Clgs:
         ClgList.append(ClgListView(clg.clgName,clg.city,clg.clgid))
-    print(ClgList)
-    
+    print(ClgList)    
     return HttpResponse(jsonpickle.encode(ClgList))
+
+
+def getDeptList(request):
+    Depts = DepartmentData.objects.all()
+    DeptList = []
+
+    for dept in Depts:
+        DeptList.append(DeptListView(dept.deptid,dept.deptname))
+    print(DeptList)
+    return HttpResponse(jsonpickle.encode(DeptList))
 
 
     

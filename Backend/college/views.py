@@ -5,8 +5,38 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password, check_password
 from signup.models import UserData,CollegeData,DepartmentData,RoleData
 from django.core import serializers
+from django.core.mail import send_mail
+import json
 
 # Create your views here.
+
+
+def CollegeSignup(request):
+    data = json.loads(request.body)
+    clgName = data['name']
+    email = data['email']   
+    mobile = data['mobile']
+    clgId = data['clgId']
+    city = data['city']        
+    password = make_password(data['password'])
+    print(data)
+    try:
+        college = CollegeData.objects.create(clgid=clgId , clgName=clgName , mobile=mobile , city=city, email=email , password=password)
+        #sending mail to user 
+        send_mail(
+            'Registered successfully',
+            'Now you can login and access your account.',
+            'kartik.dambre@gmail.com',
+            [email],
+            fail_silently=False,
+            )
+        print('mail sent')
+        print('user created')
+        return HttpResponse('True')
+        #return redirect('api/signin',{'message' : 'Registered successfully.'})
+    except:
+        return HttpResponse('False')
+
 
 def acceptrequest(request,id,email):    
     UserData.object.get(email=email).update(isVerified='Yes')
@@ -91,3 +121,5 @@ def addcollege(request):
                 #return render(request,'college.html',{'message':'wrong password'})
         else:
             return render(request,'college.html')
+
+

@@ -13,6 +13,11 @@ class Sidenav extends React.Component{
     req: false
   }
 
+  logout(){
+    reactLocalStorage.clear();
+    
+  }
+
   componentDidMount(){
     axios.post('http://127.0.0.1:8000/request/reqCount',{
             email: reactLocalStorage.get('email')
@@ -94,7 +99,7 @@ class Sidenav extends React.Component{
                     <Menu.Item key="7">
                       <Link to="/">
                         <Icon type="logout" />
-                        <span className="nav-text"><Button type='link' style={{color:'white'}}> Logout</Button></span>
+                        <span className="nav-text"><Button onClick = {this.logout} type='link' style={{color:'white'}}> Logout</Button></span>
                       </Link>
                     </Menu.Item>
                 </Menu>

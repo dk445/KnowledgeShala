@@ -12,6 +12,7 @@ import MakePost from './containers/MakePost';
 import Forgot from './containers/forgot';
 import SearchAction from './containers/Search';
 import Requests from './containers/Requests';
+import College from './containers/College';
 
 
 const routing = (
@@ -26,6 +27,7 @@ const routing = (
         <Route path="/forgot" component={Forgot}/>
         <Route path="/search" component={SearchAction}/>
         <Route path="/requests" component={Requests}/>
+        <Route path="/college" component = {College}/> 
       </div>
     </Router>
   )

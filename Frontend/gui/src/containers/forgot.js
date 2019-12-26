@@ -2,21 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import '../App.css';
 import { Form, Icon, Input, Button,Spin } from 'antd';
-import {Redirect} from 'react-router-dom';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import LoginForm from './Login';
-import {createReactClass} from 'create-react-class';
 import {Link} from 'react-router-dom';
 
 class Forgot extends React.Component{
-
-
 
     state = {
         showotp:false,
         showemail:true,
         pwdreset:false,
-        redirect:false
+        redirect:false,
+        load:false
       }
     compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
@@ -41,6 +37,9 @@ class Forgot extends React.Component{
     };
 
     handleSubmit = e => {
+        this.setState({
+            load:true
+        })
         console.log('in handle');
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -48,8 +47,6 @@ class Forgot extends React.Component{
             console.log('Received values of form: ', values);
           }
         });
-    
-        
         
         if(this.state.showotp){
             const   emailId = e.target.elements.emailId.value;
@@ -61,7 +58,8 @@ class Forgot extends React.Component{
                 this.setState({
                     showotp:false,
                     showemail:false,
-                    pwdreset:true
+                    pwdreset:true,
+                    load:false
                 })
                 reactLocalStorage.set('email',emailId);
             }
@@ -78,7 +76,8 @@ class Forgot extends React.Component{
             .then(res=>{
                 console.log(res.data);
                 this.setState({
-                    redirect:true
+                    redirect:true,
+                    load:false
                 })
             })
 
@@ -95,106 +94,17 @@ class Forgot extends React.Component{
             console.log(res.data);
             reactLocalStorage.set('otp',res.data);
             this.setState({
-                showotp:true
+                showotp:true,
+                load:false
             });            
             }) 
             
         }
+        
     };      
    
 
 render(){
-    //const { getFieldDecorator }  = this.props.form;
-    var createReactClass = require('create-react-class');
-
-
-    var Otp = createReactClass({
-        render: function() {
-            //const { getFieldDecorator }  = this.props.form;
-            return(
-                
-            <div>{this.state.redirect ? <Link to="/#"/>:null}
-                          <Form.Item name = "otp">
-                            <Input
-                                required
-                                name="otp"
-                                prefix={<Icon type="form" style={{ color: 'rgba(0,0,0,.25)'}} />}
-                                placeholder="Enter OTP sent to your above email"
-                            />
-                        </Form.Item>
-                    
-                        </div>
-                
-                
-            );
-        }
-    });
-
-    var ForgotEmail = createReactClass({
-        render: function() {
-            //const { getFieldDecorator }  = this.props.form;
-            return(
-                
-                    
-                          <Form.Item name = "emailId">
-                                {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: 'Please input your email!' }],
-                                })(
-                                    <Input
-                                    name="emailId"
-                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />}
-                                    placeholder="Email"
-                                    />,
-                                )}
-                            </Form.Item>
-                    
-                    
-                
-                
-            );
-        }
-    });
-
-    var PwdReset = createReactClass({
-        render: function() {
-            
-            
-            return(
-                        
-                <div>
-                    <Form.Item label="Password" name='pwd' hasFeedback>
-                        {getFieldDecorator('password', {
-                            rules: [
-                                {
-                                required: true,
-                                message: 'Please input your password!',
-                                },
-                                {
-                                validator: this.validateToNextPassword,
-                                },
-                            ],
-                            })(<Input.Password  name='pwd'/>)}
-                    </Form.Item>
-
-                    <Form.Item label="Confirm Password" hasFeedback>
-                        {getFieldDecorator('confirm', {
-                            rules: [
-                                {
-                                required: true,
-                                message: 'Please confirm your password!',
-                                },
-                                {
-                                validator: this.compareToFirstPassword,
-                                },
-                            ],
-                        })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-                    </Form.Item>                   
-                </div>  
-                
-            );
-        }
-    });
-
     const formItemLayout = {
         labelCol: {
           xs: { span: 24 },
@@ -202,24 +112,89 @@ render(){
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 16 },     
+          sm: { span: 16 },
         },
-      };  
+      };
     const { getFieldDecorator }  = this.props.form;
-
     return(
-
+        
             <div className="App">
+                <div style={{position:'absolute' , left:'57%' , top:'40%'}}>
+                    {this.state.load ? <Spin size="large" /> : null}
+                </div>                                           
+                {this.state.redirect ? <Link to="/#"/>:null}
                 <h1>Welcome to KNOWLEDGESHALA</h1>
-                <br/>
-                <Form  {...formItemLayout} onSubmit={this.handleSubmit} style={{marginLeft:'90px',marginRight:'5px'}}>  
-                        {this.state.pwdreset ? <PwdReset/> : <h1></h1>}
+                <br/><br/>
+                <Form  onSubmit={this.handleSubmit} >  
+                        
+                        
+                        {this.state.pwdreset ?                             
+                        <div>
+                            <Form.Item label="Password" name='pwd' hasFeedback>
+                                {getFieldDecorator('password', {
+                                    rules: [
+                                        {
+                                        required: true,
+                                        message: 'Please input your password!',
+                                        },
+                                        {
+                                        validator: this.validateToNextPassword,
+                                        },
+                                    ],
+                                    })(<Input.Password  name='pwd'/>)}
+                            </Form.Item>
+
+                            <Form.Item label="Confirm Password" hasFeedback>
+                                {getFieldDecorator('confirm', {
+                                    rules: [
+                                        {
+                                        required: true,
+                                        message: 'Please confirm your password!',
+                                        },
+                                        {
+                                        validator: this.compareToFirstPassword,
+                                        },
+                                    ],
+                                })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+                            </Form.Item>                   
+                        </div>
+
+                        : null}
+
+
                     
-                        {this.state.showemail ? <ForgotEmail/> : <h1></h1>}
+                        {this.state.showemail ?                         
+                            <div>
+                                <Form.Item name = "emailId">
+                                    {getFieldDecorator('username', {
+                                        rules: [{ required: true, message: 'Please input your email!' }],
+                                    })(
+                                        <Input
+                                        name="emailId"
+                                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />}
+                                        placeholder="Email"
+                                        />,
+                                    )}
+                                </Form.Item>
+                            </div>
+
+                        : null}
                     
                     
-                        {this.state.showotp ? <Otp name = "otp" /> : <h1></h1>}
+                        {this.state.showotp ?                        
+                            <div>
+                                <Form.Item name = "otp">
+                                    <Input
+                                        required
+                                        name="otp"
+                                        prefix={<Icon type="form" style={{ color: 'rgba(0,0,0,.25)'}} />}
+                                        placeholder="Enter OTP sent to your above email"
+                                    />
+                                </Form.Item>                        
+                            </div>
+                        : null}
                     
+
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Submit

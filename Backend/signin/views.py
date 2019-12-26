@@ -14,24 +14,32 @@ import json , random , jsonpickle
 
 
 def collegesignin(request):
-    if request.user.is_authenticated:
-        return redirect('/feed/')
-    else:
-        if request.method == 'GET':
-            return render(request,'collegepage.html')
+    data = json.loads(request.body.decode('utf-8'))
+    email = data['email']  
+    password = data['password']
+    print(email)
+    print(password)
+    try: 
+        clg = CollegeData.objects.get(email=email)
+        if check_password(password,clg.password) :
+            
+            if clg.isVerified == "No":
+                print('not verified')
+                #return HttpResponse('not verified')  //commenting for development purpose
+                return HttpResponse('login success')  #this line should be remove
+            
+            print('login success')            
+            return HttpResponse('login success')
 
         else:
-            email = request.POST['email']
-            password = request.POST['password']
-            college = CollegeData.objects.get(email=email)
-            if(check_password(password,college.password)):
-                print(college.clgid)
-                return redirect('/college/'+college.clgid)
-                #for req in requests:
-                 #   print(req.name)
-                
-            else:
-                return render(request,'collegepage.html')
+            #return render(request,'signin.html',{'message':'Wrong credentials'}) 
+            print('wrong pwd')   
+            return HttpResponse('login failed')            
+    except:
+        #return render(request,'signin.html',{'message':'No such user found.'})
+        print('(Exception) not found')
+        return HttpResponse('login failed')
+
 
 def otpRequest(request):
     data = json.loads(request.body.decode('utf-8'))

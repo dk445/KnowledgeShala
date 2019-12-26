@@ -1,5 +1,5 @@
 import  React from 'react';
-import {Form,Input,Tooltip,Icon,Menu,Cascader,Select,Radio,Col,Checkbox,Button,AutoComplete,DropDown} from 'antd';
+import {Form,Input,Tooltip,Icon,Cascader,Select,Radio,Checkbox,Button} from 'antd';
 import axios from 'axios';
   
   const { Option } = Select;
@@ -9,6 +9,7 @@ import axios from 'axios';
     state = {
       confirmDirty: false,
       ClgList: [],
+      DeptList:[],
       lable:'',
       value:''
     };
@@ -77,24 +78,37 @@ import axios from 'axios';
     };
 
     componentDidMount(){
-       const List = []
-       const obj = {
-         label:'',
-         value:''
-       }
+       const clgList = []
+       const deptList = []
+
        axios.get('http://127.0.0.1:8000/get/clg').then(res=> {
          console.log(res.data);
          for(var i=0 ; i< res.data.length ;i++){
-           List.push({
+           clgList.push({
              label : res.data[i].clgId + ' - ' + res.data[i].label + '  '+ res.data[i].city,
              value: res.data[i].value
            })
          } 
-          console.log(List)
+          console.log(clgList)
          this.setState({
-             ClgList:List
+             ClgList:clgList
            })
-       })       
+       })
+       
+       axios.get('http://127.0.0.1:8000/get/dept').then(res=> {
+         console.log(res.data);
+         for(var i=0 ; i< res.data.length ;i++){
+           deptList.push({
+             label : res.data[i].deptId +' - '+res.data[i].deptName,
+             value: res.data[i].deptId
+           })
+         } 
+          console.log(deptList)
+         this.setState({
+              DeptList:deptList
+           })
+       })
+
    
       }
   
@@ -186,10 +200,16 @@ import axios from 'axios';
             </Form.Item>
 
 
-            <Form.Item label="Department Id" name='deptId'>            
-                <Input name='deptId'/>            
+            <Form.Item label="Department" name='deptId'>       
+                  {getFieldDecorator('residence', {
+                    initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+                    rules: [
+                      { type: 'array', required: true, message: 'Please select your department' },
+                    ],
+                  })(<Cascader options={this.state.DeptList} />)}
             </Form.Item>
 
+            
 
             <Form.Item label="Role">            
               <Radio.Group name='role' defaultValue={0}>

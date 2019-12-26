@@ -7,8 +7,6 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Homscreen from './Homscreen';
-
 
 
 class LoginForm extends React.Component {
@@ -16,8 +14,9 @@ class LoginForm extends React.Component {
   state = {
     email:'',
     password:'',
-    redirect: false
+    redirect: false,
   }
+  
 
   handleChange = event => {
     this.setState({ 
@@ -48,35 +47,35 @@ class LoginForm extends React.Component {
 
     console.log(emailId , pwd);
     
+   
+      axios.post('http://127.0.0.1:8000/api/signin/',{
+        email : emailId,
+        password : pwd,
+        msg:''
+      })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+        if(res.data == "login success"){
+          console.log('redirecting to feed');
+          console.log(emailId);
+          reactLocalStorage.set('email',emailId);
+          console.log(reactLocalStorage.get('email'));
+          this.setRedirect();
+          
+        }
+        else{
+          this.setState({
+            msg: 'Incorrecr email and/or password'
+            })
+          }
 
-    axios.post('http://127.0.0.1:8000/api/signin/',{
-      email : emailId,
-      password : pwd,
-      msg:''
-     })
-    .then(res => {
-      console.log(res);
-      console.log(res.data);
-      if(res.data == "login success"){
-        console.log('redirecting to feed');
-        console.log(emailId);
-        reactLocalStorage.set('email',emailId);
-        console.log(reactLocalStorage.get('email'));
-        this.setRedirect();
-        
-      }
-      else{
-        this.setState({
-          msg: 'Incorrecr email and/or password'
-        })
-      }
-
-    })  
-
+        })  
+    
   };
   
   
-  renderRedirect = () => {
+  renderRedirect = () => {  
     if (this.state.redirect) {
       return <Redirect to='/feed'/>
     }
@@ -87,7 +86,7 @@ class LoginForm extends React.Component {
         return (
           <div>
           {this.renderRedirect()}
-          <h6 style={{color:'red'}}>{this.state.msg}</h6>
+          <h6 style={{color:'red'}}>{this.state.msg}</h6>                                                                 
           <Form onSubmit={this.handleSubmit}  >  
             <Form.Item name = "emailId">
               {getFieldDecorator('username', {

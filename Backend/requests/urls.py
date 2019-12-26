@@ -8,5 +8,6 @@ urlpatterns = [
     path('acceptReq', views.accept),
     path('cancelReq', views.cancelRequest),
     path('rejectReq' , views.rejectReq),
-    path('reqCount',views.reqCount)
+    path('reqCount',views.reqCount),
+    path('college/auth',views.checkAdminPwd),
 ] 

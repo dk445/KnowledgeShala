@@ -89,3 +89,13 @@ def cancelRequest(request):
     except:
         return HttpResponse('failed')
      
+
+def checkAdminPwd(request):
+    print(request.body.decode('utf-8'))
+    data = json.loads(request.body.decode('utf-8'))    
+    pwd = data['adminPassword']
+    print(pwd)
+    if(pwd=="11221133"):
+        return HttpResponse(True)
+    else:
+        return HttpResponse(False)
