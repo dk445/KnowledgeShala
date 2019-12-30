@@ -11,7 +11,8 @@ import axios from 'axios';
       ClgList: [],
       DeptList:[],
       lable:'',
-      value:''
+      value:'',
+      
     };
   
     handleSubmit = e => {
@@ -24,7 +25,7 @@ import axios from 'axios';
       });
 
 
-    try{
+    
       const emailId = e.target.elements.email.value
       const sname = e.target.elements.name.value
       const smobile = e.target.elements.mobile.value
@@ -32,7 +33,9 @@ import axios from 'axios';
       const sdeptId = e.target.elements.deptId.value
       const srole = e.target.elements.role.value
       const spassword = e.target.elements.pwd.value
-    
+      
+      console.log(sdeptId);
+      console.log(sclgName)
 
 
       axios.post('http://127.0.0.1:8000/',{
@@ -49,9 +52,9 @@ import axios from 'axios';
       console.log(res.data);
     })
    
-    }catch  (error){
-      return;
-    }
+    //}catch  (error){
+      //return;
+    //    }
       
     };
   
@@ -140,10 +143,10 @@ import axios from 'axios';
         },
       };
       const prefixSelector = getFieldDecorator('prefix', {
-        initialValue: '86',
+        initialValue: '91',
       })(
         <Select style={{ width: 70 }}>
-          <Option value="91">+91</Option>
+          <Option value="86">+86</Option>
           <Option value="63">+63</Option>
         </Select>,
       ); 
@@ -190,23 +193,23 @@ import axios from 'axios';
               })(<Input name='mobile' addonBefore={prefixSelector} style={{ width: '100%' }} />)}
             </Form.Item>
 
-            <Form.Item label="College" name='clgName'>       
-                  {getFieldDecorator('residence', {
-                    initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-                    rules: [
-                      { type: 'array', required: true, message: 'Please select your college' },
-                    ],
-                  })(<Cascader options={this.state.ClgList} />)}
+            <Form.Item label="College" name='clgName'>    
+                  <select name = 'clgName'>
+                    {this.state.ClgList.map(function(data,label){return(
+                    <option key={label} value={data.value}>{data.label}</option>
+                    )})}
+                  </select>                                  
             </Form.Item>
 
 
-            <Form.Item label="Department" name='deptId'>       
-                  {getFieldDecorator('residence', {
-                    initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-                    rules: [
-                      { type: 'array', required: true, message: 'Please select your department' },
-                    ],
-                  })(<Cascader options={this.state.DeptList} />)}
+            <Form.Item label="Department" name='deptId'>      
+                  
+                  <select name = 'deptId'>
+                    {this.state.DeptList.map(function(data,label){return(
+                    <option key={label} value={data.value}>{data.label}</option>
+                    )})}
+                  </select>
+
             </Form.Item>
 
             
@@ -233,7 +236,7 @@ import axios from 'axios';
               })(<Input.Password  name='pwd'/>)}
             </Form.Item>
 
-            <Form.Item label="Confirm Password" hasFeedback>
+            <Form.Item label="Confirm Password  " hasFeedback>
               {getFieldDecorator('confirm', {
                 rules: [
                   {

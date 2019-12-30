@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../App.css';
 import { Form, Icon, Input, Button,Spin,Checkbox } from 'antd';
 import CollegeSignup from './CollegeSignup';
+import CollegeRequests from './CollegeRequests';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import {Link, Redirect} from 'react-router-dom';
 
@@ -15,9 +16,9 @@ class College extends React.Component{
     state = {
         email:'',
         password:'',
-        clgPortal: false,
         toSignupPage:false,
-        login:true
+        login:true,
+        redirect:false
       }
     
       handleChange = event => {
@@ -28,7 +29,8 @@ class College extends React.Component{
     
       handleSubmit = (e) => {
         this.setState({
-          msg:''
+          msg:'',
+          email: e.target.elements.emailId.value
         })
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -36,36 +38,30 @@ class College extends React.Component{
             console.log('Received values of form: ', values);
           }
         });
-
-        if(this.state.clgPortal){
-
-            axios.post('http://127.0.0.1:8000/college/signin',{
-            email : e.target.elements.emailId.value,
-            password : e.target.elements.password.value,
-            })
-            .then(res => {
-            console.log(res);
-            console.log(res.data);
-            if(res.data == "login success"){
-                console.log('redirecting to feed');
-                //console.log(emailId);
-                reactLocalStorage.set('email',e.target.elements.emailId.value);
-                console.log(reactLocalStorage.get('email'));
-                this.setRedirect();
-                
-            }   
-            else{
-                this.setState({
-                    msg: 'Incorrecr email and/or password'
-                })
-            }
-
-            }) 
-        }
-
+        axios.post('http://127.0.0.1:8000/api/college/signin',{
+        email : e.target.elements.emailId.value,
+        password : e.target.elements.password.value,
+        })
+        .then(res => {
+        console.log(res.data);
+        if(res.data == "True"){
+            console.log('redirecting to feed');
+            //console.log(emailId);
+            reactLocalStorage.set('email',this.state.email);
+            reactLocalStorage.set('college',true);
+            console.log(reactLocalStorage.get('email'));
+            this.setState({
+                redirect:true
+            })    
+        }   
         else{
-            
-        };
+            this.setState({
+                msg: 'Incorrecr email and/or password'
+            })
+        }
+        }) 
+        
+
     }
 
     signupPage(){
@@ -73,16 +69,16 @@ class College extends React.Component{
             login:false,
             toSignupPage:true
         })
-    }
-      
+    }    
       
       
     
-          render(){
+        render(){
             const { getFieldDecorator }  = this.props.form;
             return (
               <div>
-              <h6 style={{color:'red'}}>{this.state.msg}</h6>    
+              <h6 style={{color:'red'}}>{this.state.msg}</h6>  
+              {this.state.redirect?<Redirect to="/collegeAccount"/>:null}  
               {this.state.toSignupPage?<CollegeSignup/>:null}
               <Form onSubmit={this.handleSubmit}>  
                 
@@ -128,8 +124,7 @@ class College extends React.Component{
                                     Create College Account
                         </Button><br/>    
 
-                    </div>:null}    
-                
+                    </div>:null}                    
                     
               </Form> 
                       

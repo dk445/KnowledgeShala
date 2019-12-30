@@ -60,9 +60,9 @@ class LoginForm extends React.Component {
           console.log('redirecting to feed');
           console.log(emailId);
           reactLocalStorage.set('email',emailId);
+          reactLocalStorage.set('college',false)
           console.log(reactLocalStorage.get('email'));
-          this.setRedirect();
-          
+          this.setRedirect();          
         }
         else{
           this.setState({

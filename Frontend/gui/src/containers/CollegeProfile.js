@@ -3,10 +3,10 @@ import axios from 'axios';
 import '../App.css';
 import { Layout, List, Avatar ,Collapse , Button , Spin} from 'antd';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import Sidenav from '../components/Sidenav';
+import CollegeSidenav from '../components/CollegeSidenav';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Blur from 'react-css-blur';
+import {Redirect} from 'react-router-dom';
 const {Content} = Layout;
 const { Panel } = Collapse;
 
@@ -14,28 +14,23 @@ const { Panel } = Collapse;
 
 
 
-class Profile extends React.Component{    
+class CollegeProfile extends React.Component{    
     
     state = {
         email :'',
         loggedinuser:'',
         data: [],
         posts:[],
-        self : false,
-        unfriend : false,
-        req: false ,
-        load : false,
-        comingReq:false,
-        add:false,        
-               
+        redirect:false,
+        verified:false,  
+        load:false,
+        status:false        
     }
 
     constructor(props) {
 
         super(props);
-        this.MakeReq = this.MakeReq.bind(this);
-        this.CancelReq = this.CancelReq.bind(this);
-        this.DeleteMate = this.DeleteMate.bind(this);
+        this.Remove = this.Remove.bind(this);
         this.AcceptReq = this.AcceptReq.bind(this);
         this.RejectReq = this.RejectReq.bind(this);
     }
@@ -52,14 +47,7 @@ class Profile extends React.Component{
             email : emailId,
             load :true,
         })
-        const mates = []
-        const req = []
-        if(emailId==reactLocalStorage.get('email')){
-                this.setState({
-                self : true
-            })
-        }
-        //console.log()
+        
         console.log(emailId)
         axios.post('http://127.0.0.1:8000/account/',{
             email:emailId,
@@ -67,122 +55,84 @@ class Profile extends React.Component{
         })
         .then(res => {            
             console.log(res.data);
-            if(res.data.userMates){
+            if(res.data.verified){
                 this.setState({
-                    unfriend:true,
-                })
-            }
-            else if(res.data.userRequests){
-                this.setState({
-                    req:true,
-                    //unfriend:false,
-                })
-            }
-            else if(res.data.comingReq){
-                this.setState({
-                    comingReq:true
-                })
-            }
-            else{
-                this.setState({
-                    add:true
+                    verified:true,
                 })
             }
             this.setState({
                 data : res.data.userdata,
                 posts: res.data.userposts,
                 load : false,
+                status:true
             })
         })
     }
 
-    MakeReq(){
-        var loggedEmail = reactLocalStorage.get('email')
-        var reqEmail = this.state.email;
-        axios.post('http://127.0.0.1:8000/request/makeReq',{
-            loggedUser:loggedEmail,
-            reqUser : reqEmail
+    
 
-        }).then(res=>{
-            console.log(res.data);
-            if(res.data=='success'){
-                this.setState({
-                    req:true,                    
-                })
-            }
+    Remove(){
+        this.setState({
+            load:true
         })
-
-    }
-
-    DeleteMate(){
         var loggedEmail = reactLocalStorage.get('email')
         var reqEmail = this.state.email;
-        axios.post('http://127.0.0.1:8000/mates/remove',{
+        axios.post('http://127.0.0.1:8000/college/remove',{
             loggedUser:loggedEmail,
             reqUser : reqEmail
 
         }).then(res=>{
             console.log(res.data);
-            if(res.data=='success'){
+            if(res.data){
                 this.setState({
-                    req:false,  
-                    unfriend:false,
-                    add:true
-                    
+                    verified:false,
+                    load:false,
+                    redirect:true
                 })
             }
         })        
     }
 
-    CancelReq() {
-        var loggedEmail = reactLocalStorage.get('email')
-        var reqEmail = this.state.email;
-        axios.post('http://127.0.0.1:8000/request/cancelReq',{
-            loggedUser:loggedEmail,
-            reqUser : reqEmail
-
-        }).then(res=>{
-            console.log(res.data);
-            if(res.data=='success'){
-                this.setState({
-                    req:false,
-                    add:true                                        
-                })
-            }
-        })
-    }
-
+    
     AcceptReq(){
+        this.setState({
+            load:true
+        })
         var loggedEmail = reactLocalStorage.get('email')
         var reqEmail = this.state.email;
-        axios.post('http://127.0.0.1:8000/request/acceptReq',{
+        axios.post('http://127.0.0.1:8000/college/accept',{
             loggedUser:loggedEmail,
             reqUser : reqEmail
 
         }).then(res=>{
             console.log(res.data);
-            if(res.data=='success'){
+            if(res.data){
                 this.setState({
-                    comingReq:false,
-                    unfriend:true                                        
+                    verified:true,
+                    load:false                                        
                 })
             }
         })        
     }
+
 
     RejectReq(){
+        this.setState({
+            load:true
+        })
         var loggedEmail = reactLocalStorage.get('email')
         var reqEmail = this.state.email;
-        axios.post('http://127.0.0.1:8000/request/rejectReq',{
+        axios.post('http://127.0.0.1:8000/college/reject',{
             loggedUser:loggedEmail,
             reqUser : reqEmail
 
         }).then(res=>{
             console.log(res.data);
-            if(res.data=='success'){
+            if(res.data){
                 this.setState({
-                    comingReq:false,
-                    add:true                                        
+                    verified:false,
+                    redirect:true,
+                    load:false                             
                 })
             }
         })
@@ -197,14 +147,16 @@ class Profile extends React.Component{
     render(){
         return(
             <Layout>
-                <Sidenav navPosition={'1'}/>
+                <CollegeSidenav navPosition={'1'}/>
                 
                 <Layout style={{ marginLeft: 200 }}>
                 <Header/>
+                <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                                                                                   
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+                    {this.state.redirect?<Redirect to="/collegeAccount"/>:null}
                     
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}>      
-                    <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                                                                                   
+                    
                         <List
                             itemLayout="horizontal"
                             dataSource={this.state.data}
@@ -230,28 +182,15 @@ class Profile extends React.Component{
                         /> <br/>
 
                         <div>
-                            {!this.state.self ? <div>
-                                {this.state.unfriend ? <Button type="primary" title="Delete as mate" onClick={this.DeleteMate}>Unfriend</Button> : 
-                                    <div>
-                                        {this.state.req ? <div><Button type="primary" title="Cancel Request" onClick={this.CancelReq}>Requsted</Button></div>
-                                            :
-                                            <div>
-                                                {this.state.comingReq ? <div>
-                                                                            <Button type="primary" title="Accept Request" onClick={this.AcceptReq}>Accept Request</Button>
-                                                                            <Button type="primary" title="Reject Request" onClick={this.RejectReq} style={{left:'10%'}}>Reject Request</Button>
-                                                                        </div>:
-                                                                        <div>
-                                                                        {this.state.add ? 
-                                                                        <div>
-                                                                            <Button type="primary" title="Make Request" onClick={this.MakeReq}>Make Request</Button>
-                                                                        </div>:null}
-                                                                        </div>
-                                                                        }
-                                            </div>
-                                            }
-                                    </div>}
-                                    </div>:null}
-                                
+                            {this.state.status?
+                            this.state.verified ? <div>
+                                <Button type="primary" title="Remove" onClick={this.Remove}>Remove</Button>
+                                </div>:
+                            <div>
+                                <Button type="primary" title="Accept" onClick={this.AcceptReq}>Accept</Button>
+                                <Button type="primary" title="Reject Request" onClick={this.RejectReq} style={{left:'10%'}}>Reject</Button>
+                            </div>:
+                            null}                               
                             
                         </div>
                         <br/><hr/>
@@ -316,4 +255,4 @@ class Profile extends React.Component{
     }
 }
 
-export default Profile;
+export default CollegeProfile;

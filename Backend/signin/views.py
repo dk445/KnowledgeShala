@@ -15,30 +15,21 @@ import json , random , jsonpickle
 
 def collegesignin(request):
     data = json.loads(request.body.decode('utf-8'))
+    print(data)
     email = data['email']  
     password = data['password']
+    res = False
     print(email)
     print(password)
-    try: 
-        clg = CollegeData.objects.get(email=email)
-        if check_password(password,clg.password) :
-            
-            if clg.isVerified == "No":
-                print('not verified')
-                #return HttpResponse('not verified')  //commenting for development purpose
-                return HttpResponse('login success')  #this line should be remove
-            
-            print('login success')            
-            return HttpResponse('login success')
-
-        else:
-            #return render(request,'signin.html',{'message':'Wrong credentials'}) 
-            print('wrong pwd')   
-            return HttpResponse('login failed')            
-    except:
-        #return render(request,'signin.html',{'message':'No such user found.'})
-        print('(Exception) not found')
-        return HttpResponse('login failed')
+    clg = CollegeData.objects.get(email=email)
+    if check_password(password,clg.password) :
+        print('login success')       
+        res=True
+    return HttpResponse(res)            
+#except:
+    #return render(request,'signin.html',{'message':'No such user found.'})
+    #print('(Exception) not found')
+    #return HttpResponse('login failed')
 
 
 def otpRequest(request):
@@ -74,10 +65,6 @@ def signinPage(request):
     data = json.loads(request.body.decode('utf-8'))
     email = data['email']  
     password = data['password']
-    
-
-    #email = 'kartikdambre.160410116022@gmail.com'
-
     print(email)
     print(password)
     try: 

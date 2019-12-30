@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import '../App.css';
 import { Layout, List, Avatar , Spin } from 'antd';
-import Sidenav from '../components/Sidenav';
+import CollegeSidenav from '../components/CollegeSidenav';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import {Link} from 'react-router-dom';
@@ -10,47 +10,43 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 const { Content} = Layout;
 
 
-class Homescreen extends React.Component{    
+class CollegeRequests extends React.Component{    
     
     state = {
-        posts : [],
-        loggedinuser : '',
+        requests : [],
+        loggedinuser : reactLocalStorage.get('email'),
         load : true
-    }
-
-    
+    }    
 
     componentDidMount() {
         this.setState({
             load :true,
         })
-        axios({
-            method: 'post',
-            url: 'http://127.0.0.1:8000/feed/',
-            data: reactLocalStorage.get('email')
+        const emailId = this.state.loggedinuser         
+        axios.post('http://127.0.0.1:8000/college/requests',{
+            email: emailId
         })
         .then(res => {
             
             console.log(res.data);
             this.setState({
-                posts : res.data
+                requests : res.data
             })
         })
         this.setState({
             load :false,
         })
-    }    
-
-  
+    }      
 
     render(){
         return(
             <Layout>
-                <Sidenav navPosition={'2'} email ={this.state.loggedinuser}/>
+                <CollegeSidenav navPosition={'2'} email ={this.state.loggedinuser}/>
                 <Layout style={{ marginLeft: 200 }}>
                 <Header/>
+                <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                    
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                    <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                    
+                    
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left', marginLeft:'60px', marginRight:'110px' }}>                        
                                             
                     <List
@@ -62,7 +58,7 @@ class Homescreen extends React.Component{
                         },
                         pageSize: 4 ,
                         }}
-                        dataSource={this.state.posts}
+                        dataSource={this.state.requests}
                         footer={
                         <div>
                             
@@ -70,23 +66,20 @@ class Homescreen extends React.Component{
                         }
                         renderItem={item => (
                         <List.Item
-                            key={item.owner}
+                            key={item.name}
                             actions={[
                             
                             ]}
-                            //extra={
                             
-                            //}
                         >
                             <List.Item.Meta
-                            //avatar={<Avatar src={item.avatar} />}
                                 title={<Link to={{
-                                    pathname:"/account",
+                                    pathname:"/account-detail",
                                     state:{
-                                        email : item.email,                                        
+                                        email : item.email,
                                     }
-                                }}>{item.owner}</Link>}
-                                description={item.createDate + ' '+ item.createTime}
+                                }}>{item.name}</Link>}
+                                description={'Department : '+item.deptName + '  Role : '+ item.role}
                             />
                                 {item.description}
                             </List.Item>
@@ -101,5 +94,5 @@ class Homescreen extends React.Component{
     }
 }
 
-export default Homescreen;  
+export default CollegeRequests;  
 

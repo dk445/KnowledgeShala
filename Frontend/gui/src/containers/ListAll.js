@@ -7,26 +7,27 @@ import Sidenav from '../components/Sidenav';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import {reactLocalStorage} from 'reactjs-localstorage';
+import CollegeSidenav from '../components/CollegeSidenav';
 const {Content } = Layout;
 
-class Requests extends React.Component{    
+class ListAll extends React.Component{    
     
     state = {
-        req : [],
+        list : [],
         loggedinuser :'',
-        load:true,
+        load:true
     }
 
     componentDidMount() {
 
-        axios.post('http://127.0.0.1:8000/request/displayReq',{
+        axios.post('http://127.0.0.1:8000/college/list',{
             email: reactLocalStorage.get('email')
         })
         .then(res => {
             
             console.log(res.data);
             this.setState({
-                req : res.data,
+                list : res.data,
                 load:false
             })
         })
@@ -36,27 +37,28 @@ class Requests extends React.Component{
     render(){
         return(
             <Layout>
-                <Sidenav  navPosition={'4'} email ={this.state.loggedinuser}/>
+                <CollegeSidenav  navPosition={'3'} email ={this.state.loggedinuser}/>
                 
                 <Layout style={{ marginLeft: 200 }}>
                 <Header/>
+                <div style={{position:'absolute' , left:'57%' , top:'25%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                                           
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                 
                     <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}> 
-                    <div style={{position:'relative' , left:'48%' , top:'100 px'}}>{this.state.load ? <Spin size="large" /> : null}</div>                                           
+
                         <List
                             itemLayout="horizontal"
-                            dataSource={this.state.req}
+                            dataSource={this.state.list}
                             renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
                                 //avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                     title={<Link to={{
-                                        pathname:"/account",
+                                        pathname:"/account-detail",
                                         state:{
-                                            email : item.email,
+                                            email : item.email,                                            
                                         }
-                                    }}>{item.name}</Link>}                          
+                                    }}><h5>{item.name}</h5></Link>}                          
                                     description= {'College: '+item.clgName + ' Department : ' +item.deptName} //{item.mateClg}
                                 />                
                             </List.Item>
@@ -71,4 +73,4 @@ class Requests extends React.Component{
     }
 }
 
-export default Requests;
+export default ListAll;

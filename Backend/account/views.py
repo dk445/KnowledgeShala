@@ -20,10 +20,13 @@ def profile(request):
     userMates=False
     userRequests= False
     comingReq = False
+    verified = False
 
     
 
     user = UserData.objects.get(email=email)
+    if(user.isVerified == "Yes"):
+        verified=True
     data.append(user.get_user_view())
 
     posts = UserPost.objects.filter(owner = email).order_by('createdon').reverse()
@@ -47,7 +50,8 @@ def profile(request):
         'userposts':userPosts,
         'userMates' : userMates,
         'userRequests' : userRequests,
-        'comingReq': comingReq
+        'comingReq': comingReq,
+        'verified' : verified
     }
     
     print(result)

@@ -12,6 +12,9 @@ class CollegeData(models.Model):
     email = models.EmailField(unique = True,null=True)
     password = models.CharField(max_length=128)
 
+    def get_clg_view(self):
+        return CollegeView(self.clgName,self.email,self.city,self.clgid)
+
 class DepartmentData(models.Model):
     deptid = models.CharField(max_length = 10, primary_key=True)
     deptname = models.CharField(max_length = 100)
@@ -52,6 +55,14 @@ class DeptListView():
     def __init__(self,deptId,deptName):
         self.deptId = deptId
         self.deptName = deptName
+
+
+class CollegeView():
+    def __init__(self,clgName,email,city,clgId):
+        self.clgName = clgName
+        self.email = email
+        self.city = city
+        self.clgId = clgId
 
      
     

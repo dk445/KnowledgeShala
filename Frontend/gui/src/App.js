@@ -13,7 +13,8 @@ class App extends Component {
 
   state={
     email:'',
-    redirect:false,
+    redirectTologin:false,
+    redirectTocollege:false,
     clgAdminPwd:false
   }
   constructor(props) {
@@ -53,14 +54,22 @@ class App extends Component {
 componentDidMount(){ 
       var email = reactLocalStorage.get('email')
       if(reactLocalStorage.get('email')){
-        this.setState({
-          redirect:true
-        })
+        if(reactLocalStorage.get('college') == "false"){
+          this.setState({
+            redirectTologin:true
+          })
+        }
+        else{
+          this.setState({
+            redirectTocollege:true
+          })
+        }
       }
+      else{
       window.location.hash="/";
       window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
       window.onhashchange=function(){window.location.hash="/";} 
-      //reactLocalStorage.clear();    
+      }//reactLocalStorage.clear();    
 }
 
 
@@ -68,9 +77,10 @@ componentDidMount(){
       return (
         <div className="App">
           {this.state.clgRedirect?<Redirect to='/college'/>:null}
-          {this.state.redirect?<Redirect to='/feed'/>:null}
-          <h1>Welcome To KNOWLEDGESHALA</h1>
-          <br/>
+          {this.state.redirectTologin?<Redirect to='/feed'/>:null}
+          {this.state.redirectTocollege?<Redirect to='/collegeAccount'/>:null}
+          <br/><h1>Welcome To KNOWLEDGESHALA</h1>
+          <hr/>
           <button className="btn btn-link" onClick={this._onButtonClick}>Login</button>
           <button className="btn btn-link" onClick={this._onButton2Click}>Signup</button>
           <button className="btn btn-link" onClick={this._onButton3Click}>College Authority</button>

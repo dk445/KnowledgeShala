@@ -7,6 +7,7 @@ import Sidenav from '../components/Sidenav';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Spin } from 'antd';
+import CollegeSidenav from '../components/CollegeSidenav';
 
 const {Content} = Layout;
 const { Search } = Input;
@@ -17,11 +18,11 @@ class SearchAction extends React.Component{
         result : [],
         query : '',
         msg:false,
-        load:false
+        load:false,
     }
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.handleSearch = this.handleSearch.bind(this);
     }
 
@@ -48,11 +49,13 @@ class SearchAction extends React.Component{
         })
     }
 
+
     render(){
 
         return(
             <Layout>
-                <Sidenav navPosition={'5'}/>                
+                {this.state.college ? <CollegeSidenav navPosition={'4'}/>:<Sidenav navPosition={'5'}/>}
+                                
                 <Layout style={{ marginLeft: 200 }}>
                     <Header/>
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
@@ -74,7 +77,7 @@ class SearchAction extends React.Component{
                                                 title={<Link to={{
                                                     pathname:"/account",
                                                     state:{
-                                                        email : item.email
+                                                        email : item.email,                                    
                                                     }
                                                 }}>{item.name}</Link>}                          
                                                 description= {'College: '+item.clgName + '\tDepartment : ' +item.deptName} //{item.mateClg}

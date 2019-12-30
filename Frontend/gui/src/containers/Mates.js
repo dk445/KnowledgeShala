@@ -54,7 +54,7 @@ class Mates extends React.Component{
                                     title={<Link to={{
                                         pathname:"/account",
                                         state:{
-                                            email : item.mateEmail
+                                            email : item.mateEmail,                                            
                                         }
                                     }}>{item.mateName}</Link>}                          
                                     description= {'College: '+item.mateClg + ' Department : ' +item.mateDept} //{item.mateClg}

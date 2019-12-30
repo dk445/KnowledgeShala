@@ -7,7 +7,7 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-class Sidenav extends React.Component{
+class CollegeSidenav extends React.Component{
   state = {
     loggedinuser  : '',
     req: false
@@ -19,7 +19,7 @@ class Sidenav extends React.Component{
   }
 
   componentDidMount(){
-    axios.post('http://127.0.0.1:8000/request/reqCount',{
+    axios.post('http://127.0.0.1:8000/clg/reqCount',{
             email: reactLocalStorage.get('email')
         })
         .then(res => {
@@ -47,9 +47,9 @@ class Sidenav extends React.Component{
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={this.props.navPosition}>
                     
                   
-                    <Menu.Item key="1">
+                    <Menu.Item key="1" disabled>
                       <Link to={{
-                        pathname :"/account",
+                        pathname :"/account-detail",
                         state : {
                         email: reactLocalStorage.get('email')
                         }
@@ -57,51 +57,40 @@ class Sidenav extends React.Component{
                         <Icon type="user" />
                         <span className="nav-text"><Button type='link' style={{color:'white'}}>Profile</Button></span>
                       </Link>
-                    </Menu.Item>
+                    </Menu.Item> 
+
 
                     <Menu.Item key="2">
-                      <Link to="/feed">
-                        <Icon type="home" />
-                        <span className="nav-text" ><Button type='link' style={{color:'white'}}> Feed</Button></span>
-                      </Link>
-                    </Menu.Item>
-
-
-                    <Menu.Item key="3">
-                      <Link to="/post">
-                        <Icon type="upload" />
-                        <span className="nav-text"><Button type='link' style={{color:'white'}}> Make Post</Button></span>
-                      </Link>
-                    </Menu.Item>             
-
-                    <Menu.Item key="4">
-                      <Link to="/requests">
+                      <Link to="/collegeAccount">
                         <Icon type="user-add" />
                         <span className="nav-text"><Button type='link' style={{color:'white'}}> Requests</Button></span>
                         {this.state.req ? <Badge color={'red'} /> : null}
                       </Link>
-                    </Menu.Item>                  
-                    
-                    <Menu.Item key="5">
-                      <Link to={{
-                        pathname:"/search",
-                        state:{
-                          college:false
-                        }
-                      }}>
-                        <Icon type="search" />
-                        <span className="nav-text"><Button type='link' style={{color:'white'}}> Search</Button></span>
-                      </Link>
-                    </Menu.Item>
+                    </Menu.Item>                 
 
-                    <Menu.Item key="6">
-                      <Link to= "/mates">
+
+                    <Menu.Item key="3">
+                      <Link to= "/list">
                         <Icon type="team" />
-                        <span className="nav-text"><Button type='link' style={{color:'white'}}>Mates</Button></span>
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}>List Of Students</Button></span>
                       </Link>
                     </Menu.Item>
 
-                    <Menu.Item key="7">
+
+                    <Menu.Item key="4">
+                      <Link to={{
+                        pathname :"/college-info",
+                        state : {
+                        email: reactLocalStorage.get('email')
+                        }
+                      }}>                    
+                        <Icon type="user" />
+                        <span className="nav-text"><Button type='link' style={{color:'white'}}>College Profile</Button></span>
+                      </Link>
+                    </Menu.Item>
+
+
+                    <Menu.Item key="5">
                       <Link to="/">
                         <Icon type="logout" />
                         <span className="nav-text"><Button onClick = {this.logout} type='link' style={{color:'white'}}> Logout</Button></span>
@@ -114,4 +103,4 @@ class Sidenav extends React.Component{
   }
 
 }
-export default Sidenav;
+export default CollegeSidenav;

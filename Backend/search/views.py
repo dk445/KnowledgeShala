@@ -14,10 +14,21 @@ def search(request):
     users= []
     
     try:
-        result = UserData.objects.filter(name__unaccent__icontains = query).defer('name','email')
+        result = UserData.objects.filter(name__unaccent__icontains = query).defer('name')
         #user = UserData.objects.get(email=email)
         for user in result:
             users.append(user.get_user_view())
+        
+        result = UserData.objects.filter(email__unaccent__icontains = query).defer('email')
+        #user = UserData.objects.get(email=email)
+        for user in result:
+            users.append(user.get_user_view())
+
+        
+        #user = UserData.objects.get(email=email)
+    
+        
+        
     except:
         return HttpResponse('No users found')
     return HttpResponse(jsonpickle.encode(users))

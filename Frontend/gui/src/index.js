@@ -13,6 +13,10 @@ import Forgot from './containers/forgot';
 import SearchAction from './containers/Search';
 import Requests from './containers/Requests';
 import College from './containers/College';
+import CollegeRequests from './containers/CollegeRequests';
+import CollegeProfile from './containers/CollegeProfile';
+import ListAll from './containers/ListAll';
+import CollegeInfo from './components/CollegeInfo';
 
 
 const routing = (
@@ -28,6 +32,10 @@ const routing = (
         <Route path="/search" component={SearchAction}/>
         <Route path="/requests" component={Requests}/>
         <Route path="/college" component = {College}/> 
+        <Route path="/collegeAccount" component = {CollegeRequests}/>
+        <Route path="/account-detail" component = {CollegeProfile}/>
+        <Route path="/list" component = {ListAll}/>
+        <Route path="/college-info" component = {CollegeInfo}/>
       </div>
     </Router>
   )

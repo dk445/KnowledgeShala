@@ -9,13 +9,11 @@ from django.core.mail import send_mail
 import json
 import jsonpickle
 
-
-# Create your views here.
-
-        
+# Create your views here.        
 
 def signupPage(request):
     data = json.loads(request.body)
+    print(data)
     fullname = data['name']
     email = data['email']   
     mobile = data['mobile']
@@ -23,26 +21,27 @@ def signupPage(request):
     roleId = data['role']
     deptId= data['deptId']        
     password = make_password(data['password'])
-    try:
-        college = CollegeData.objects.get(clgName=clgName)
-        department = DepartmentData.objects.get(deptid=deptId)
-        role = RoleData.objects.get(roleid = roleId)
-        user = UserData.objects.create(name=fullname, email=email,password=password,mobile=mobile,clgid=college,deptid=department,roleid=role)
-        
-        #sending mail to user 
-        send_mail(
-            'Registered successfully',
-            'Once your college verified your account you can access your account.',
-            'kartik.dambre@gmail.com',
-            [email],
-            fail_silently=False,
-            )
-        print('mail sent')
-        print('user created')
-        return HttpResponse('True')
+    print(clgName)
+    #try:
+    college = CollegeData.objects.get(clgName=clgName)
+    department = DepartmentData.objects.get(deptid=deptId)
+    role = RoleData.objects.get(roleid = roleId)
+    user = UserData.objects.create(name=fullname, email=email,password=password,mobile=mobile,clgid=college,deptid=department,roleid=role)
+    
+    #sending mail to user 
+    send_mail(
+        'Registered successfully',
+        'Once your college verified your account you can access your account.',
+        'kartik.dambre@gmail.com',
+        [email],
+        fail_silently=False,
+        )
+    print('mail sent')
+    print('user created')
+    return HttpResponse('True')
         #return redirect('api/signin',{'message' : 'Registered successfully.'})
-    except:
-        return HttpResponse('False')
+    #except:
+     #   return HttpResponse('False')
 
     
 def getClgList(request):
