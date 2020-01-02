@@ -32,7 +32,7 @@ class MakePost extends React.Component{
 
         console.log(desc);
         axios.post('http://127.0.0.1:8000/feed/post/',{
-            email : reactLocalStorage.get('email'),
+            uniId : reactLocalStorage.get('uniId'),
             desc: desc
         }).then(res=>{
             console.log(res.data);

@@ -1,6 +1,6 @@
 
 import  React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox,Spin } from 'antd';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import {reactLocalStorage} from 'reactjs-localstorage';
@@ -15,6 +15,7 @@ class LoginForm extends React.Component {
     email:'',
     password:'',
     redirect: false,
+    load: false
   }
   
 
@@ -32,7 +33,7 @@ class LoginForm extends React.Component {
 
   handleSubmit = (e) => {
     this.setState({
-      msg:''
+      msg:'',
     })
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -46,7 +47,9 @@ class LoginForm extends React.Component {
     if(emailId=="" || pwd== "") return;
 
     console.log(emailId , pwd);
-    
+    this.setState({
+      load:true
+    })
    
       axios.post('http://127.0.0.1:8000/api/signin/',{
         email : emailId,
@@ -56,12 +59,13 @@ class LoginForm extends React.Component {
       .then(res => {
         console.log(res);
         console.log(res.data);
-        if(res.data == "login success"){
+        if(res.data.length==32){ //== "login success"){
           console.log('redirecting to feed');
-          console.log(emailId);
+          var uniId = res.data
+          reactLocalStorage.set('uniId',uniId);
           reactLocalStorage.set('email',emailId);
           reactLocalStorage.set('college',false)
-          console.log(reactLocalStorage.get('email'));
+          console.log(reactLocalStorage.get('uniId'));
           this.setRedirect();          
         }
         else{
@@ -70,6 +74,11 @@ class LoginForm extends React.Component {
             })
           }
 
+        })
+        .then(res=>{
+          this.setState({
+            load:false
+          })
         })  
     
   };
@@ -86,6 +95,7 @@ class LoginForm extends React.Component {
         return (
           <div>
           {this.renderRedirect()}
+          <div style={{position:'absolute' , left:'48%' , top:'60%'}}>{this.state.load ? <Spin size="large" /> : null}</div> 
           <h6 style={{color:'red'}}>{this.state.msg}</h6>                                                                 
           <Form onSubmit={this.handleSubmit}  >  
             <Form.Item name = "emailId">

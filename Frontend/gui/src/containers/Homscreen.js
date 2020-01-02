@@ -18,8 +18,6 @@ class Homescreen extends React.Component{
         load : true
     }
 
-    
-
     componentDidMount() {
         this.setState({
             load :true,
@@ -27,7 +25,7 @@ class Homescreen extends React.Component{
         axios({
             method: 'post',
             url: 'http://127.0.0.1:8000/feed/',
-            data: reactLocalStorage.get('email')
+            data: reactLocalStorage.get('uniId')
         })
         .then(res => {
             

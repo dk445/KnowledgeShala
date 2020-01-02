@@ -8,33 +8,56 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 const { Header, Content, Footer, Sider } = Layout;
 
 class Sidenav extends React.Component{
+
   state = {
     loggedinuser  : '',
-    req: false
+    req: false,
+    logout:false
   }
+  constructor(props){
+    super(props)
+    this.state = {
+      loggedinuser  : '',
+      req: false,
+    }
+  
+  }
+  
 
   logout(){
-    reactLocalStorage.clear();
-    
+    axios.post('http://127.0.0.1:8000/signout/',{
+      uniId:reactLocalStorage.get('uniId')
+    })    
+    .then(res => {
+      if(res.data == 'True'){
+        reactLocalStorage.clear();
+        window.location = '/';
+        //window.location.hash="/#";
+        window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
+        window.onhashchange=function(){window.location.hash="/#";} 
+      }
+    })
   }
 
   componentDidMount(){
     axios.post('http://127.0.0.1:8000/request/reqCount',{
-            email: reactLocalStorage.get('email')
+          uniId: reactLocalStorage.get('uniId')
         })
-        .then(res => {
-            
+        .then(res => {            
             console.log(res.data);
-            if(res.data == 'True')
-            this.setState({
-                req : true
-            })
+            if(res.data == 'True'){
+              this.setState({
+                  req : true
+              })
+            }
         })       
   }
 
+  
   render(){
     return(
       <div>
+        {this.state.logout?<Redirect to='/'/>:null}
         <Sider
                 style={{
                     overflow: 'auto',
@@ -51,7 +74,7 @@ class Sidenav extends React.Component{
                       <Link to={{
                         pathname :"/account",
                         state : {
-                        email: reactLocalStorage.get('email')
+                          email: reactLocalStorage.get('email')
                         }
                       }}>                    
                         <Icon type="user" />

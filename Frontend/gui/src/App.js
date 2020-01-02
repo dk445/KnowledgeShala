@@ -52,8 +52,8 @@ class App extends Component {
   }
 
 componentDidMount(){ 
-      var email = reactLocalStorage.get('email')
-      if(reactLocalStorage.get('email')){
+      //var uniId = reactLocalStorage.get('uniId')
+      if(reactLocalStorage.get('uniId')){
         if(reactLocalStorage.get('college') == "false"){
           this.setState({
             redirectTologin:true
@@ -66,6 +66,7 @@ componentDidMount(){
         }
       }
       else{
+      
       window.location.hash="/";
       window.location.hash="Again-No-back-button";//again because google chrome don't insert first hash into history
       window.onhashchange=function(){window.location.hash="/";} 

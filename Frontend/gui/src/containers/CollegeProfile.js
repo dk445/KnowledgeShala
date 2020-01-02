@@ -51,7 +51,7 @@ class CollegeProfile extends React.Component{
         console.log(emailId)
         axios.post('http://127.0.0.1:8000/account/',{
             email:emailId,
-            loggedUser:reactLocalStorage.get('email')
+            uniId:reactLocalStorage.get('uniId')
         })
         .then(res => {            
             console.log(res.data);
@@ -75,12 +75,9 @@ class CollegeProfile extends React.Component{
         this.setState({
             load:true
         })
-        var loggedEmail = reactLocalStorage.get('email')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/college/remove',{
-            loggedUser:loggedEmail,
             reqUser : reqEmail
-
         }).then(res=>{
             console.log(res.data);
             if(res.data){
@@ -98,10 +95,8 @@ class CollegeProfile extends React.Component{
         this.setState({
             load:true
         })
-        var loggedEmail = reactLocalStorage.get('email')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/college/accept',{
-            loggedUser:loggedEmail,
             reqUser : reqEmail
 
         }).then(res=>{
@@ -120,10 +115,8 @@ class CollegeProfile extends React.Component{
         this.setState({
             load:true
         })
-        var loggedEmail = reactLocalStorage.get('email')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/college/reject',{
-            loggedUser:loggedEmail,
             reqUser : reqEmail
 
         }).then(res=>{
@@ -148,10 +141,9 @@ class CollegeProfile extends React.Component{
         return(
             <Layout>
                 <CollegeSidenav navPosition={'1'}/>
-                
+                <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>
                 <Layout style={{ marginLeft: 200 }}>
                 <Header/>
-                <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>                                                                                   
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                     {this.state.redirect?<Redirect to="/collegeAccount"/>:null}
                     

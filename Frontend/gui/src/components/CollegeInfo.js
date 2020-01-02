@@ -37,7 +37,7 @@ class CollegeInfo extends React.Component{
         
         console.log(emailId)
         axios.post('http://127.0.0.1:8000/college/details',{
-            email:reactLocalStorage.get('email')
+            uniId:reactLocalStorage.get('uniId')
         })
         .then(res => {            
             console.log(res.data);

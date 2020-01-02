@@ -12,7 +12,7 @@ import jsonpickle
 def profile(request):
     data = json.loads(request.body.decode('utf-8'))
     email =  data['email']
-    loggedUser = data['loggedUser']
+    uniId = data['uniId']
     print(email)
 
     data=[]
@@ -21,10 +21,14 @@ def profile(request):
     userRequests= False
     comingReq = False
     verified = False
-
     
 
     user = UserData.objects.get(email=email)
+    try:
+        loggedinUser = UserData.objects.get(uniId=uniId)
+    except:
+        loggedinUser = CollegeData.objects.get(uniId=uniId)
+
     if(user.isVerified == "Yes"):
         verified=True
     data.append(user.get_user_view())
@@ -33,10 +37,10 @@ def profile(request):
     if len(posts) > 0:
         for post in posts:
             userPosts.append(post.getView())
-    if(email != loggedUser):
-        mates = Relation.objects.filter(user = email).filter(mate=loggedUser)
-        requests = Requests.objects.filter(requestReceiver = email).filter(requestMaker=loggedUser).filter(statusid = '0')
-        Req = Requests.objects.filter(requestReceiver = loggedUser).filter(requestMaker=email).filter(statusid = '0')
+    if(email != loggedinUser.email):
+        mates = Relation.objects.filter(user = email).filter(mate=loggedinUser.email)
+        requests = Requests.objects.filter(requestReceiver = email).filter(requestMaker=loggedinUser.email).filter(statusid = '0')
+        Req = Requests.objects.filter(requestReceiver = loggedinUser.email).filter(requestMaker=email).filter(statusid = '0')
         if len(requests)>0:
             userRequests = True
         if len(mates) > 0:

@@ -1,5 +1,5 @@
 import  React from 'react';
-import {Form,Input,Tooltip,Icon,Cascader,Select,Radio,Checkbox,Button} from 'antd';
+import {Form,Input,Tooltip,Icon,Cascader,Select,Radio,Checkbox,Button,Spin} from 'antd';
 import axios from 'axios';
   
   const { Option } = Select;
@@ -12,6 +12,8 @@ import axios from 'axios';
       DeptList:[],
       lable:'',
       value:'',
+      load:false,
+      msg:''
       
     };
   
@@ -37,6 +39,9 @@ import axios from 'axios';
       console.log(sdeptId);
       console.log(sclgName)
 
+      this.setState({
+        load:true
+      })
 
       axios.post('http://127.0.0.1:8000/',{
         email : emailId,
@@ -50,6 +55,20 @@ import axios from 'axios';
     .then(res => {
       console.log(res);
       console.log(res.data);
+      if(res.data=='True'){
+        this.setState({
+          msg:'Registered successfully'
+        })
+      }
+      else{
+        this.setState({
+          msg:'Error in registration!'
+        })
+      }
+      this.setState({
+        load:false,
+        msg:true
+      })
     })
    
     //}catch  (error){
@@ -83,7 +102,9 @@ import axios from 'axios';
     componentDidMount(){
        const clgList = []
        const deptList = []
-
+       this.setState({
+         load:true
+       })
        axios.get('http://127.0.0.1:8000/get/clg').then(res=> {
          console.log(res.data);
          for(var i=0 ; i< res.data.length ;i++){
@@ -108,7 +129,8 @@ import axios from 'axios';
          } 
           console.log(deptList)
          this.setState({
-              DeptList:deptList
+              DeptList:deptList,
+              load:false
            })
        })
 
@@ -155,7 +177,8 @@ import axios from 'axios';
   
       return (
         <div>
-          
+          <h6 style={{color:'red'}}>{this.state.msg}</h6> 
+          <div style={{position:'absolute' , left:'48%' , top:'60%'}}>{this.state.load ? <Spin size="large" /> : null}</div> 
           <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <Form.Item label="E-mail" name='email'>
               {getFieldDecorator('email', {

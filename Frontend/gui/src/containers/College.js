@@ -18,7 +18,8 @@ class College extends React.Component{
         password:'',
         toSignupPage:false,
         login:true,
-        redirect:false
+        redirect:false,
+        load:false
       }
     
       handleChange = event => {
@@ -38,18 +39,22 @@ class College extends React.Component{
             console.log('Received values of form: ', values);
           }
         });
+        this.setState({
+            load:true
+        })
         axios.post('http://127.0.0.1:8000/api/college/signin',{
         email : e.target.elements.emailId.value,
         password : e.target.elements.password.value,
         })
         .then(res => {
         console.log(res.data);
-        if(res.data == "True"){
+        if(res.data.length==32){
+            var uniId = res.data
             console.log('redirecting to feed');
             //console.log(emailId);
-            reactLocalStorage.set('email',this.state.email);
+            reactLocalStorage.set('uniId',uniId);
             reactLocalStorage.set('college',true);
-            console.log(reactLocalStorage.get('email'));
+            console.log(reactLocalStorage.get('uniId'));
             this.setState({
                 redirect:true
             })    
@@ -59,6 +64,11 @@ class College extends React.Component{
                 msg: 'Incorrecr email and/or password'
             })
         }
+        })
+        .then(res=>{
+            this.setState({
+                load:false
+            })
         }) 
         
 
@@ -73,64 +83,65 @@ class College extends React.Component{
       
       
     
-        render(){
-            const { getFieldDecorator }  = this.props.form;
-            return (
-              <div>
-              <h6 style={{color:'red'}}>{this.state.msg}</h6>  
-              {this.state.redirect?<Redirect to="/collegeAccount"/>:null}  
-              {this.state.toSignupPage?<CollegeSignup/>:null}
-              <Form onSubmit={this.handleSubmit}>  
-                
-                    {this.state.login?
-                    <div>                        
-                        <Form.Item name = "emailId">
-                            {getFieldDecorator('username', {
-                                rules: [{ required: true, message: 'Please input your username!' }],
-                            })(
-                                <Input
-                                name="emailId"
-                                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />}
-                                placeholder="Email"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item name="password">
-                            {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Please input your Password!' }],
-                            })(
-                                <Input
-                                name="password"
-                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                type="password"
-                                placeholder="Password"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('remember', {
-                                valuePropName: 'checked',
-                                initialValue: true,
-                            })(<Checkbox>Remember me</Checkbox>)}
-                            <a className="login-form-forgot" href="/forgot">
-                                Forgot password
-                            </a><br/>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
-                                Log in
-                            </Button><br/>                        
-                        </Form.Item>
-                        <h6>OR</h6><br/>
-                        <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.signupPage}>
-                                    Create College Account
-                        </Button><br/>    
+    render(){
+        const { getFieldDecorator }  = this.props.form;
+        return (
+            <div>
+            <h6 style={{color:'red'}}>{this.state.msg}</h6>  
+            <div style={{position:'absolute' , left:'48%' , top:'60%'}}>{this.state.load ? <Spin size="large" /> : null}</div>
+            {this.state.redirect?<Redirect to="/collegeAccount"/>:null}  
+            {this.state.toSignupPage?<CollegeSignup/>:null}
+            <Form onSubmit={this.handleSubmit}>  
+            
+                {this.state.login?
+                <div>                        
+                    <Form.Item name = "emailId">
+                        {getFieldDecorator('username', {
+                            rules: [{ required: true, message: 'Please input your username!' }],
+                        })(
+                            <Input
+                            name="emailId"
+                            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)'}} />}
+                            placeholder="Email"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item name="password">
+                        {getFieldDecorator('password', {
+                            rules: [{ required: true, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                            name="password"
+                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            type="password"
+                            placeholder="Password"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('remember', {
+                            valuePropName: 'checked',
+                            initialValue: true,
+                        })(<Checkbox>Remember me</Checkbox>)}
+                        <a className="login-form-forgot" href="/forgot">
+                            Forgot password
+                        </a><br/>
+                        <Button type="primary" htmlType="submit" className="login-form-button">
+                            Log in
+                        </Button><br/>                        
+                    </Form.Item>
+                    <h6>OR</h6><br/>
+                    <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.signupPage}>
+                                Create College Account
+                    </Button><br/>    
 
-                    </div>:null}                    
+                </div>:null}                    
+                
+            </Form> 
                     
-              </Form> 
-                      
-              </div>
-            );
-          }
+            </div>
+        );
+        }
 }
 const WrappedNormalLoginForm = Form.create()(College);
 export default WrappedNormalLoginForm;

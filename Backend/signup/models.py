@@ -11,6 +11,8 @@ class CollegeData(models.Model):
     city = models.CharField(max_length=20, null=True)
     email = models.EmailField(unique = True,null=True)
     password = models.CharField(max_length=128)
+    uniId = models.CharField(max_length=32,null=True)
+
 
     def get_clg_view(self):
         return CollegeView(self.clgName,self.email,self.city,self.clgid)
@@ -31,7 +33,8 @@ class UserData(AbstractUser):
     isVerified = models.CharField(max_length=3 , default='No')
     clgid = models.ForeignKey(CollegeData , on_delete=models.CASCADE)
     deptid = models.ForeignKey(DepartmentData , on_delete=models.CASCADE)
-    roleid = models.ForeignKey(RoleData , on_delete=models.CASCADE)   
+    roleid = models.ForeignKey(RoleData , on_delete=models.CASCADE)
+    uniId = models.CharField(max_length=32,null=True)   
 
     def get_user_view(self):
         return UserDataView(self.name,self.email,self.clgid.clgName,self.deptid.deptname,self.roleid.rolename)

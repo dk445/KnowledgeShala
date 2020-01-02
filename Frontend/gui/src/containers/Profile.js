@@ -47,13 +47,12 @@ class Profile extends React.Component{
     
     
     componentDidMount() {
-        var emailId = this.props.location.state.email;
+        var emailId = this.props.location.state.email; 
         this.setState({
             email : emailId,
             load :true,
         })
-        const mates = []
-        const req = []
+        
         if(emailId==reactLocalStorage.get('email')){
                 this.setState({
                 self : true
@@ -63,7 +62,7 @@ class Profile extends React.Component{
         console.log(emailId)
         axios.post('http://127.0.0.1:8000/account/',{
             email:emailId,
-            loggedUser:reactLocalStorage.get('email')
+            uniId:reactLocalStorage.get('uniId')
         })
         .then(res => {            
             console.log(res.data);
@@ -97,10 +96,10 @@ class Profile extends React.Component{
     }
 
     MakeReq(){
-        var loggedEmail = reactLocalStorage.get('email')
+        var uniId = reactLocalStorage.get('uniId')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/request/makeReq',{
-            loggedUser:loggedEmail,
+            uniId:uniId,
             reqUser : reqEmail
 
         }).then(res=>{
@@ -115,10 +114,10 @@ class Profile extends React.Component{
     }
 
     DeleteMate(){
-        var loggedEmail = reactLocalStorage.get('email')
+        var uniId = reactLocalStorage.get('uniId')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/mates/remove',{
-            loggedUser:loggedEmail,
+            uniId:uniId,
             reqUser : reqEmail
 
         }).then(res=>{
@@ -135,10 +134,10 @@ class Profile extends React.Component{
     }
 
     CancelReq() {
-        var loggedEmail = reactLocalStorage.get('email')
+        var uniId = reactLocalStorage.get('uniId')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/request/cancelReq',{
-            loggedUser:loggedEmail,
+            uniId:uniId,
             reqUser : reqEmail
 
         }).then(res=>{
@@ -153,10 +152,10 @@ class Profile extends React.Component{
     }
 
     AcceptReq(){
-        var loggedEmail = reactLocalStorage.get('email')
+        var uniId = reactLocalStorage.get('uniId')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/request/acceptReq',{
-            loggedUser:loggedEmail,
+            uniId:uniId,
             reqUser : reqEmail
 
         }).then(res=>{
@@ -171,10 +170,10 @@ class Profile extends React.Component{
     }
 
     RejectReq(){
-        var loggedEmail = reactLocalStorage.get('email')
+        var uniId = reactLocalStorage.get('uniId')
         var reqEmail = this.state.email;
         axios.post('http://127.0.0.1:8000/request/rejectReq',{
-            loggedUser:loggedEmail,
+            uniId:uniId,
             reqUser : reqEmail
 
         }).then(res=>{

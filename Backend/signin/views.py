@@ -10,6 +10,7 @@ from django.contrib.auth.models import auth,User
 from django.http import HttpResponse
 from django.core.mail import send_mail
 import json , random , jsonpickle
+from django.utils.crypto import get_random_string
 # Create your views here.
 
 
@@ -19,17 +20,23 @@ def collegesignin(request):
     email = data['email']  
     password = data['password']
     res = False
+    uniId = get_random_string(length=32)
+    print(uniId)
     print(email)
     print(password)
-    clg = CollegeData.objects.get(email=email)
-    if check_password(password,clg.password) :
-        print('login success')       
-        res=True
-    return HttpResponse(res)            
-#except:
-    #return render(request,'signin.html',{'message':'No such user found.'})
-    #print('(Exception) not found')
-    #return HttpResponse('login failed')
+
+    try:
+        clg = CollegeData.objects.get(email=email)
+        if check_password(password,clg.password) :
+            print('login success')       
+            clg.uniId = uniId
+            clg.save()
+            res=True
+            return HttpResponse(uniId)
+        else:
+            return HttpResponse(res)            
+    except:
+        return HttpResponse(res)
 
 
 def otpRequest(request):
@@ -65,8 +72,10 @@ def signinPage(request):
     data = json.loads(request.body.decode('utf-8'))
     email = data['email']  
     password = data['password']
+    
     print(email)
     print(password)
+    
     try: 
         user = UserData.objects.get(email=email)
         if check_password(password,user.password) :
@@ -74,11 +83,14 @@ def signinPage(request):
             if user.isVerified == "No":
                 auth.login(request,user)
                 print('not verified')
+                uniId = get_random_string(length=32)
+                user.uniId = uniId
+                user.save()
+                print(uniId)
                 #return HttpResponse('not verified')  //commenting for development purpose
-                return HttpResponse('login success')  #this line should be remove
+                return HttpResponse(uniId)  #this line should be remove
             
             print('login success')
-            
             return HttpResponse('login success')
 
         else:

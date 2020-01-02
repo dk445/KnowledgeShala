@@ -11,12 +11,14 @@ import jsonpickle
 
 def displaymates(request):
     data = json.loads(request.body.decode('utf-8'))
-    loggedinuser =  data['email']
+    uniId =  data['uniId']
     #loggedinuser = 'kartikdambre.160410116022@gmail.com'
-    print(loggedinuser)
+    print(uniId)
     result = []
     #loggedinuser = request.user.email
-    mates = Relation.objects.filter(user_id=loggedinuser)
+
+    loggedinUser = UserData.objects.get(uniId=uniId)
+    mates = Relation.objects.filter(user_id=loggedinUser.email)
     for mate in mates:
         result.append(mate.getView()) 
     #result = serializers.serialize('json',mates)
@@ -25,12 +27,12 @@ def displaymates(request):
 
 def deleteMate(request):
     data = json.loads(request.body.decode('utf-8'))
-    loggedinuser =  data['loggedUser']
+    uniId =  data['uniId']
     mateEmail = data['reqUser']
-
+    loggedinUser = UserData.objects.get(uniId=uniId)
     try:
-        Relation.objects.filter(user=loggedinuser).filter(mate=mateEmail).delete()
-        Relation.objects.filter(user=mateEmail).filter(mate=loggedinuser).delete()
+        Relation.objects.filter(user=loggedinUser.email).filter(mate=mateEmail).delete()
+        Relation.objects.filter(user=mateEmail).filter(mate=loggedinUser.email).delete()
         return HttpResponse('success')
     except:
         return HttpResponse('failed')

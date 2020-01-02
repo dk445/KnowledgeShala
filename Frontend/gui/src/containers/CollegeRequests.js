@@ -14,7 +14,7 @@ class CollegeRequests extends React.Component{
     
     state = {
         requests : [],
-        loggedinuser : reactLocalStorage.get('email'),
+        uniId : reactLocalStorage.get('uniId'),
         load : true
     }    
 
@@ -22,9 +22,9 @@ class CollegeRequests extends React.Component{
         this.setState({
             load :true,
         })
-        const emailId = this.state.loggedinuser         
+        const uniId = this.state.uniId         
         axios.post('http://127.0.0.1:8000/college/requests',{
-            email: emailId
+            uniId: uniId
         })
         .then(res => {
             

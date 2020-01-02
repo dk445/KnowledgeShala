@@ -1,5 +1,5 @@
 import  React from 'react';
-import {Form,Input,Tooltip,Icon,Select,Radio,Checkbox,Button} from 'antd';
+import {Form,Input,Tooltip,Icon,Select,Radio,Checkbox,Button,Spin} from 'antd';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import Collage from './College';
@@ -13,7 +13,8 @@ class CollegeSignup extends React.Component{
         msg:'',
         clgPortal: false,
         redirect:false,
-        adminPwd:true
+        adminPwd:true,
+        load:false
       };
     
       handleSubmit = e => {
@@ -26,8 +27,7 @@ class CollegeSignup extends React.Component{
             console.log('Received values of form: ', values);
           }
           
-        });
-           
+        });          
 
   
        if(this.state.clgPortal){
@@ -44,31 +44,38 @@ class CollegeSignup extends React.Component{
                 })
                 return;
             }
-    
-            axios.post('http://127.0.0.1:8000/signup/clg',{
-            email : clgEmail,
-            name : clgName,
-            mobile : clgMobile,
-            clgId : clgId,
-            city : clgCity,
-            password : clgPassword
-        })
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-            if(res.data == "False"){
-                this.setState({
-                    msg:'Error in Registering'
-                })
-            }
-            else{
-                this.setState({
-                    clgPortal:false,
-                    redirect:true
-                })
-            }
+            this.setState({
+              load:true
             })
-            
+            axios.post('http://127.0.0.1:8000/signup/clg',{
+              email : clgEmail,
+              name : clgName,
+              mobile : clgMobile,
+              clgId : clgId,
+              city : clgCity,
+              password : clgPassword
+            })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+                if(res.data == "False"){
+                    this.setState({
+                        msg:'Error in Registration'
+                    })
+                }
+                else{
+                    this.setState({
+                        clgPortal:false,
+                        redirect:true
+                    })
+                  }
+              })
+            .the(res=>{
+              this.setState({
+                load:false
+              })
+            })
+              
         }
         
 
@@ -168,6 +175,7 @@ class CollegeSignup extends React.Component{
         return (
           <div>            
             {this.state.redirect?<Collage/>:null}
+            <div style={{position:'absolute' , left:'48%' , top:'60%'}}>{this.state.load ? <Spin size="large" /> : null}</div>
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <h6 style={{color:'red'}}>{this.state.msg}</h6>            
             {!this.state.clgPortal ? <div>

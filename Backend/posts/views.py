@@ -30,10 +30,10 @@ class Posts(APIView):
         data = json.loads(request.body.decode('utf-8'))
         #print(data)
         desc = data['desc']
-        email = data['email']
-        print(desc , email)
+        uniId = data['uniId']
+        print(desc , uniId)
     #try:
-        owner = UserData.objects.get(email=email)
+        owner = UserData.objects.get(uniId=uniId)
         created = timezone.localtime()
         Post = UserPost(owner=owner , description = desc , createdon = created)
         #UserPost.objects.create(owner=owner , description = desc , createdon = created)
@@ -45,26 +45,26 @@ class Posts(APIView):
 
     def displaypost(request):
         print(request.body.decode('utf-8'))
-        loggedinuser =  request.body.decode('utf-8')   
-        mates = Relation.objects.filter(user_id = loggedinuser)
+        uniId =  request.body.decode('utf-8')   
+
+        loggedinuser = UserData.objects.get(uniId=uniId)
+
+        mates = Relation.objects.filter(user_id = loggedinuser.email)
         filteredpost = []
         postObjects = []
-        posts = UserPost.objects.filter(owner_id = loggedinuser)
+        posts = UserPost.objects.filter(owner_id = loggedinuser.email)
+        ownerdept= UserData.objects.get(email=loggedinuser.email).deptid
+
         for post in posts:                
             postObjects.append(post)
-            #filteredpost.append(post.getView())
-
-        ownerdept= UserData.objects.get(email=loggedinuser).deptid
+            #filteredpost.append(post.getView())        
 
         for relation in mates:
             if(relation.mate.deptid == ownerdept):
                 posts = UserPost.objects.filter(owner_id = relation.mate)
-                #posts.order_by('createdon').reverse()
             for post in posts:
-                #if post.postid not in postids:
-                #        postids.append(post.postid)
-                #filteredpost.append(post.getView()) 
                 postObjects.append(post)
+                
         sorted(postObjects, key=attrgetter('createdon'))        
         postObjects.reverse()
         for post in postObjects:

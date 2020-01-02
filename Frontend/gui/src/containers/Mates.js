@@ -20,7 +20,7 @@ class Mates extends React.Component{
     componentDidMount() {
 
         axios.post('http://127.0.0.1:8000/mates/',{
-            email: reactLocalStorage.get('email')
+            uniId: reactLocalStorage.get('uniId')
         })
         .then(res => {
             
