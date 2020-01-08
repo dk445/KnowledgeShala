@@ -27,7 +27,7 @@ def profile(request):
     try:
         loggedinUser = UserData.objects.get(uniId=uniId)
     except:
-        loggedinUser = CollegeData.objects.get(uniId=uniId)
+        loggedinUser = CollegeData.objects.get(uniId=uniId )
 
     if(user.isVerified == "Yes"):
         verified=True
