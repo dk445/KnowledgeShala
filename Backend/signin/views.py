@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.template import RequestContext
 from signup.models import UserData,CollegeData,DepartmentData,RoleData
+from signin.models import UserOtp
 from django.contrib.auth.hashers import make_password, check_password
 from posts.models import UserPost
 from django.contrib.auth import authenticate,login
@@ -44,19 +45,40 @@ def otpRequest(request):
     email = data['email']
     otp = random.randint(10101010 , 98989898)
     otp = str(otp)
-
-    send_mail(
+    try:
+        user = UserData.objects.get(email=email)
+        UserOtp.objects.filter(user=user).delete()
+        OTP = UserOtp(user = user,otp=otp)
+        OTP.save()
+        send_mail(
             'Reset password request',
             'Your OTP for resetting the password is '+otp+'.Do not share it with others.',
             'kartik.dambre@gmail.com',
             [email],
             fail_silently=False,
             )
-    return HttpResponse(otp)
+        return HttpResponse(True)
+    except:
+        return HttpResponse(False)
+
+
+def VerifyOtp(request):
+    data = json.loads(request.body.decode('utf-8'))
+    email = data['email']
+    otp = data['otp']
+    user = UserOtp.objects.get(user=UserData.objects.get(email=email))
+    if(otp==user.otp):
+        user.delete()
+        return HttpResponse(True)
+    else:
+        return HttpResponse(False)
+
 
 def PwdReset(request):
     data = json.loads(request.body.decode('utf-8'))
     email = data['email']
+
+
     password = data['password']
     password = make_password(password)
 

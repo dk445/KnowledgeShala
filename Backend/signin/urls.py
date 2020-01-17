@@ -7,4 +7,5 @@ urlpatterns = [
     path('college/signin',views.collegesignin),
     path('signin/forgot',views.otpRequest),
     path('signin/forgot/reset',views.PwdReset),
+    path('signin/forgot/verifyOtp',views.VerifyOtp)
 ]

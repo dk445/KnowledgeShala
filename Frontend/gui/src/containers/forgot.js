@@ -12,7 +12,8 @@ class Forgot extends React.Component{
         showemail:true,
         pwdreset:false,
         redirect:false,
-        load:false
+        load:false,
+        msg:""
       }
     compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
@@ -36,9 +37,11 @@ class Forgot extends React.Component{
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     };
 
+
     handleSubmit = e => {
         this.setState({
-            load:true
+            load:true,
+            msg:""
         })
         console.log('in handle');
         e.preventDefault();
@@ -52,20 +55,31 @@ class Forgot extends React.Component{
             const   emailId = e.target.elements.emailId.value;
             console.log(emailId)         
             console.log(e.target.elements.otp.value);
-            console.log(reactLocalStorage.get('otp'))
-            if(e.target.elements.otp.value === reactLocalStorage.get('otp')){
-                console.log('correct');
-                this.setState({
-                    showotp:false,
-                    showemail:false,
-                    pwdreset:true,
-                    load:false
-                })
-                reactLocalStorage.set('email',emailId);
-            }
-            else{
-                console.log('wrong');
-            }
+
+            axios.post('http://127.0.0.1:8000/api/signin/forgot/verifyOtp',{
+                email : emailId,
+                otp : e.target.elements.otp.value
+            })
+            .then(res => {
+                console.log(res.data)
+                if(res.data == "True"){
+                    console.log('correct');
+                    this.setState({
+                        showotp:false,
+                        showemail:false,
+                        pwdreset:true,
+                        load:false
+                    })
+                    reactLocalStorage.set('email',emailId);
+                }
+                else{
+                    this.setState({
+                        msg:"Wrong Otp",
+                        load:false
+                    })
+                }
+            })
+            
         }
         else if(this.state.pwdreset){
             console.log(e.target.elements.pwd.value);
@@ -90,13 +104,19 @@ class Forgot extends React.Component{
             email : emailId,
             })
             .then(res => {
-            console.log(res);
-            console.log(res.data);
-            reactLocalStorage.set('otp',res.data);
-            this.setState({
-                showotp:true,
-                load:false
-            });            
+                console.log(res);
+                if(res.data == "True"){
+                    this.setState({
+                        showotp:true,
+                        load:false
+                    });            
+                }
+                else{
+                    this.setState({
+                        msg:"User not found",
+                        load:false
+                    })
+                }
             }) 
             
         }
@@ -127,7 +147,7 @@ render(){
                 <br/><br/>
                 <Form  onSubmit={this.handleSubmit} >  
                         
-                        
+                        <h6 color="red">{this.state.msg}</h6>
                         {this.state.pwdreset ?                             
                         <div>
                             <Form.Item label="Password" name='pwd' hasFeedback>
