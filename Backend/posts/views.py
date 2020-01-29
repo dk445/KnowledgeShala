@@ -37,7 +37,7 @@ class Posts(APIView):
         created = timezone.localtime()
         Post = UserPost(owner=owner , description = desc , createdon = created)
         #UserPost.objects.create(owner=owner , description = desc , createdon = created)
-        Post.save();    
+        Post.save();   
     #except:
         #return HttpResponse('failed')
         print('posted')

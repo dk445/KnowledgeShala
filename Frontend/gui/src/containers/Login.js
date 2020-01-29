@@ -51,7 +51,7 @@ class LoginForm extends React.Component {
       load:true
     })
    
-      axios.post('http://127.0.0.1:8000/api/signin/',{
+      axios.post('django-env.bepbynpcen.ap-south-1.elasticbeanstalk.com/api/signin/',{
         email : emailId,
         password : pwd,
         msg:''

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '!&lpe0_!qsc0l71p%nfec!h0qi@l%0ju-#7_94eaq8_e(vsr7#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','django-env.bepbynpcen.ap-south-1.elasticbeanstalk.com']
 
 
 # Application definition
@@ -87,15 +88,16 @@ WSGI_APPLICATION = 'try1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'newDb',
-        'USER': 'postgres',
-        'PASSWORD': 'A.1b2c3d4',
-        'HOST': 'localhost'
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'newDb',
+#        'USER': 'postgres',
+#        'PASSWORD': 'A.1b2c3d4',
+#        'HOST': 'localhost'        
+#    }
+#}
+DATABASES = {'default': dj_database_url.config(default='postgres://postgres:A.1b2c3d4@localhost:5432/newDb')}
 
 
 # Password validation

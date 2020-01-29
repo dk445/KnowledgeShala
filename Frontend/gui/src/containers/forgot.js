@@ -136,14 +136,13 @@ render(){
         },
       };
     const { getFieldDecorator }  = this.props.form;
-    return(
-        
+    return(        
             <div className="App">
                 <div style={{position:'absolute' , left:'57%' , top:'40%'}}>
                     {this.state.load ? <Spin size="large" /> : null}
                 </div>                                           
                 {this.state.redirect ? <Link to="/#"/>:null}
-                <h1>Welcome to KNOWLEDGESHALA</h1>
+                <h1>Welcome to KNOWLEDGESHALA</h1><hr/>
                 <br/><br/>
                 <Form  onSubmit={this.handleSubmit} >  
                         
