@@ -31,6 +31,7 @@ class SearchAction extends React.Component{
             load :true,
         })
         var searchQuery = document.getElementById('search').value
+        searchQuery=searchQuery.trim();
         console.log(searchQuery);
         if(searchQuery == '') return; 
 
@@ -73,7 +74,6 @@ class SearchAction extends React.Component{
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                            //avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                                 title={<Link to={{
                                                     pathname:"/account",
                                                     state:{

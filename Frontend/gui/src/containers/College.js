@@ -11,16 +11,18 @@ class College extends React.Component{
 
     constructor(props){
         super(props);
+        this.state = {
+            email:'',
+            password:'',
+            toSignupPage:false,
+            login:true,
+            redirect:false,
+            load:false
+        }
+
         this.signupPage = this.signupPage.bind(this);
     }
-    state = {
-        email:'',
-        password:'',
-        toSignupPage:false,
-        login:true,
-        redirect:false,
-        load:false
-      }
+    
     
       handleChange = event => {
         this.setState({ 
@@ -77,7 +79,8 @@ class College extends React.Component{
     signupPage(){
         this.setState({
             login:false,
-            toSignupPage:true
+            toSignupPage:true,
+            msg:''
         })
     }    
       

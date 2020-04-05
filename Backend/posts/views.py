@@ -44,8 +44,8 @@ class Posts(APIView):
         return HttpResponse('success')
 
     def displaypost(request):
-        print(request.body.decode('utf-8'))
-        uniId =  request.body.decode('utf-8')   
+        data = json.loads(request.body.decode('utf-8'))
+        uniId =  data['uniId']
 
         loggedinuser = UserData.objects.get(uniId=uniId)
 
@@ -57,7 +57,6 @@ class Posts(APIView):
 
         for post in posts:                
             postObjects.append(post)
-            #filteredpost.append(post.getView())        
 
         for relation in mates:
             if(relation.mate.deptid == ownerdept):

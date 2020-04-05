@@ -26,6 +26,13 @@ class RoleData(models.Model):
     roleid = models.CharField(max_length = 1, primary_key=True)
     rolename = models.CharField(max_length = 52)
 
+class CollegeDepartment(models.Model):
+    clgid = models.ForeignKey(CollegeData , on_delete=models.CASCADE)
+    deptid = models.ForeignKey(DepartmentData , on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.deptid)
+
 class UserData(AbstractUser):
     email = models.EmailField(primary_key=True,unique = True)
     name = models.CharField(max_length = 24)

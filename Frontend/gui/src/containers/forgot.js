@@ -4,6 +4,7 @@ import '../App.css';
 import { Form, Icon, Input, Button,Spin } from 'antd';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import {Link} from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 class Forgot extends React.Component{
 
@@ -15,6 +16,9 @@ class Forgot extends React.Component{
         load:false,
         msg:""
       }
+    redirect(){
+        return <Redirect to="/"/>
+    }
     compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
@@ -90,10 +94,14 @@ class Forgot extends React.Component{
             .then(res=>{
                 console.log(res.data);
                 this.setState({
-                    redirect:true,
                     load:false
                 })
+                alert("Password reset successfully")
+                this.setState({
+                    redirect:true,
+                })
             })
+            
 
         }
 
@@ -141,7 +149,7 @@ render(){
                 <div style={{position:'absolute' , left:'57%' , top:'40%'}}>
                     {this.state.load ? <Spin size="large" /> : null}
                 </div>                                           
-                {this.state.redirect ? <Link to="/#"/>:null}
+                {this.state.redirect ? this.redirect():null}
                 <h1>Welcome to KNOWLEDGESHALA</h1><hr/>
                 <br/><br/>
                 <Form  onSubmit={this.handleSubmit} >  
@@ -149,7 +157,7 @@ render(){
                         <h6 color="red">{this.state.msg}</h6>
                         {this.state.pwdreset ?                             
                         <div>
-                            <Form.Item label="Password" name='pwd' hasFeedback>
+                            <Form.Item label="New Password" name='pwd' hasFeedback>
                                 {getFieldDecorator('password', {
                                     rules: [
                                         {
@@ -163,7 +171,7 @@ render(){
                                     })(<Input.Password  name='pwd'/>)}
                             </Form.Item>
 
-                            <Form.Item label="Confirm Password" hasFeedback>
+                            <Form.Item label="Confirm New Password" hasFeedback>
                                 {getFieldDecorator('confirm', {
                                     rules: [
                                         {

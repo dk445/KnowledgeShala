@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from signup.models import UserData,CollegeData,DepartmentData,RoleData,ClgListView,DeptListView
+from signup.models import UserData,CollegeData,DepartmentData,RoleData,ClgListView,DeptListView,CollegeDepartment
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import auth,User
 from django.utils import timezone
@@ -22,25 +22,25 @@ def signupPage(request):
     deptId= data['deptId']        
     password = make_password(data['password'])
     print(clgName)
-    try:
-        college = CollegeData.objects.get(clgName=clgName)
-        department = DepartmentData.objects.get(deptid=deptId)
-        role = RoleData.objects.get(roleid = roleId)
-        user = UserData.objects.create(name=fullname, email=email,password=password,mobile=mobile,clgid=college,deptid=department,roleid=role)
-        
-        #sending mail to user 
-        send_mail(
-            'Registered successfully',
-            'Once your college verified your account you can access your account.',
-            'kartik.dambre@gmail.com',
-            [email],
-            fail_silently=False,
-            )
-        print('mail sent')
-        print('user created')
-        return HttpResponse(True)
-    except:
-        return HttpResponse(False)  
+    # try:
+    college = CollegeData.objects.get(clgName=clgName)
+    department = DepartmentData.objects.get(deptid=deptId)
+    role = RoleData.objects.get(roleid = roleId)
+    user = UserData.objects.create(name=fullname, email=email,password=password,mobile=mobile,clgid=college,deptid=department,roleid=role)
+    
+    #sending mail to user 
+    send_mail(
+        'Registered successfully',
+        'Once your college verified your account you can access your account.',
+        'kartik.dambre@gmail.com',
+        [email],
+        fail_silently=False,
+        )
+    print('mail sent')
+    print('user created')
+    return HttpResponse(True)
+    # except:
+    #     return HttpResponse(False)  
 
     
 def getClgList(request):
@@ -61,7 +61,20 @@ def getDeptList(request):
     print(DeptList)
     return HttpResponse(jsonpickle.encode(DeptList))
 
-
+def getCollegeDepartmentList(request):
+    data = json.loads(request.body)
+    print(data)
+    clgName = data['clgName']
+    Depts = CollegeDepartment.objects.filter(clgid = CollegeData.objects.get(clgName=clgName))
+    print(Depts)
+    DeptList = []
+    for dept in Depts:
+        print(dept)
+        department = DepartmentData.objects.get(deptid=dept.deptid_id)
+        print(department)
+        DeptList.append(DeptListView(department.deptid,department.deptname))
+    print(DeptList)
+    return HttpResponse(jsonpickle.encode(DeptList))
     
 
         

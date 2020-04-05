@@ -22,6 +22,8 @@ import CollegeInfo from './components/CollegeInfo';
 const routing = (
     <Router history={history}>
       <div>
+
+        
         <Route exact path="/" component={App} />
         <Route path="/feed" component={Homescreen} />
         <Route path="/mates" component={Mates} />

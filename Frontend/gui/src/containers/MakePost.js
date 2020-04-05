@@ -69,6 +69,7 @@ class MakePost extends React.Component{
             <Layout style={{ marginLeft: 200 }}>
             <Header/>
             <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+            
             <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>
                 <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}> 
                 

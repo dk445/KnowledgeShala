@@ -11,12 +11,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class LoginForm extends React.Component {
 
-  state = {
-    email:'',
-    password:'',
-    redirect: false,
-    load: false
+  constructor(props){
+    super(props);
+    this.state = {
+      email:'',
+      password:'',
+      redirect: false,
+      load: false
+    }
   }
+  
   
 
   handleChange = event => {
@@ -51,7 +55,7 @@ class LoginForm extends React.Component {
       load:true
     })
    
-      axios.post('django-env.bepbynpcen.ap-south-1.elasticbeanstalk.com/api/signin/',{
+      axios.post('http://127.0.0.1:8000/api/signin/',{
         email : emailId,
         password : pwd,
         msg:''

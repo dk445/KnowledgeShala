@@ -22,10 +22,13 @@ class Homescreen extends React.Component{
         this.setState({
             load :true,
         })
-        axios({
-            method: 'post',
-            url: 'http://127.0.0.1:8000/feed/',
-            data: reactLocalStorage.get('uniId')
+        // axios({
+        //     method: 'post',
+        //     url: 'http://127.0.0.1:8000/feed/',
+        //     data: reactLocalStorage.get('uniId')
+        // })
+        axios.post('http://127.0.0.1:8000/feed/',{
+            uniId:reactLocalStorage.get('uniId'),
         })
         .then(res => {
             
@@ -72,12 +75,8 @@ class Homescreen extends React.Component{
                             actions={[
                             
                             ]}
-                            //extra={
-                            
-                            //}
                         >
                             <List.Item.Meta
-                            //avatar={<Avatar src={item.avatar} />}
                                 title={<Link to={{
                                     pathname:"/account",
                                     state:{

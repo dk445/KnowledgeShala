@@ -1,21 +1,48 @@
 import  React from 'react';
-import {Form,Input,Tooltip,Icon,Cascader,Select,Radio,Checkbox,Button,Spin} from 'antd';
+import {Form,Input,Tooltip,Icon,Select,Radio,Checkbox,Button,Spin} from 'antd';
 import axios from 'axios';
   
   const { Option } = Select;
   
   
   class SignupForm extends React.Component {
-    state = {
-      confirmDirty: false,
-      ClgList: [],
-      DeptList:[],
-      lable:'',
-      value:'',
-      load:false,
-      msg:''
-      
-    };
+    
+    constructor(props){
+      super(props);
+      this.state = {
+        confirmDirty: false,
+        ClgList: [],
+        DeptList:[],
+        lable:'',
+        value:'',
+        load:false,
+        msg:''        
+      };
+      this.onCollegeChange=this.onCollegeChange.bind(this);
+    }
+    
+    onCollegeChange(e){
+      const deptList = []
+      this.setState({
+        load:true
+      })
+      axios.post('http://127.0.0.1:8000/get/clg-dept',{
+        clgName : e.target.value
+      }).then(res=> {
+         console.log(res.data);
+         for(var i=0 ; i< res.data.length ;i++){
+           deptList.push({
+             label : res.data[i].deptId +' - '+res.data[i].deptName,
+             value: res.data[i].deptId
+           })
+         } 
+          console.log(deptList)
+         this.setState({
+              DeptList:deptList,
+              load:false
+           })
+       })
+    }
   
     handleSubmit = e => {
       e.preventDefault();
@@ -59,22 +86,25 @@ import axios from 'axios';
         this.setState({
           msg:'Registered successfully'
         })
+          alert('Regstration successfull');
+        
+
       }
       else{
         this.setState({
           msg:'Error in registration!'
         })
+          alert('Regstration Failed');        
       }
       this.setState({
         load:false,
         msg:true
       })
     })
-   
-    //}catch  (error){
-      //return;
-    //    }
-      
+    .then(res=>{
+      return window.location.reload();    
+    })
+          
     };
   
     handleConfirmBlur = e => {
@@ -101,7 +131,6 @@ import axios from 'axios';
 
     componentDidMount(){
        const clgList = []
-       const deptList = []
        this.setState({
          load:true
        })
@@ -115,26 +144,10 @@ import axios from 'axios';
          } 
           console.log(clgList)
          this.setState({
-             ClgList:clgList
+             ClgList:clgList,
+             load:false
            })
-       })
-       
-       axios.get('http://127.0.0.1:8000/get/dept').then(res=> {
-         console.log(res.data);
-         for(var i=0 ; i< res.data.length ;i++){
-           deptList.push({
-             label : res.data[i].deptId +' - '+res.data[i].deptName,
-             value: res.data[i].deptId
-           })
-         } 
-          console.log(deptList)
-         this.setState({
-              DeptList:deptList,
-              load:false
-           })
-       })
-
-   
+       })   
       }
   
     
@@ -215,18 +228,17 @@ import axios from 'axios';
                 rules: [{ required: true, message: 'Please input your phone number!' }],
               })(<Input name='mobile' addonBefore={prefixSelector} style={{ width: '100%' }} />)}
             </Form.Item>
-
+          
             <Form.Item label="College" name='clgName'>    
-                  <select name = 'clgName'>
+                  <select name = 'clgName' onChangeCapture={this.onCollegeChange}>
                     {this.state.ClgList.map(function(data,label){return(
-                    <option key={label} value={data.value}>{data.label}</option>
+                    <option key={label} value={data.value} >{data.label}</option>
                     )})}
                   </select>                                  
             </Form.Item>
 
-
-            <Form.Item label="Department" name='deptId'>      
-                  
+            
+            <Form.Item label="Department" name='deptId'>                     
                   <select name = 'deptId'>
                     {this.state.DeptList.map(function(data,label){return(
                     <option key={label} value={data.value}>{data.label}</option>

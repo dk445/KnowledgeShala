@@ -1,35 +1,48 @@
 import  React from 'react';
-import {Form,Input,Tooltip,Icon,Select,Radio,Checkbox,Button,Spin} from 'antd';
+import {Form,Input,Icon,Select,Checkbox,Button,Spin} from 'antd';
 import axios from 'axios';
-import {Redirect} from 'react-router-dom';
 import Collage from './College';
 
 const { Option } = Select;
 
 class CollegeSignup extends React.Component{
 
-    state = {
-        confirmDirty: false,
-        msg:'',
-        clgPortal: false,
-        redirect:false,
-        adminPwd:true,
-        load:false
-      };
+      constructor(props){
+        super(props);
+        this.state = {
+          confirmDirty: false,
+          msg:'',
+          clgPortal: false,
+          redirect:false,
+          adminPwd:true,
+          load:false,
+          deptList:[],
+          departmentOptions:[]
+        };
+        this.onCheckboxChange = this.onCheckboxChange.bind(this);
+      }
     
+      
+      componentDidMount(){
+        
+      }
+
       handleSubmit = e => {
         this.setState({
-            msg:''
+            msg:'',
+            load:true
         })
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
           if (!err) {
             console.log('Received values of form: ', values);
           }
-          
+          else{
+            return;
+          }          
         });          
 
-  
+        
        if(this.state.clgPortal){
             const clgEmail = e.target.elements.email.value
             const clgId = e.target.elements.clgid.value
@@ -37,8 +50,9 @@ class CollegeSignup extends React.Component{
             const clgMobile = e.target.elements.mobile.value
             const clgCity = e.target.elements.city.value
             const clgPassword = e.target.elements.pwd.value
-            
-            if(clgMobile.length>10){
+         
+
+            if(clgMobile.length!=10){
                 this.setState({
                     msg:'mobile number is not valid'
                 })
@@ -53,7 +67,8 @@ class CollegeSignup extends React.Component{
               mobile : clgMobile,
               clgId : clgId,
               city : clgCity,
-              password : clgPassword
+              password : clgPassword,
+              departments : this.state.deptList
             })
             .then(res => {
                 console.log(res);
@@ -70,7 +85,7 @@ class CollegeSignup extends React.Component{
                     })
                   }
               })
-            .the(res=>{
+            .then(res=>{
               this.setState({
                 load:false
               })
@@ -85,7 +100,7 @@ class CollegeSignup extends React.Component{
             if(pwd== "") return;
         
             axios.post('http://127.0.0.1:8000/request/college/auth',{
-            adminPassword:pwd
+              adminPassword:pwd
             })
             .then(res => {
             console.log(res.data);
@@ -94,20 +109,34 @@ class CollegeSignup extends React.Component{
                     msg:'',
                     adminPwd:false,
                     clgPortal:true
+                })
+                axios.get('http://127.0.0.1:8000/get/dept')
+                .then(res =>{
+                  let departments = res.data.map(item=>item.deptName);
+                  this.setState({
+                    departmentOptions:departments
+                  })
                 })          
             }
             else{
                 this.setState({
-                msg: 'Incorrecr admin password'
+                  msg: 'Incorrecr admin password'
                 })
             }
         
             })  
             
         }
+        this.setState({
+          load:false
+        })
                 
       };
-    
+
+      onCheckboxChange(e){
+        this.setState({deptList : e});
+      }
+
       handleConfirmBlur = e => {
         const { value } = e.target;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -130,11 +159,7 @@ class CollegeSignup extends React.Component{
         callback();
       };
   
-      componentDidMount(){
-               
-     
-    }
-    
+   
       
     render() {
         const { getFieldDecorator } = this.props.form;        
@@ -175,18 +200,18 @@ class CollegeSignup extends React.Component{
         return (
           <div>            
             {this.state.redirect?<Collage/>:null}
-            <div style={{position:'absolute' , left:'48%' , top:'60%'}}>{this.state.load ? <Spin size="large" /> : null}</div>
+            <div>{this.state.load ? <Spin size="large" /> : null}</div>
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>
             <h6 style={{color:'red'}}>{this.state.msg}</h6>            
             {!this.state.clgPortal ? <div>
                     {this.state.adminPwd ? <div>
-                        <Form.Item name="adminPassword">
+                        <Form.Item name="adminPassword"  style={{left:'18%'}}>
                             {getFieldDecorator('password', {
                                 rules: [{ required: true, message: 'Please enter admin Password!' }],
                             })(
                                 <Input
                                 name="adminPassword"
-                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                prefix={<Icon type="lock" style={{ color: 'rgba(  0,0,0,.25)' }} />}
                                 type="password"
                                 placeholder="Admin Password"
                                 />,
@@ -200,10 +225,7 @@ class CollegeSignup extends React.Component{
                 <Form.Item
                     label={
                         <span>
-                            College Name &nbsp;
-                            <Tooltip title="your college name">
-                            <Icon type="question-circle-o" />
-                            </Tooltip>
+                            College Name 
                         </span>
                         }
                     >
@@ -232,6 +254,10 @@ class CollegeSignup extends React.Component{
                     <Input name='clgid'/>            
                 </Form.Item>
                 
+                <Form.Item label="Departments" name='deptList'>            
+                  <Checkbox.Group options={this.state.departmentOptions} name='deptList' onChange={this.onCheckboxChange}/>            
+                </Form.Item>
+
                 <Form.Item label="Phone Number" name='mobile'>
                     {getFieldDecorator('phone', {
                     rules: [{ required: true, message: 'Please input your phone number!' }],

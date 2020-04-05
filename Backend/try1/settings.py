@@ -97,7 +97,8 @@ WSGI_APPLICATION = 'try1.wsgi.application'
 #        'HOST': 'localhost'        
 #    }
 #}
-DATABASES = {'default': dj_database_url.config(default='postgres://postgres:A.1b2c3d4@localhost:5432/newDb')}
+
+DATABASES = {'default': dj_database_url.config(default='postgres://postgres:A.1b2c3d4@localhost:5432/KnowledgeShala')}
 
 
 # Password validation

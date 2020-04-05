@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password, check_password
-from signup.models import UserData,CollegeData,DepartmentData,RoleData
+from signup.models import UserData,CollegeData,DepartmentData,RoleData,CollegeDepartment
 from django.core import serializers
 from django.core.mail import send_mail
 import json
@@ -57,9 +57,15 @@ def CollegeSignup(request):
     clgId = data['clgId']
     city = data['city']        
     password = make_password(data['password'])
+    departments = data['departments']
+    print(departments)
     print(data)
     try:
         college = CollegeData.objects.create(clgid=clgId , clgName=clgName , mobile=mobile , city=city, email=email , password=password)
+        for department in departments:
+            college = CollegeData.objects.get(clgid=clgId)
+            department = DepartmentData.objects.get(deptname=department)
+            collegeDepartment = CollegeDepartmet.objects.create(clgid = college , deptid = department)
         #sending mail to user 
         send_mail(
             'Registered successfully',
@@ -71,7 +77,7 @@ def CollegeSignup(request):
         print('mail sent')
         print('user created')
         return HttpResponse('True')
-        #return redirect('api/signin',{'message' : 'Registered successfully.'})
+        
     except:
         return HttpResponse('False')
 
