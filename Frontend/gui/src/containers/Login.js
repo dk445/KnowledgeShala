@@ -63,7 +63,12 @@ class LoginForm extends React.Component {
       .then(res => {
         console.log(res);
         console.log(res.data);
-        if(res.data.length==32){ //== "login success"){
+        if(res.data=='not verified'){
+          this.setState({
+            msg: 'Not a verified user. Contact your college authority'
+          })
+        }
+        else if(res.data.length==32){ //== "login success"){
           console.log('redirecting to feed');
           var uniId = res.data
           reactLocalStorage.set('uniId',uniId);

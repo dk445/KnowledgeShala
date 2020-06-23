@@ -105,15 +105,15 @@ def signinPage(request):
             if user.isVerified == "No":
                 auth.login(request,user)
                 print('not verified')
-                uniId = get_random_string(length=32)
-                user.uniId = uniId
-                user.save()
-                print(uniId)
-                #return HttpResponse('not verified')  //commenting for development purpose
-                return HttpResponse(uniId)  #this line should be remove
+                return HttpResponse('not verified')  #commenting for development purpose
+                # return HttpResponse(uniId)  #this line should be remove
             
             print('login success')
-            return HttpResponse('login success')
+            uniId = get_random_string(length=32)
+            user.uniId = uniId
+            user.save()
+            print(uniId)
+            return HttpResponse(uniId)
 
         else:
             #return render(request,'signin.html',{'message':'Wrong credentials'}) 

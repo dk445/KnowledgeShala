@@ -7,8 +7,8 @@ class FooterCost extends React.Component{
 
   render(){
     return(
-        <div>
-            <Footer style={{ textAlign: 'center' }}>Designed By Ant</Footer>
+        <div style={{ }}>
+            <Footer style={{ textAlign: 'center',marginBottom: '24%' }}>Designed By KnowledgeShala</Footer>
         </div>
     );
   }

@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',    #added
-    #'django.middleware.common.CommonMiddleware',  # added
+    # 'django.middleware.common.CommonMiddleware',  # added
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,15 +88,16 @@ WSGI_APPLICATION = 'try1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'newDb',
+#        'NAME': 'KnowledgeShala',
 #        'USER': 'postgres',
 #        'PASSWORD': 'A.1b2c3d4',
-#        'HOST': 'localhost'        
+#        'HOST': 'localhost',
+#        'PORT':'5432'        
 #    }
-#}
+# }
 
 DATABASES = {'default': dj_database_url.config(default='postgres://postgres:A.1b2c3d4@localhost:5432/KnowledgeShala')}
 

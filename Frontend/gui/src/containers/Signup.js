@@ -192,7 +192,7 @@ import axios from 'axios';
         <div>
           <h6 style={{color:'red'}}>{this.state.msg}</h6> 
           <div style={{position:'absolute' , left:'48%' , top:'60%'}}>{this.state.load ? <Spin size="large" /> : null}</div> 
-          <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+          <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{fontSize:'20px'}}>
             <Form.Item label="E-mail" name='email'>
               {getFieldDecorator('email', {
                 rules: [
@@ -205,10 +205,10 @@ import axios from 'axios';
                     message: 'Please input your E-mail!',
                   },
                 ],
-              })(<Input name='email'></Input>)}
+              })(<Input style={{'marginLeft':'10px'}} name='email'></Input>)}
             </Form.Item>
 
-            <Form.Item
+            <Form.Item style={{marginTop:'-20px'}}
               label={
                 <span>
                   Fullname&nbsp;
@@ -220,17 +220,17 @@ import axios from 'axios';
             >
               {getFieldDecorator('nickname', {
                 rules: [{ required: true, message: 'Please input your name!', whitespace: true }],
-              })(<Input name='name'></Input>)}
+              })(<Input style={{'marginLeft':'10px'}} name='name'></Input>)}
             </Form.Item>
 
-            <Form.Item label="Phone Number" name='mobile'>
+            <Form.Item label="Phone Number" name='mobile' style={{marginTop:'-20px'}}>
               {getFieldDecorator('phone', {
                 rules: [{ required: true, message: 'Please input your phone number!' }],
-              })(<Input name='mobile' addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+              })(<Input  name='mobile' addonBefore={prefixSelector} style={{ width: '100%' , marginLeft:'10px'}} />)}
             </Form.Item>
           
-            <Form.Item label="College" name='clgName'>    
-                  <select name = 'clgName' onChangeCapture={this.onCollegeChange}>
+            <Form.Item label="College" name='clgName' style={{marginTop:'-20px'}}>    
+                  <select style={{'marginLeft':'10px'}} name = 'clgName' onChangeCapture={this.onCollegeChange}>
                     {this.state.ClgList.map(function(data,label){return(
                     <option key={label} value={data.value} >{data.label}</option>
                     )})}
@@ -238,7 +238,7 @@ import axios from 'axios';
             </Form.Item>
 
             
-            <Form.Item label="Department" name='deptId'>                     
+            <Form.Item label="Department" name='deptId' style={{marginTop:'-20px'}}>                     
                   <select name = 'deptId'>
                     {this.state.DeptList.map(function(data,label){return(
                     <option key={label} value={data.value}>{data.label}</option>
@@ -249,7 +249,7 @@ import axios from 'axios';
 
             
 
-            <Form.Item label="Role">            
+            <Form.Item label="Role" style={{marginTop:'-20px'}}>            
               <Radio.Group name='role' defaultValue={0}>
                   <Radio value={0}>Student</Radio>
                   <Radio value={1}>Instructor</Radio>
@@ -257,7 +257,7 @@ import axios from 'axios';
             </Form.Item>
 
 
-            <Form.Item label="Password" name='pass' hasFeedback>
+            <Form.Item label="Password" name='pass' hasFeedback style={{marginTop:'-20px'}}>
               {getFieldDecorator('password', {
                 rules: [
                   {
@@ -268,10 +268,10 @@ import axios from 'axios';
                     validator: this.validateToNextPassword,
                   },
                 ],
-              })(<Input.Password  name='pwd'/>)}
+              })(<Input.Password style={{'marginLeft':'10px'}} name='pwd'/>)}
             </Form.Item>
 
-            <Form.Item label="Confirm Password  " hasFeedback>
+            <Form.Item label="Confirm Password" hasFeedback style={{marginTop:'-20px'}}>
               {getFieldDecorator('confirm', {
                 rules: [
                   {
@@ -282,11 +282,11 @@ import axios from 'axios';
                     validator: this.compareToFirstPassword,
                   },
                 ],
-              })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+              })(<Input.Password style={{'marginLeft':'10px'}} onBlur={this.handleConfirmBlur} />)}
             </Form.Item>
             
 
-            <Form.Item {...tailFormItemLayout}>
+            <Form.Item {...tailFormItemLayout} style={{marginTop:'-20px'}}>
               {getFieldDecorator('agreement', {
                 valuePropName: 'checked',
               })(
@@ -295,7 +295,7 @@ import axios from 'axios';
                 </Checkbox>,
               )}
             </Form.Item>
-            <Form.Item {...tailFormItemLayout}>
+            <Form.Item {...tailFormItemLayout} style={{marginTop:'-20px'}}>
               <Button type="primary" htmlType="submit">
                 Register
               </Button>

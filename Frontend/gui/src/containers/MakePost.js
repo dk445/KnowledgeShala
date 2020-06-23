@@ -73,11 +73,10 @@ class MakePost extends React.Component{
             <div style={{position:'absolute' , left:'57%' , top:'40%'}}>{this.state.load ? <Spin size="large" /> : null}</div>
                 <div style={{ padding: 24, background: '#fff', textAlign: 'left' , marginLeft: '60px'}}> 
                 
-            <Form onSubmit={this.handleSubmit}  > 
+            <Form onSubmit={this.handleSubmit}> 
                 <Form.Item name = "desc">
                 <b>Post content</b>
                         <TextArea name="desc" rows={4}/>
-
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">

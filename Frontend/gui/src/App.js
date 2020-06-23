@@ -80,12 +80,14 @@ componentDidMount(){
           {this.state.clgRedirect?<Redirect to='/college'/>:null}
           {this.state.redirectTologin?<Redirect to='/feed'/>:null}
           {this.state.redirectTocollege?<Redirect to='/collegeAccount'/>:null}
-          <br/><h1>Welcome To KNOWLEDGESHALA</h1>
-          <hr/>
-          <button className="btn btn-link" onClick={this._onButtonClick}>Login</button>
-          <button className="btn btn-link" onClick={this._onButton2Click}>Signup</button>
-          <button className="btn btn-link" onClick={this._onButton3Click}>College Authority</button>
-          <br/>        <br/>
+          <br/><h1 style={{color:'rgb(232, 249, 246)', marginLeft:'5%'}}>Welcome To KnowledgeShala</h1>
+          <hr style={{width:'110%',marginLeft:'-2%'}}/>
+          <div style={{width:'110%',marginLeft:'-4%'}}>
+            <button className="btn btn-link" style={{color:'#b4edf3', fontSize:'20px',fontWeight:'bold' , }} onClick={this._onButtonClick}>Login</button>
+            <button className="btn btn-link" style={{color:'#b4edf3', fontSize:'20px',fontWeight:'bold' , }} onClick={this._onButton2Click}>Signup</button>
+            <button className="btn btn-link" style={{color:'#b4edf3', fontSize:'20px',fontWeight:'bold' , }} onClick={this._onButton3Click}>College Authority</button>
+          </div>
+          <br/>
           <div>
             {this.state.showLoginComponent ?
             <LoginForm clg = "false"/>:

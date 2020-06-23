@@ -126,7 +126,7 @@ class Sidenav extends React.Component{
 
                     <Menu.Item key="7">
                       <Link to="/">
-                        <Icon type="logout" />
+                        <Icon type="logout"  />
                         <span className="nav-text"><Button onClick = {this.logout} type='link' style={{color:'white'}}> Logout</Button></span>
                       </Link>
                     </Menu.Item>

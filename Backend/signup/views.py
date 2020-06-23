@@ -65,7 +65,8 @@ def getCollegeDepartmentList(request):
     data = json.loads(request.body)
     print(data)
     clgName = data['clgName']
-    Depts = CollegeDepartment.objects.filter(clgid = CollegeData.objects.get(clgName=clgName))
+    print(CollegeData.objects.get(clgName=clgName))
+    Depts = CollegeDepartment.objects.filter(clgid_id  = (CollegeData.objects.get(clgName=clgName)).clgid)
     print(Depts)
     DeptList = []
     for dept in Depts:

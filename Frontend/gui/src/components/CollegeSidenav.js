@@ -101,10 +101,9 @@ class CollegeSidenav extends React.Component{
 
 
                     <Menu.Item key="5">
-                      <Link to="/">
+                      
                         <Icon type="logout" />
-                        <span className="nav-text"><Button onClick = {this.logout} type='link' style={{color:'white'}}> Logout</Button></span>
-                      </Link>
+                        <span className="nav-text"><Link to="/"><Button onClick = {this.logout} type='link' style={{color:'white'}}> Logout</Button> </Link></span>
                     </Menu.Item>
                 </Menu>
                 </Sider>

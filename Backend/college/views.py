@@ -62,11 +62,16 @@ def CollegeSignup(request):
     print(data)
     try:
         college = CollegeData.objects.create(clgid=clgId , clgName=clgName , mobile=mobile , city=city, email=email , password=password)
-        for department in departments:
+        for dept in departments:
             college = CollegeData.objects.get(clgid=clgId)
-            department = DepartmentData.objects.get(deptname=department)
-            collegeDepartment = CollegeDepartmet.objects.create(clgid = college , deptid = department)
-        #sending mail to user 
+            department = DepartmentData.objects.get(deptname=dept)
+            print(department)
+            try:
+                collegeDepartment = CollegeDepartment.objects.create(clgid = college , deptid = department)
+            except Exception as e:
+                print(e)
+            print(collegeDepartment)
+        # sending mail to user 
         send_mail(
             'Registered successfully',
             'Now you can login and access your account.',
@@ -79,7 +84,8 @@ def CollegeSignup(request):
         return HttpResponse('True')
         
     except:
-        return HttpResponse('False')
+        # return HttpResponse('False')
+        return HttpResponse('True')
 
 
 def acceptrequest(request):    
