@@ -235,7 +235,7 @@ class CollegeSignup extends React.Component{
                 </Form.Item>
 
 
-                <Form.Item label="E-mail" name='email'>
+                <Form.Item label="E-mail" name='email' style={{marginTop:'-20px'}} >
                     {getFieldDecorator('email', {
                     rules: [
                         {
@@ -250,15 +250,15 @@ class CollegeSignup extends React.Component{
                     })(<Input name='email'></Input>)}
                 </Form.Item>
                     
-                <Form.Item label="College Id" name='clgid'>            
+                <Form.Item label="College Id" name='clgid'style={{marginTop:'-20px'}}>            
                     <Input name='clgid'/>            
                 </Form.Item>
                 
-                <Form.Item label="Departments" name='deptList'>            
+                <Form.Item label="Departments" name='deptList' style={{marginTop:'-20px'}}>            
                   <Checkbox.Group options={this.state.departmentOptions} name='deptList' onChange={this.onCheckboxChange}/>            
                 </Form.Item>
 
-                <Form.Item label="Phone Number" name='mobile'>
+                <Form.Item label="Phone Number" name='mobile' style={{marginTop:'-20px'}}>
                     {getFieldDecorator('phone', {
                     rules: [{ required: true, message: 'Please input your phone number!' }],
                     })(<Input name='mobile' addonBefore={prefixSelector} style={{ width: '100%' }} />)}
@@ -266,12 +266,12 @@ class CollegeSignup extends React.Component{
     
                 
   
-                <Form.Item label="City" name='city'>            
+                <Form.Item label="City" name='city' style={{marginTop:'-20px'}}>            
                     <Input name='city'/>            
                 </Form.Item>
   
   
-                <Form.Item label="Password" name='pwd' hasFeedback>
+                <Form.Item label="Password" name='pwd' hasFeedback style={{marginTop:'-20px'}}>
                     {getFieldDecorator('password', {
                     rules: [
                         {
@@ -285,7 +285,7 @@ class CollegeSignup extends React.Component{
                     })(<Input.Password  name='pwd'/>)}
                 </Form.Item>
     
-                <Form.Item label="Confirm Password" hasFeedback>
+                <Form.Item label="Confirm Password" hasFeedback style={{marginTop:'-20px'}}>
                     {getFieldDecorator('confirm', {
                     rules: [
                         {
@@ -300,7 +300,7 @@ class CollegeSignup extends React.Component{
                 </Form.Item>
               
   
-                <Form.Item {...tailFormItemLayout}>
+                <Form.Item {...tailFormItemLayout} style={{marginTop:'-20px'}}>
                     {getFieldDecorator('agreement', {
                     valuePropName: 'checked',
                     })(
@@ -309,7 +309,7 @@ class CollegeSignup extends React.Component{
                     </Checkbox>,
                     )}
                 </Form.Item>
-                <Form.Item {...tailFormItemLayout}>
+                <Form.Item {...tailFormItemLayout} style={{marginTop:'-20px'}}>
                     <Button type="primary" htmlType="submit">
                     Register
                     </Button>

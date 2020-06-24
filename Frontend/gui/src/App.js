@@ -50,7 +50,9 @@ class App extends Component {
       clgAdminPwd:true
     })
   }
-
+  _onButton4Click = () => {
+    window.open('http://knowledgeshala.s3-website.ap-south-1.amazonaws.com/','_blank');
+  }
 componentDidMount(){ 
       //var uniId = reactLocalStorage.get('uniId')
       if(reactLocalStorage.get('uniId')){
@@ -80,12 +82,14 @@ componentDidMount(){
           {this.state.clgRedirect?<Redirect to='/college'/>:null}
           {this.state.redirectTologin?<Redirect to='/feed'/>:null}
           {this.state.redirectTocollege?<Redirect to='/collegeAccount'/>:null}
-          <br/><h1 style={{color:'rgb(232, 249, 246)', marginLeft:'5%'}}>Welcome To KnowledgeShala</h1>
-          <hr style={{width:'110%',marginLeft:'-2%'}}/>
-          <div style={{width:'110%',marginLeft:'-4%'}}>
+          <br/><h1 style={{color:'rgb(232, 249, 246)', marginLeft:'-7%',width:'110%'}}>Welcome To KnowledgeShala</h1>
+          <hr style={{width:'180%',marginLeft:'-35%'}}/>
+          <div style={{width:'180%',marginLeft:'-38%'}}>
             <button className="btn btn-link" style={{color:'#b4edf3', fontSize:'20px',fontWeight:'bold' , }} onClick={this._onButtonClick}>Login</button>
             <button className="btn btn-link" style={{color:'#b4edf3', fontSize:'20px',fontWeight:'bold' , }} onClick={this._onButton2Click}>Signup</button>
             <button className="btn btn-link" style={{color:'#b4edf3', fontSize:'20px',fontWeight:'bold' , }} onClick={this._onButton3Click}>College Authority</button>
+            <button className="btn btn-link" style={{color:'#b4edf3', fontSize:'20px',fontWeight:'bold' , }} onClick={this._onButton4Click}>AboutUs</button>
+
           </div>
           <br/>
           <div>

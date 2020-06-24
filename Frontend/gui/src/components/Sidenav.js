@@ -68,6 +68,9 @@ class Sidenav extends React.Component{
                 
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={this.props.navPosition}>
+                    <Menu.Item key="0">                        
+                        <span className="nav-text" style={{color:'white',marginLeft:'0%',fontWeight:'bold',fontSize:'17px'}}>Knowledge Shala</span>
+                    </Menu.Item>
                     
                   
                     <Menu.Item key="1">
