@@ -93,13 +93,13 @@ WSGI_APPLICATION = 'try1.wsgi.application'
 #        'ENGINE': 'django.db.backends.postgresql',
 #        'NAME': 'KnowledgeShala',
 #        'USER': 'postgres',
-#        'PASSWORD': 'A.1b2c3d4',
+#        'PASSWORD': '*********',
 #        'HOST': 'localhost',
 #        'PORT':'5432'        
 #    }
 # }
 
-DATABASES = {'default': dj_database_url.config(default='postgres://postgres:A.1b2c3d4@localhost:5432/KnowledgeShala')}
+DATABASES = {'default': dj_database_url.config(default='postgres://postgres:*********@localhost:5432/KnowledgeShala')}
 
 
 # Password validation
@@ -161,7 +161,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'kartik.dambre@gmail.com'
-EMAIL_HOST_PASSWORD = 'lnolbzcygiugctdv'
+EMAIL_HOST_PASSWORD = '***************'
 
  
 CORS_ORIGIN_ALLOW_ALL = True
